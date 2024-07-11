@@ -25,7 +25,7 @@ function Login() {
                         type="password" placeholder="password" />
                     </form>
                     <div className="flex flex-col gap-[7px] mt-[10px]">
-                        <Button></Button>
+                        <Button label="Start"></Button>
                         <button className="text-stone-300 text-[15px] font-semibold tracking-tight">Sign Up</button>
                     </div>
                 </div>
