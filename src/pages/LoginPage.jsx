@@ -3,7 +3,7 @@ import network from '../components/network.json';
 import Button from '../components/Button';
 import axios from "axios";
 import { useState } from "react";
-function Login() {
+function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -24,9 +24,9 @@ function Login() {
                         className="bg-stone-50 w-[250px] h-[50px] rounded-[10px] border border-gray-600 text-gray-600/opacity-30 text-base font-extrabold tracking-tight pl-[24px]" 
                         type="password" placeholder="password" />
                     </form>
-                    <div className="flex flex-col gap-[7px] mt-[10px]">
+                    <div className="flex flex-col items-center gap-[7px] mt-[10px]">
                         <Button label="Start"></Button>
-                        <button className="text-stone-300 text-[15px] font-semibold tracking-tight">Sign Up</button>
+                        <a href="/signup" className="text-stone-300 text-[15px] font-semibold tracking-tight">Sign Up</a>
                     </div>
                 </div>
                 
@@ -35,4 +35,4 @@ function Login() {
     )
 }
 
-export default Login;
+export default LoginPage;
