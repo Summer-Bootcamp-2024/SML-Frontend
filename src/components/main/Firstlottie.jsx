@@ -3,7 +3,7 @@ import Lottie from 'lottie-react';
 import animationData from "./first.json"
 
 const Firstlottie = () => {
-  return <Lottie animationData={animationData} loop={true} style={{ height: 350, width: 350}} />;
+  return <Lottie animationData={animationData} loop={true} style={{ height: 350, width: 350, marginRight:20}} />;
 };
 
 export default Firstlottie;

@@ -6,11 +6,11 @@ import Header from '../components/main/Header';
 import { MdDoubleArrow } from "react-icons/md";
 
 function MainPage() {
-  const COPIED_NUM = 3;
-  const [slideIndex, setSlideIndex] = useState(0);
-  const slideRef = useRef(null);
+  const COPIED_NUM = 3; //슬라이드 수
+  const [slideIndex, setSlideIndex] = useState(0); //슬라이드 인덱스
+  const slideRef = useRef(null); //슬라이드 컨테이너 참조 -> 동적으로 제어하기위해
 
-  const slideHandler = (direction) => {
+  const slideHandler = (direction) => { //버튼 클릭시 슬라이드 이동
     setSlideIndex((prevIndex) => (prevIndex + direction + COPIED_NUM) % COPIED_NUM);
   };
 
@@ -28,7 +28,7 @@ function MainPage() {
         <div
           ref={slideRef}
           className="flex"
-          style={{ width: `${100 * COPIED_NUM}vw` }}
+          style={{ width: `${100 * COPIED_NUM}vw`}}
         >
           <div className="flex w-full h-full">
             <Mainfirst />

@@ -6,7 +6,7 @@ function Mainfirst() {
     <div className="flex items-center justify-center w-[100vw] h-[calc(100vh-80px)] bg-white">
       <div className="flex flex-col items-center justify-center w-full h-[440px] bg-custom-blue/30">
         <div className='flex'>
-          <div className='w-[1150px] flex items-center justify-between'>
+          <div className='w-[1200px] flex items-center justify-between'>
             <div className="flex flex-col p-[20px]">
               <div className="flex justify-center">
                 <span className="text-[48px] font-bold text-custom-blue mr-[15px]">Search, Match</span>
