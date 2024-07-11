@@ -22,7 +22,7 @@ function Mainthird() {
                 <span className='text-[16px] font-semibold'>일촌과 이촌으로 나와의 관계도를 한눈에 파악할 수 있어요!</span>
               </div>
             </div>
-            <img src={slideimage} style={{width: 400, height: 400, transform: 'rotate(10.50deg)'}}/>
+            <img src={slideimage} className='w-[400px] h-[400px] rotate-[10.50deg]'/>
           </div>
         </div>
       </div>
