@@ -3,8 +3,7 @@ import network from '../components/network.json';
 import Button from '../components/Button';
 import axios from "axios";
 import { useState } from "react";
-
-const Login = () => {
+function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
