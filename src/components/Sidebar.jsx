@@ -4,9 +4,15 @@ import { MdOutlinePersonSearch } from "react-icons/md";
 import { MdListAlt } from "react-icons/md";
 import { MdHome } from "react-icons/md";
 import { MdLogout } from "react-icons/md";
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useLocation } from 'react-router-dom';
 
 function Sidebar() {
+    const location = useLocation();
+
+    const isActive = (path) => {
+        return location.pathname === path || (path === '/mypage' && location.pathname === '/mypageedit');
+    }
+
     return(
         <div className="w-[296px] h-[100vh] bg-stone-50 border-r border-zinc-300">
             <div className="text-2xl font-extrabold tracking-tight text-gray-600 pl-[48px] pt-[24px]">SML</div>
@@ -30,7 +36,7 @@ function Sidebar() {
                     <MdOutlineChat className='w-[30px] h-6'/>
                     <span className='font-semibold tracking-tight'>Chat</span>
                 </NavLink>
-                <NavLink to="/mypage" className={({isActive}) => isActive ? 'text-lg bg-gray-600 rounded-[10px] text-stone-50 w-[180px] h-[60px] pl-[15px] flex items-center gap-[5px] cursor-pointer' : 'w-[180px] h-[60px] pl-[15px] flex items-center gap-[5px] cursor-pointer'}>
+                <NavLink to="/mypage" className={isActive('/mypage') ? 'text-lg bg-gray-600 rounded-[10px] text-stone-50 w-[180px] h-[60px] pl-[15px] flex items-center gap-[5px] cursor-pointer' : 'w-[180px] h-[60px] pl-[15px] flex items-center gap-[5px] cursor-pointer'}>
                     <MdHome className='w-[30px] h-6'/>
                     <span className='font-semibold tracking-tight'>My Page</span>
                 </NavLink>
