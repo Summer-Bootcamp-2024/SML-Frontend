@@ -30,9 +30,9 @@ function MypageEdit() {
         <div className="flex justify-end w-full h-[100vh]">
             <Sidebar />
             <div className="flex flex-col gap-[46px] justify-center items-center w-[calc(100vw-296px)] h-[100vh]">
-                <div className="flex w-[840px] h-[450px] bg-stone-50 rounded-[10px] shadow-xl border-2 border-blue-400">
+                <div className="flex w-[840px] h-[450px] bg-custom-grey/10 rounded-[10px] shadow-custom-blue/30 shadow-lg border-2 border-custom-blue">
                     <div className="flex flex-col gap-[20px] pl-[50px] pt-[28px]">
-                        <h1 className="text-2xl font-black tracking-tight text-gray-600 underline">My PROFILE</h1>
+                        <h1 className="text-2xl font-black tracking-tight underline text-custom-indigo">My PROFILE</h1>
                         <form className="flex flex-col gap-[10px] w-[142.64px] items-center">
                             <input onChange={showImg} ref={imgRef} id="photo" className="hidden" type="file" accept=".png, .jgeg, .jpg" />
                             <label htmlFor="photo" className="bg-gray-300 w-[142.64px] h-[137.74px] flex justify-center items-center cursor-pointer">
@@ -42,7 +42,7 @@ function MypageEdit() {
                                 <MdPhotoCamera size={60} className="text-white" />
                             )}
                             </label>
-                            <label className="text-sm font-medium text-black">프로필 사진 선택</label>
+                            <label className="text-sm font-medium text-custom-indigo">프로필 사진 선택</label>
                         </form>
                     </div>
                     <div className="flex w-[80%] gap-[30px] pt-[75px] pl-[68px]">
@@ -56,13 +56,13 @@ function MypageEdit() {
                             <li>관심분야</li>
                         </ul>
                         <form className="relative w-[80%] flex flex-col gap-[20px]">
-                            <input type="text" placeholder="Jhon" className="w-[250px] h-[27px] pl-[15px] text-stone-500 bg-stone-50 rounded-[5px] border border-stone-300" />
-                            <input type="text" placeholder="27세" className="w-[250px] h-[27px] pl-[15px] text-stone-500 bg-stone-50 rounded-[5px] border border-stone-300" />
-                            <input type="text" placeholder="백엔드 개발자" className="w-[250px] h-[27px] pl-[15px] text-stone-500 bg-stone-50 rounded-[5px] border border-stone-300" />
-                            <input type="text" placeholder="Men" className="w-[250px] h-[27px] pl-[15px] text-stone-500 bg-stone-50 rounded-[5px] border border-stone-300" />
-                            <input type="text" placeholder="실리콘밸리" className="w-[250px] h-[27px] pl-[15px] text-stone-500 bg-stone-50 rounded-[5px] border border-stone-300" />
-                            <input type="text" placeholder="서울시 중구" className="w-[250px] h-[27px] pl-[15px] text-stone-500 bg-stone-50 rounded-[5px] border border-stone-300" />
-                            <input type="text" placeholder="면접" className="w-[250px] h-[27px] pl-[15px] text-stone-500 bg-stone-50 rounded-[5px] border border-stone-300" />
+                            <input type="text" placeholder="Jhon" className="w-[250px] h-[27px] pl-[15px] text-custom-grey bg-custom-white rounded-[5px] border border-custom-grey" />
+                            <input type="text" placeholder="27세" className="w-[250px] h-[27px] pl-[15px] text-custom-grey bg-custom-white rounded-[5px] border border-custom-grey" />
+                            <input type="text" placeholder="백엔드 개발자" className="w-[250px] h-[27px] pl-[15px] text-custom-grey bg-custom-white rounded-[5px] border border-custom-grey" />
+                            <input type="text" placeholder="Men" className="w-[250px] h-[27px] pl-[15px] text-custom-grey bg-custom-white rounded-[5px] border border-custom-grey" />
+                            <input type="text" placeholder="실리콘밸리" className="w-[250px] h-[27px] pl-[15px] text-custom-grey bg-custom-white rounded-[5px] border border-custom-grey" />
+                            <input type="text" placeholder="서울시 중구" className="w-[250px] h-[27px] pl-[15px] text-custom-grey bg-custom-white rounded-[5px] border border-custom-grey" />
+                            <input type="text" placeholder="면접" className="w-[250px] h-[27px] pl-[15px] text-custom-grey bg-custom-white rounded-[5px] border border-custom-grey" />
                             <Link to="/mypage">
                                 <Button label="수정 완료" className="absolute right-4 bottom-6"></Button>
                             </Link>
