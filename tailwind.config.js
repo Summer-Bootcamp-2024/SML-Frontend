@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const colors = require('tailwindcss/colors');
+
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
@@ -8,11 +10,10 @@ export default {
         "custom-white" : "#F8F8F8",
         "custom-orange" :"#F9C77B",
         "custom-grey" : "#BDBDBD",
-        "custom-indigo" : "#404F60"
+        "custom-indigo" : "#404F60" 
       },
     },
   },
   plugins: [],
 }
-
 
