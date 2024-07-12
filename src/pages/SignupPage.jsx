@@ -1,6 +1,6 @@
 import Button from "../components/Button";
 
-function Signup() {
+function SignupPage() {
     return (
         <div className="flex w-full h-[100vh] items-center justify-center">
             <div className="flex flex-col gap-[28px] justify-center items-center w-[450px] h-[550px] rounded-[20px] shadow-2xl">
@@ -33,4 +33,4 @@ function Signup() {
     )
 }
 
-export default Signup;
+export default SignupPage;
