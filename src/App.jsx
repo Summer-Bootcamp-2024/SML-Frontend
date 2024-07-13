@@ -5,6 +5,8 @@ import SignupPage from './pages/SignupPage';
 import MainPage from './pages/MainPage'
 import FriendListPage from './pages/FriendListPage'
 import Mypage from './pages/Mypage'
+import MypageEdit from './pages/MypageEdit';
+
 function App() {
   return (
     <BrowserRouter>
@@ -12,8 +14,9 @@ function App() {
         <Route path="/" element={<MainPage />} />
         <Route path='/login' element={<LoginPage />} />
         <Route path='/signup' element={<SignupPage />} />
-        <Route path='/mypage' element={<Mypage />} />
         <Route path='/list' element={<FriendListPage />} />
+        <Route path='/mypage/' element={<Mypage />} />
+        <Route path='/mypageedit' element={<MypageEdit />} />
       </Routes>
     </BrowserRouter>
   )
