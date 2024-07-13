@@ -21,7 +21,7 @@ function FriendListPage() {
   return (
    <div className='flex'>
     <Sidebar/>
-    <div className='flex flex-col justify-center w-[calc(100vw-296px)] h-screen border-2 border-blue-400'>
+    <div className='flex flex-col justify-center w-[calc(100vw-296px)] h-screen '>
       <select
       className='w-[170px] h-[45px] border-[1px] border-custom-grey bg-custom-white rounded-[10px] mt-[-20px] ml-[40px] font-semibold text-[18px] text-custom-indigo indent-[10px]'
       onChange={onListHandler}
