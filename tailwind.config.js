@@ -10,7 +10,8 @@ export default {
         "custom-white" : "#F8F8F8",
         "custom-orange" :"#F9C77B",
         "custom-grey" : "#BDBDBD",
-        "custom-indigo" : "#404F60" 
+        "custom-indigo" : "#404F60",
+        "custom-skyblue" : "#EFF6FC"
       },
     },
   },
