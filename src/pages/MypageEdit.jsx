@@ -56,13 +56,13 @@ function MypageEdit() {
                             <li>관심분야</li>
                         </ul>
                         <form className="relative w-[80%] flex flex-col gap-[20px]">
-                            <input type="text" placeholder="Jhon" className="w-[250px] h-[27px] pl-[15px] text-custom-grey bg-custom-white rounded-[5px] border border-custom-grey" />
-                            <input type="text" placeholder="27세" className="w-[250px] h-[27px] pl-[15px] text-custom-grey bg-custom-white rounded-[5px] border border-custom-grey" />
-                            <input type="text" placeholder="백엔드 개발자" className="w-[250px] h-[27px] pl-[15px] text-custom-grey bg-custom-white rounded-[5px] border border-custom-grey" />
-                            <input type="text" placeholder="Men" className="w-[250px] h-[27px] pl-[15px] text-custom-grey bg-custom-white rounded-[5px] border border-custom-grey" />
-                            <input type="text" placeholder="실리콘밸리" className="w-[250px] h-[27px] pl-[15px] text-custom-grey bg-custom-white rounded-[5px] border border-custom-grey" />
-                            <input type="text" placeholder="서울시 중구" className="w-[250px] h-[27px] pl-[15px] text-custom-grey bg-custom-white rounded-[5px] border border-custom-grey" />
-                            <input type="text" placeholder="면접" className="w-[250px] h-[27px] pl-[15px] text-custom-grey bg-custom-white rounded-[5px] border border-custom-grey" />
+                            <input type="text" placeholder="Jhon" className="w-[250px] h-[27px] pl-[15px] text-black bg-custom-white rounded-[5px] border border-custom-grey" />
+                            <input type="text" placeholder="27세" className="w-[250px] h-[27px] pl-[15px] text-black bg-custom-white rounded-[5px] border border-custom-grey" />
+                            <input type="text" placeholder="백엔드 개발자" className="w-[250px] h-[27px] pl-[15px] text-black bg-custom-white rounded-[5px] border border-custom-grey" />
+                            <input type="text" placeholder="Men" className="w-[250px] h-[27px] pl-[15px] text-black bg-custom-white rounded-[5px] border border-custom-grey" />
+                            <input type="text" placeholder="실리콘밸리" className="w-[250px] h-[27px] pl-[15px] text-black bg-custom-white rounded-[5px] border border-custom-grey" />
+                            <input type="text" placeholder="서울시 중구" className="w-[250px] h-[27px] pl-[15px] text-black bg-custom-white rounded-[5px] border border-custom-grey" />
+                            <input type="text" placeholder="면접" className="w-[250px] h-[27px] pl-[15px] text-black bg-custom-white rounded-[5px] border border-custom-grey" />
                             <Link to="/mypage">
                                 <Button label="수정 완료" className="absolute right-4 bottom-6"></Button>
                             </Link>

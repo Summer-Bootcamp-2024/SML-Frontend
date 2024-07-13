@@ -14,7 +14,7 @@ function Sidebar() {
     }
 
     return(
-        <div className="w-[296px] h-[100vh] bg-custom-grey/10 border-r border-zinc-300">
+        <div className="flex flex-col w-[296px] h-full bg-custom-grey/10 border-r border-zinc-300">
             <div className="text-2xl font-extrabold tracking-tight text-custom-orange pl-[48px] pt-[24px]">SML</div>
             <div className="flex items-center pl-[48px] mt-[37px] w-[250px] h-[80px] gap-[71px]">
                 <img className="w-[70px] h-[70px] rounded-[115px]" src={profileImg}/>
