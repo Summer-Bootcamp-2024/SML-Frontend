@@ -7,7 +7,7 @@ import FriendListPage from './pages/FriendListPage'
 import Mypage from './pages/Mypage'
 import MypageEdit from './pages/MypageEdit';
 import SearchPage from './pages/SearchPage';
-import Credit from './components/Credit';
+import ChatPage from './pages/ChatpPage'
 
 function App() {
   return (
@@ -20,6 +20,7 @@ function App() {
         <Route path='/mypage/' element={<Mypage />} />
         <Route path='/mypageedit' element={<MypageEdit />} />
         <Route path='/search' element={<SearchPage />} />
+        <Route path='/chat' element={<ChatPage />} />
       </Routes>
     </BrowserRouter>
   )
