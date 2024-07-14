@@ -20,7 +20,6 @@ function App() {
         <Route path='/mypage/' element={<Mypage />} />
         <Route path='/mypageedit' element={<MypageEdit />} />
         <Route path='/search' element={<SearchPage />} />
-        <Route path='/search/bar' element={<Credit />} />
       </Routes>
     </BrowserRouter>
   )
