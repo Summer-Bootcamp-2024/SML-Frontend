@@ -25,26 +25,30 @@ function Sidebar() {
                     </div>
                 </div>
                 <ul className='flex flex-col justify-center items-center w-[190px] h-[300px]'>
-                    <NavLink to="/list" className={({isActive}) => isActive ? 'text-[20px] font-extrabold bg-custom-orange rounded-[10px] text-custom-indigo w-[180px] h-[55px] flex justify-center items-center cursor-pointer' : 'w-[190px] h-[55px] text-[18px] font-medium flex items-center justify-center cursor-pointer mb-[15px]'}>
-                    <div className='w-[190px] flex items-center justify-baseline'>
+                    <NavLink to="/list" className={({isActive}) => isActive ? 'text-[20px] font-extrabold bg-custom-orange rounded-[10px] text-custom-indigo w-[190px] h-[55px] flex justify-center items-center cursor-pointer mb-[15px]' 
+                    : 'w-[190px] h-[55px] text-[18px] font-medium flex items-center justify-center cursor-pointer mb-[15px]'}>
+                    <div className='w-[190px] flex items-center justify-center'>
                         <MdListAlt className='w-[24px] h-[24px]'/>
                         <span className=' w-[110px] ml-[10px] pr-[10px]'>Friend List</span>
                     </div>
                     </NavLink>
-                    <NavLink to="/search" className={({isActive}) => isActive ? 'text-[20px] font-extrabold bg-custom-orange rounded-[10px] text-custom-indigo w-[180px] h-[55px] flex justify-center items-center cursor-pointer' : 'w-[190px] h-[55px] text-[18px] font-medium flex items-center justify-center cursor-pointer mb-[15px]'}>
-                    <div className='w-[190px] flex items-center justify-baseline'>
+                    <NavLink to="/search" className={({isActive}) => isActive ? 'text-[20px] font-extrabold bg-custom-orange rounded-[10px] text-custom-indigo w-[190px] h-[55px] flex justify-center items-center cursor-pointer mb-[15px]' 
+                    : 'w-[190px] h-[55px] text-[18px] font-medium flex items-center justify-center cursor-pointer mb-[15px]'}>
+                    <div className='w-[190px] flex items-center justify-center'>
                         <MdOutlinePersonSearch className='w-[24px] h-[24px]'/>
                         <span className='w-[110px] ml-[10px] pr-[10px]'>Search</span>
                     </div> 
                     </NavLink>
-                    <NavLink to="/chat" className={({isActive}) => isActive ? 'text-[20px] font-extrabold bg-custom-orange rounded-[10px] text-custom-indigo w-[180px] h-[55px] flex justify-center items-center cursor-pointer' : 'w-[190px] h-[55px] text-[18px] font-medium flex items-center justify-center cursor-pointer mb-[15px]'}>
-                    <div className='w-[190px] flex items-center justify-baseline'>
+                    <NavLink to="/chat" className={({isActive}) => isActive ? 'text-[20px] font-extrabold bg-custom-orange rounded-[10px] text-custom-indigo w-[190px] h-[55px] flex justify-center items-center cursor-pointer mb-[15px]' 
+                    : 'w-[190px] h-[55px] text-[18px] font-medium flex items-center justify-center cursor-pointer mb-[15px]'}>
+                    <div className='w-[190px] flex items-center justify-center'>
                         <MdOutlineChat className='w-[24px] h-[24px]'/>
                         <span className='w-[110px] ml-[10px] pr-[10px]'>Chat</span>
                         </div>
                     </NavLink>
-                    <NavLink to="/mypage" className={({isActive}) => isActive ? 'text-[20px] font-extrabold bg-custom-orange rounded-[10px] text-custom-indigo w-[180px] h-[55px] flex justify-center items-center cursor-pointer' : 'w-[190px] h-[55px] text-[18px] font-medium flex items-center justify-center cursor-pointer'}>
-                        <div className='w-[190px] flex items-center justify-baseline'>
+                    <NavLink to="/mypage" className={({isActive}) => isActive ? 'text-[20px] font-extrabold bg-custom-orange rounded-[10px] text-custom-indigo w-[190px] h-[55px] flex justify-center items-center cursor-pointer' 
+                    : 'w-[190px] h-[55px] text-[18px] font-medium flex items-center justify-center cursor-pointer'}>
+                        <div className='w-[190px] flex items-center justify-center'>
                             <MdHome className='w-[24px] h-[24px]'/>
                             <span className='w-[110px] ml-[10px] pr-[10px]'>My Page</span>
                         </div>
