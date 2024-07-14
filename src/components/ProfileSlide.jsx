@@ -1,25 +1,39 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import profileimage from '../assets/images/profileImg2.png';
 import Button from './Button';
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 
-function ProfileSlide({ isOpen, onClose }) {
+function ProfileSlide({ isOpen, onClose, onOpenCreditModal, isCreditModalOpen}) {
     const [clickedIndex, setClickedIndex] = useState(null);
+    const [isIntroductionClicked, setIsIntroductionClicked] = useState(false);
 
     const handleItemClick = (index) => {
         setClickedIndex(index);
+        console.log(clickedIndex);
     };
+
+    const handleIntroductionClick = () => {
+        setIsIntroductionClicked(true);
+        console.log(isIntroductionClicked);
+    };
+
+    useEffect(() => {
+        if (clickedIndex !== null && isIntroductionClicked) {
+            onOpenCreditModal();
+            console.log(isIntroductionClicked);
+        }
+    }, [clickedIndex, isIntroductionClicked, onOpenCreditModal]);
 
 
     return (
         <div
             className={`fixed top-[200px] right-10 h-[470px] bg-custom-skyblue transition-transform duration-300 ${isOpen ? '' : 'translate-x-[400px]'}`}
-            style={{
-                width: '450px',
-                // 'overflow-y-auto'를 추가하여 내부 내용만 스크롤되도록 설정합니다.
-                overflowY: 'auto',
-            }}
-        >
+                style={{
+                    width: '450px',
+                    // 'overflow-y-auto'를 추가하여 내부 내용만 스크롤되도록 설정합니다.
+                    overflowY: 'auto',
+                }}
+            >
             <button className="flex justify-end w-full" onClick={onClose}>
                 <MdKeyboardDoubleArrowRight className='w-[46px] h-[39px] mr-[10px] mt-[10px] text-custom-grey'/>
             </button>
@@ -62,7 +76,7 @@ function ProfileSlide({ isOpen, onClose }) {
                             ))}
                         </div>
                     </div>
-                    <Button label={"소개 받기"} />
+                    <Button label={"소개 받기"} onClick={handleIntroductionClick}/>
                 </div>
             </div>
         </div>

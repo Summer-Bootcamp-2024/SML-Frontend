@@ -7,7 +7,7 @@ import FriendListPage from './pages/FriendListPage'
 import Mypage from './pages/Mypage'
 import MypageEdit from './pages/MypageEdit';
 import SearchPage from './pages/SearchPage';
-import ProfileSlide from './components/ProfileSlide';
+import Credit from './components/Credit';
 
 function App() {
   return (
@@ -20,7 +20,7 @@ function App() {
         <Route path='/mypage/' element={<Mypage />} />
         <Route path='/mypageedit' element={<MypageEdit />} />
         <Route path='/search' element={<SearchPage />} />
-        <Route path='/search/bar' element={<ProfileSlide />} />
+        <Route path='/search/bar' element={<Credit />} />
       </Routes>
     </BrowserRouter>
   )

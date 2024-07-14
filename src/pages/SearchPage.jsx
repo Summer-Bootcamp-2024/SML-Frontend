@@ -3,10 +3,11 @@ import SearchCon from "../components/search/SearchCon";
 import ProfileList from "../components/search/ProfileList";
 import profileImg from "../assets/images/profileImg.png";
 import { useState } from "react";
-import ProfileModal from "../components/ProfileModal";
 import ProfileSlide from "../components/ProfileSlide";
+import Credit from "../components/Credit";
 function SearchPage() {
     const [selectProfile, setSelectProfile] = useState(null);
+    const [creditOpen, setCreditOpen] = useState(false);
 
     const profiles = [
         { name: '김대희', job: '백엔드 개발자', loc: '서울시 중구', interest: '테니스', imgSrc: profileImg},
@@ -27,6 +28,10 @@ function SearchPage() {
         setSelectProfile(null);
     }
 
+    const openCreditModal = () => {
+        setCreditOpen(true);
+    }
+
     return (
         <div className="flex w-full h-[100vh]">
             <Sidebar></Sidebar>
@@ -38,7 +43,10 @@ function SearchPage() {
                     <ProfileList profiles={profiles} onCardClick={handleCardClick}></ProfileList>
                 </div>
                 {selectProfile && (
-                    <ProfileSlide isOpen={true} onClose={closeProfile} />
+                    <ProfileSlide isOpen={true} onClose={closeProfile} onOpenCreditModal={openCreditModal}/>
+                )}
+                {creditOpen && (
+                    <Credit />
                 )}
             </div>
         </div>
