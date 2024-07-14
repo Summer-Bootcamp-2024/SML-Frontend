@@ -1,6 +1,6 @@
 import Button from '../components/Button';
 import Sidebar from '../components/Sidebar';
-import profileImgSquare from '../assets/images/profileImgSquare.png';
+import profileImgSquare from '../assets/images/myprofile/profileImgSquare.png';
 import MypageEdit from './MypageEdit';
 import { Link, Route, Routes } from 'react-router-dom';
 
@@ -43,7 +43,7 @@ function Mypage() {
                             <span className="text-base font-bold text-custom-indigo">12345 credit</span>
                         </div>
                     </div>
-                    <Link to='/mypageedit'>
+                    <Link to='/mypage/edit'>
                         <Button className="absolute right-10 bottom-6" label="수정하기"></Button>
                     </Link>
                 </div>

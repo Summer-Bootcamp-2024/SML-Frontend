@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import profileimage from '../assets/images/profileImg2.png';
 import Button from './Button';
-import { MdClose } from "react-icons/md";
+import { MdClose } from "react-icons/md"; 
 
 function ProfileModal({ PostingClosedModal }) {
     const [clickedIndex, setClickedIndex] = useState(null);

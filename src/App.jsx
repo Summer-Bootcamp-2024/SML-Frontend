@@ -16,7 +16,7 @@ function App() {
         <Route path='/signup' element={<SignupPage />} />
         <Route path='/list' element={<FriendListPage />} />
         <Route path='/mypage/' element={<Mypage />} />
-        <Route path='/mypageedit' element={<MypageEdit />} />
+        <Route path='/mypage/edit' element={<MypageEdit />} />
       </Routes>
     </BrowserRouter>
   )
