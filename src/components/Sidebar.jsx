@@ -1,4 +1,4 @@
-import profileImg from '../assets/images/profileImg.png';
+import profileImg from '../assets/images/myprofile/profileImg.png'
 import { MdOutlineChat } from "react-icons/md";
 import { MdOutlinePersonSearch } from "react-icons/md";
 import { MdListAlt } from "react-icons/md";

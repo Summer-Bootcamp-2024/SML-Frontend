@@ -1,6 +1,6 @@
 import React from 'react'
 import Creditlottie from './Creditlottie.jsx'
-import slideimage from '../../assets/images/profile.png'
+import slideimage from '../../assets/images/mainsecond.png'
 
 function Mainsecond() {
   return (
