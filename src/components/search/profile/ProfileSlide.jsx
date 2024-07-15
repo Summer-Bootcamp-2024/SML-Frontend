@@ -1,30 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, {useState } from 'react';
 import profileimage from '../../../assets/images/profileImg2.png';
 import Button from '../../Button';
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
+import Credit from '../../CreditModal'
 
-function ProfileSlide({ isOpen, onClose, onOpenCreditModal}) {
-    const [clickedIndex, setClickedIndex] = useState(null);
-    const [isIntroductionClicked, setIsIntroductionClicked] = useState(false);
+function ProfileSlide({ isOpen, openCreditModal}) {
+    const [clickedIndex, setClickedIndex] = useState(null); //일촌목록 선택 여부
     
+    
+   
 
+    const onCloseModal = () => {
+        setCreditModalOpen(false)
+      }
+    
     const handleItemClick = (index) => {
         setClickedIndex(index);
-        console.log(clickedIndex);
     };
-
-    const handleIntroductionClick = () => {
-        setIsIntroductionClicked(true);
-        console.log(isIntroductionClicked);
-    };
-  
-
-    useEffect(() => {
-        if (clickedIndex !== null && isIntroductionClicked) {
-            onOpenCreditModal();
-         
-        }
-    }, [clickedIndex, isIntroductionClicked, onOpenCreditModal]);
+   
 
 
     return (
@@ -36,7 +29,7 @@ function ProfileSlide({ isOpen, onClose, onOpenCreditModal}) {
                     overflowY: 'auto',
                 }}
             >
-            <button className="flex justify-end w-full" onClick={onClose}>
+            <button className="flex justify-end w-full" onClick={onCloseModal}>
                 <MdKeyboardDoubleArrowRight className='w-[46px] h-[39px] mr-[10px] mt-[10px] text-custom-grey'/>
             </button>
             <div className='flex flex-col items-center justify-center'>
@@ -78,8 +71,9 @@ function ProfileSlide({ isOpen, onClose, onOpenCreditModal}) {
                             ))}
                         </div>
                     </div>
-                    <Button label={"소개 받기"} onClick={handleIntroductionClick}/>
+                    <Button label={"소개 받기"} onClick={clickedIndex !== null ? openCreditModal : null}/>
                 </div>
+                
             </div>
         </div>
     );

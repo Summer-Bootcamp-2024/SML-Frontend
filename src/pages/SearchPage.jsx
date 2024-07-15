@@ -6,9 +6,10 @@ import { useState } from 'react'
 import ProfileSlide from '../components/search/profile/ProfileSlide'
 import Credit from '../components/CreditModal'
 function SearchPage() {
+  const [creditModalOpen, setCreditModalOpen] = useState(false)
   const [selectProfile, setSelectProfile] = useState(null)
-  const [creditOpen, setCreditOpen] = useState(false)
 
+  
   const profiles = [
     {
       name: '김대희',
@@ -76,13 +77,12 @@ function SearchPage() {
     setSelectProfile(null)
   }
 
-  const openCreditModal = () => {
-    setCreditOpen(true)
-    console.log()
+  const openCreditModal = () => { //선물하기 모달 열기
+    setCreditModalOpen(true)
   }
 
-  const onCloseCreditModal = () => {
-    setCreditOpen(false)
+  const onCloseModal = () => {
+    setCreditModalOpen(false)
   }
 
   return (
@@ -97,9 +97,9 @@ function SearchPage() {
           <ProfileList profiles={profiles} onCardClick={handleCardClick} className=""></ProfileList>
         </div>
         {selectProfile && (
-          <ProfileSlide isOpen={true} onClose={closeProfile} onOpenCreditModal={openCreditModal} />
+          <ProfileSlide isOpen={true} onClose={closeProfile} openCreditModal={openCreditModal}/>
             )}
-        {creditOpen && <Credit onCloseCreditModal={onCloseCreditModal}/>}
+        {creditModalOpen && <Credit onCloseModal={onCloseModal}/>}
       </div>
     </div>
   )
