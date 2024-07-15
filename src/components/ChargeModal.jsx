@@ -1,7 +1,8 @@
 import { useState } from "react";
 import Button from "./Button";
+import { MdClose } from "react-icons/md"; 
 
-function ChargeModal({onClose, onUpdateCredit, currentCredit}) {
+function ChargeModal({onCloseModal, onUpdateCredit, currentCredit}) {
     const [selectedCredit, setSelectedCredit] = useState(null);
 
     const handleButtonClick = (credit) => {
@@ -15,10 +16,11 @@ function ChargeModal({onClose, onUpdateCredit, currentCredit}) {
     }
 
     return (
-        <div className={`fixed top-0 flex items-center justify-center w-[calc(100vw-296px)] min-h-screen border-2 backdrop-blur-sm`}>
-            <div className="absolute flex justify-center items-center w-[800px] h-[500px] bg-custom-white backdrop-blur rounded-[10px] border border-custom-grey">
-                <div className='flex flex-col gap-[50px] w-[490px] h-[342px] justify-center items-center'>
-                    <div className="w-full flex flex-wrap gap-[20px] h-[50%]">
+        <div className={`fixed flex items-center justify-center w-[calc(100vw-296px)] min-h-screen border-2 backdrop-blur-sm`}>
+            <div className="flex flex-col justify-center items-center w-[700px] h-[450px] bg-custom-white backdrop-blur rounded-[10px] border border-custom-grey">
+            <button className="flex justify-end mt-[-40px] mb-[10px] w-full" onClick={onCloseModal}><MdClose className='w-[20px] h-[20px] mr-[10px]'/></button>
+                <div className='flex flex-col gap-[60px] w-[550px] h-[350px] justify-center items-center p-[20px]comcoiccom'>
+                    <div className="w-full flex flex-wrap gap-[20px] h-[50%] items-center justify-center">
                         {[5000, 15000, 20000, 25000, 30000, 35000].map((credit) => (
                             <Button
                                 key={credit}
