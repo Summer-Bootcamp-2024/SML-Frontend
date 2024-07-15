@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import profileimage from '../assets/images/profileImg2.png';
-import Button from './Button';
+import profileimage from '../../../assets/images/profileImg2.png';
+import Button from '../../Button';
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 
-function ProfileSlide({ isOpen, onClose, onOpenCreditModal, isCreditModalOpen}) {
+function ProfileSlide({ isOpen, onClose, onOpenCreditModal}) {
     const [clickedIndex, setClickedIndex] = useState(null);
     const [isIntroductionClicked, setIsIntroductionClicked] = useState(false);
+    
 
     const handleItemClick = (index) => {
         setClickedIndex(index);
@@ -16,20 +17,21 @@ function ProfileSlide({ isOpen, onClose, onOpenCreditModal, isCreditModalOpen}) 
         setIsIntroductionClicked(true);
         console.log(isIntroductionClicked);
     };
+  
 
     useEffect(() => {
         if (clickedIndex !== null && isIntroductionClicked) {
             onOpenCreditModal();
-            console.log(isIntroductionClicked);
+         
         }
     }, [clickedIndex, isIntroductionClicked, onOpenCreditModal]);
 
 
     return (
         <div
-            className={`fixed top-[200px] right-10 h-[470px] bg-custom-skyblue transition-transform duration-300 ${isOpen ? '' : 'translate-x-[400px]'}`}
+            className={`fixed top-[125px] right-20 h-[calc(100vh-150px)] bg-custom-skyblue transition-transform duration-300 border-2 border-green-400 ${isOpen ? '' : 'translate-x-[400px]'}`}
                 style={{
-                    width: '450px',
+                    width: '500px',
                     // 'overflow-y-auto'를 추가하여 내부 내용만 스크롤되도록 설정합니다.
                     overflowY: 'auto',
                 }}
@@ -37,7 +39,7 @@ function ProfileSlide({ isOpen, onClose, onOpenCreditModal, isCreditModalOpen}) 
             <button className="flex justify-end w-full" onClick={onClose}>
                 <MdKeyboardDoubleArrowRight className='w-[46px] h-[39px] mr-[10px] mt-[10px] text-custom-grey'/>
             </button>
-            <div className='flex flex-col items-center'>
+            <div className='flex flex-col items-center justify-center'>
                 <div className='text-[24px] font-black text-custom-indigo underline underline-offset-2 mb-[10px]'>PROFILE</div>
                 <div className='w-[400px] min-h-[500px] flex flex-col items-center'>
                     <div className='flex items-center justify-between w-[90%] mt-[10px]'>

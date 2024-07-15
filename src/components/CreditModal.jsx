@@ -2,17 +2,18 @@ import { useState } from "react";
 import Button from "./Button";
 import { Link } from "react-router-dom";
 import ChargeModal from "./ChargeModal";
+import { MdClose } from "react-icons/md"; 
 
-function Credit() {
-    const [isChargeModalOpen, setChargeModalOpen] = useState(false);
+function Credit({onCloseCreditModal}) {
+    const [stausModalOpen, setStatusModalOpen] = useState(false);
     const [currentCredit, setCurrentCredit] = useState(0);
     const [giftCredit, setGiftCredit] = useState('');
 
-    const toggleChargeModal = () => {
-        setChargeModalOpen(!isChargeModalOpen);
-        console.log(isChargeModalOpen);
-    }
-
+    const PostingOpenModal = () => {
+        setStatusModalOpen(true)
+        console.log(stausModalOpen)
+      }
+    
     const updateCredit = (addedCredit) => {
         setCurrentCredit(currentCredit + addedCredit);
         toggleChargeModal();
@@ -30,9 +31,10 @@ function Credit() {
     }
     
     return (
-        <div className={`fixed top-0 flex items-center justify-center w-[calc(100vw-296px)] min-h-screen border-2 backdrop-blur-md`}>
-            <div className="absolute w-[438px] h-[250px] bg-custom-white backdrop-blur rounded-[10px] border border-custom-grey">
-                <div className='flex flex-col items-center mt-[20px]'>
+        <div className={`fixed top-0 flex items-center justify-center w-[calc(100vw-296px)] min-h-screen border-2 bg-white/50 backdrop-blur-md`}>
+            <div className=" flex flex-col items-center justify-center w-[500px] h-[300px] bg-custom-white rounded-[10px] border-[1px] border-custom-grey">
+            <button className="flex justify-end w-full" onClick={onCloseCreditModal}><MdClose className='w-[20px] h-[20px] mr-[10px] mt-[10px] border-2'/></button>
+                <div className='flex flex-col items-center mt-[10px] p-[20px] border-2'>
                     <div className='text-[20px] font-black mb-[10px]'>상대방에게 선물할 크레딧을 입력하세요!</div>
                     <div className='w-[400px] flex flex-col items-center'>
                         <div className='flex items-center justify-between w-[90%]'>
@@ -53,14 +55,14 @@ function Credit() {
                             <Link to='/chat' onClick={handleGiftSubmit}>
                                 <Button label={"선물하기"} />
                             </Link>
-                            <Button label={"충전하기"} onClick={toggleChargeModal}/>
+                            <Button label={"충전하기"} onClick={PostingOpenModal}/>
                         </div>
                         
                     </div>
                 </div>
             </div>
-            {isChargeModalOpen && (
-                <ChargeModal onClose={toggleChargeModal} onUpdateCredit={updateCredit} currentCredit={currentCredit}/>
+            {stausModalOpen && (
+                <ChargeModal  onCloseCreditModal={onCloseCreditModal} onUpdateCredit={updateCredit} currentCredit={currentCredit}/>
             )}
         </div>
     )
