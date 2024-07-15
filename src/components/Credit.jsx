@@ -30,7 +30,7 @@ function Credit() {
     }
     
     return (
-        <div className={`fixed top-0 flex items-center justify-center w-[calc(100vw-296px)] min-h-screen border-2 backdrop-blur-sm`}>
+        <div className={`fixed top-0 flex items-center justify-center w-[calc(100vw-296px)] min-h-screen border-2 backdrop-blur-md`}>
             <div className="absolute w-[438px] h-[250px] bg-custom-white backdrop-blur rounded-[10px] border border-custom-grey">
                 <div className='flex flex-col items-center mt-[20px]'>
                     <div className='text-[20px] font-black mb-[10px]'>상대방에게 선물할 크레딧을 입력하세요!</div>
