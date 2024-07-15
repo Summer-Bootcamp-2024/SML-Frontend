@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Button from "../components/Button";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function SignupPage() {
     const [formData, setFormData] = useState({
@@ -12,6 +13,8 @@ function SignupPage() {
         age: ''
     });
 
+    const navigate = useNavigate();
+
     const handleChange = (e) => {
         setFormData({...formData, [e.target.name]: e.target.value})
     } 
@@ -21,7 +24,11 @@ function SignupPage() {
         try {
             const response = await axios.post('http://localhost:8000/api/v1/users/signup', formData);
             window.alert('회원가입 성공');
+            setTimeout(() => {
+                navigate('/login');
+            }, 2000);
         } catch (err) {
+            console.log(err.axios);
             window.alert('실패');
         }
     }
