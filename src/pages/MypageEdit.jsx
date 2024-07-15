@@ -3,6 +3,7 @@ import Sidebar from "../components/Sidebar";
 import { MdPhotoCamera } from "react-icons/md";
 import Button from "../components/Button";
 import { Link } from "react-router-dom";
+
 function MypageEdit() {
     const [postImg, setPostImg] = useState([]);
     const [previewImg, setPreviewImg] = useState([]);

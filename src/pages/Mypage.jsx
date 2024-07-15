@@ -1,8 +1,7 @@
 import Button from '../components/Button';
 import Sidebar from '../components/Sidebar';
 import profileImgSquare from '../assets/images/myprofile/profileImgSquare.png';
-import MypageEdit from './MypageEdit';
-import { Link, Route, Routes } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 
 function Mypage() {
     return (
