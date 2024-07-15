@@ -3,9 +3,25 @@ import network from '../components/network.json';
 import Button from '../components/Button';
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post('http://localhost:8000/api/v1/auth/login', {email, password}, {withCredentials: true});
+            window.alert('로그인 성공');
+            setTimeout(() => {
+                navigate('/mypage');
+            }, 2000);
+        } catch (err) {
+            window.alert('로그인 실패');
+            console.log(err);
+        }
+    }
 
     return (
         <div className="flex h-[100vh] items-center justify-center bg-[#D7ECFF]">
@@ -15,19 +31,28 @@ function LoginPage() {
                 </div>
                 <div className="flex flex-col gap-[18px] justify-center items-center w-[300px] h-[300px]">
                     <span className="text-gray-600 text-[24px] font-extrabold tracking-tight">Log in</span>
-                    <form className="flex flex-col gap-[18px]">
+                    <form onSubmit={handleLogin} className="flex flex-col gap-[18px]">
                         <input 
                         className="bg-stone-50 w-[250px] h-[50px] rounded-[10px] border border-gray-600 text-gray-600/opacity-30 text-base font-extrabold tracking-tight pl-[24px]"
                         type="email" 
-                        placeholder="email" />
+                        placeholder="email"
+                        name="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                         />
                         <input 
                         className="bg-stone-50 w-[250px] h-[50px] rounded-[10px] border border-gray-600 text-gray-600/opacity-30 text-base font-extrabold tracking-tight pl-[24px]" 
-                        type="password" placeholder="password" />
+                        type="password" 
+                        placeholder="password"
+                        name="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                         />
+                        <div className="flex flex-col items-center gap-[7px] mt-[10px]">
+                            <Button label="Start" type="submit"></Button>
+                            <a href="/signup" className="text-stone-300 text-[15px] font-semibold tracking-tight">Sign Up</a>
+                        </div>
                     </form>
-                    <div className="flex flex-col items-center gap-[7px] mt-[10px]">
-                        <Button label="Start"></Button>
-                        <a href="/signup" className="text-stone-300 text-[15px] font-semibold tracking-tight">Sign Up</a>
-                    </div>
                 </div>
                 
             </div>
