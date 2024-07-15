@@ -9,7 +9,7 @@ import { create } from 'zustand';
  */
 export const useApiUrlStore = create((set) => ({
 
-  apiUrl: 'https://localhost:8000/',
+  apiUrl: 'https://localhost:8000/api/v1',
 
   setApiUrl: (url) => set((state) => ({ ...state, apiUrl: url })),
 }));
