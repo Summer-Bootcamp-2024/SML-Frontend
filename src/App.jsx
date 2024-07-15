@@ -8,6 +8,7 @@ import Mypage from './pages/Mypage'
 import MypageEdit from './pages/MypageEdit';
 import SearchPage from './pages/SearchPage';
 import SearchPageMain from './pages/SearchPageMain';
+import ChatPage from './pages/ChatpPage'
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path='/mypageedit' element={<MypageEdit />} />
         <Route path='/search' element={<SearchPageMain />} />
         <Route path='/search/result' element={<SearchPage />} />
+        <Route path='/chat' element={<ChatPage />} />
       </Routes>
     </BrowserRouter>
   )
