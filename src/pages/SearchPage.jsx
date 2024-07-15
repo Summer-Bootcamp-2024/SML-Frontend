@@ -1,7 +1,7 @@
 import Sidebar from "../components/Sidebar";
 import SearchCon from "../components/search/SearchCon";
 import ProfileList from "../components/search/ProfileList";
-import profileImg from "../assets/images/profileImg.png";
+import profileImg from "../assets/images/myprofile/profileImg.png";
 import { useState } from "react";
 import ProfileSlide from "../components/ProfileSlide";
 import Credit from "../components/Credit";
