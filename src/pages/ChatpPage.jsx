@@ -1,7 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import profileImg from '../assets/images/myprofile/profileImg.png';
-import { MdSend } from "react-icons/md";
 import sendimg from '../assets/images/sendimg.png'
 
 

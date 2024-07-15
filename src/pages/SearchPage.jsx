@@ -5,11 +5,11 @@ import profileImg from '../assets/images/myprofile/profileImg.png'
 import { useState } from 'react'
 import ProfileSlide from '../components/search/profile/ProfileSlide'
 import Credit from '../components/CreditModal'
+
 function SearchPage() {
   const [creditModalOpen, setCreditModalOpen] = useState(false)
   const [selectProfile, setSelectProfile] = useState(null)
 
-  
   const profiles = [
     {
       name: '김대희',
@@ -96,8 +96,8 @@ function SearchPage() {
           className={`flex justify-center items-center flex-grow w-full h-full transition-transform duration-300 border-2  border-green-400 ${selectProfile ? 'translate-x-[-400px]' : ''}`}>
           <ProfileList profiles={profiles} onCardClick={handleCardClick} className=""></ProfileList>
         </div>
-        {selectProfile && (
-          <ProfileSlide isOpen={true} onClose={closeProfile} openCreditModal={openCreditModal}/>
+        {selectProfile &&(
+          <ProfileSlide isOpen={true} onCloseSlide={closeProfile} openCreditModal={openCreditModal}/>
             )}
         {creditModalOpen && <Credit onCloseModal={onCloseModal}/>}
       </div>

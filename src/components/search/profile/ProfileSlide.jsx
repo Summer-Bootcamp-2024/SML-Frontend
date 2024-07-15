@@ -2,34 +2,24 @@ import React, {useState } from 'react';
 import profileimage from '../../../assets/images/profileImg2.png';
 import Button from '../../Button';
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
-import Credit from '../../CreditModal'
 
-function ProfileSlide({ isOpen, openCreditModal}) {
+function ProfileSlide({ isOpen, openCreditModal,onCloseSlide}) {
     const [clickedIndex, setClickedIndex] = useState(null); //일촌목록 선택 여부
-    
-    
-   
-
-    const onCloseModal = () => {
-        setCreditModalOpen(false)
-      }
     
     const handleItemClick = (index) => {
         setClickedIndex(index);
     };
-   
-
 
     return (
         <div
-            className={`fixed top-[125px] right-20 h-[calc(100vh-150px)] bg-custom-skyblue transition-transform duration-300 border-2 border-green-400 ${isOpen ? '' : 'translate-x-[400px]'}`}
+            className={`fixed top-[125px] right-20 h-[calc(100vh-150px)] bg-custom-skyblue transition-transform duration-300 ${isOpen ? '' : 'translate-x-[400px]'}`}
                 style={{
                     width: '500px',
                     // 'overflow-y-auto'를 추가하여 내부 내용만 스크롤되도록 설정합니다.
                     overflowY: 'auto',
                 }}
             >
-            <button className="flex justify-end w-full" onClick={onCloseModal}>
+            <button className="flex justify-end w-full" onClick={onCloseSlide}>
                 <MdKeyboardDoubleArrowRight className='w-[46px] h-[39px] mr-[10px] mt-[10px] text-custom-grey'/>
             </button>
             <div className='flex flex-col items-center justify-center'>
