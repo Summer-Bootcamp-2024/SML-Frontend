@@ -10,8 +10,7 @@ import { useApiUrlStore } from "../store/store";
 
 
 function LoginPage() {
-    const { apiUrl } = useApiUrlStore();
-    const setUserId = useApiUrlStore(state => state.setUserId);
+    const { apiUrl, setUser_id } = useApiUrlStore();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -20,12 +19,10 @@ function LoginPage() {
         e.preventDefault();
         try {
             const response = await axios.post(`${apiUrl}/auth/login`, {email, password}, {withCredentials: true});
+            const user_id = response.data.user_id;
+            setUser_id(user_id);
             window.alert('로그인 성공');
-            const userId = response.data.user_id;
-            setUserId(userId);
-            console.log('User ID set:', userId);
-            console.log('Current store state:', useApiUrlStore.getState());
-            navigate(`/list/${userid}`);
+            navigate(`/list/${user_id}`);
 
         } catch (err) {
             window.alert('로그인 실패');

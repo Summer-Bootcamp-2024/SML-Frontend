@@ -11,6 +11,10 @@ import { create } from 'zustand';
 export const useApiUrlStore = create((set) => ({
   apiUrl: 'http://localhost:8000/api/v1',
   setApiUrl: (url) => set((state) => ({ ...state, apiUrl: url })),
-  userId: null,
-  setUserId: (id) => set({userId:id}),
+
+  message : null,
+  setMessage: (msg) => set((state) => ({...state, message: msg})),
+
+  user_id :0,
+  setUser_id: (id) => set((state) => ({...state, user_id: id})),
 }));
