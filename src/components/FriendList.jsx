@@ -2,11 +2,19 @@ import React, { useEffect, useState } from 'react';
 import ProfileModal from './ProfileModal';
 import Credit from '../components/CreditModal'
 import { useApiUrlStore, useUserIdStore } from '../store/store';
+<<<<<<< HEAD
 import { NavLink } from 'react-router-dom'
 import axios from 'axios';
 
 function FriendList({}) {
   const { user_id } = useUserIdStore();
+=======
+import { NavLink, useParams } from 'react-router-dom'
+import axios from 'axios';
+
+function FriendList({}) {
+  const { user_id } = useUserIdStore()
+>>>>>>> main
   const { apiUrl } = useApiUrlStore()
   const [stausModalOpen, setStatusModalOpen] = useState(false)
   const [friendlistData, setFriendListData] = useState([])

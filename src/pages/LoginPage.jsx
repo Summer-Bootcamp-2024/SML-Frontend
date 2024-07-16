@@ -7,24 +7,21 @@ import { useNavigate } from "react-router-dom";
 import { useApiUrlStore, useUserIdStore } from "../store/store";
 
 
-
-
 function LoginPage() {
-    const { apiUrl } = useApiUrlStore();
-    const { setUserId } = useUserIdStore();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const {apiUrl} = useApiUrlStore()
+    const {setUserId} = useUserIdStore()
 
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
             const response = await axios.post(`${apiUrl}/auth/login`, {email, password}, {withCredentials: true});
-            setUserId(response.data.user_id);
-            console.log(response.data.user_id);
             window.alert('로그인 성공');
-            navigate(`/list`);
-
+            const userid = response.data.user_id;
+            setUserId(response.data.user_id)
+             navigate('/list');
         } catch (err) {
             window.alert('로그인 실패');
             console.log(err);
