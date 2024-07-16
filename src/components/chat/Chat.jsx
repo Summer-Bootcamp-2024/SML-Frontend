@@ -21,7 +21,7 @@ function Chat() {
   };
 
   useEffect(() => {
-    console.log(messages);
+    
   }, [messages]);
 
   // 엔터 키를 누르면 메시지 전송
