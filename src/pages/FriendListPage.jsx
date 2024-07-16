@@ -5,6 +5,7 @@ import FriendList from '../components/FriendList';
 
 
 
+
 function FriendListPage() {
   const [sortOption, setSortOption] = useState('graph')
   
@@ -17,6 +18,8 @@ function FriendListPage() {
     setSortOption(e.target.value)
     console.log(sortOption)
   }
+
+   
   
   return (
    <div className='flex'>

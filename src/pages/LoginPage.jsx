@@ -4,6 +4,11 @@ import Button from '../components/Button';
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useApiUrlStore } from "../store/store";
+
+
+
+
 function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -14,7 +19,9 @@ function LoginPage() {
         try {
             const response = await axios.post('http://localhost:8000/api/v1/auth/login', {email, password}, {withCredentials: true});
             window.alert('로그인 성공');
-            navigate('/list');
+            const userid = response.data.user_id;
+            console.log(response.data)
+             navigate(`/list/${userid}`);
         } catch (err) {
             window.alert('로그인 실패');
             console.log(err);
