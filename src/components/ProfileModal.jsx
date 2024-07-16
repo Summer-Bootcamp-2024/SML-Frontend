@@ -16,7 +16,7 @@ function ProfileModal({ PostingClosedModal, ProfileId }) {
     };
 
 //친구 프로필 정보 조회
-const post = async (ProfileId) => {
+const getFriendProfile = async (ProfileId) => {
     try {
       const response = await axios.get(`${apiUrl}/users/${ProfileId}`, {
         withCredentials: true,
