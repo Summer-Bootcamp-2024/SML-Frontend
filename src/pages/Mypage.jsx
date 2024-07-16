@@ -1,33 +1,25 @@
 import Button from '../components/Button';
 import Sidebar from '../components/Sidebar';
 import profileImgSquare from '../assets/images/myprofile/profileImgSquare.png';
-import { Link, useParams} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useApiUrlStore } from '../store/store';
+import { useApiUrlStore, useUserIdStore } from '../store/store';
 
 function Mypage() {
-    const userId = useApiUrlStore(state => state.userId);
-    const apiUrl = useApiUrlStore(state => state.apiUrl);
+    const { apiUrl } = useApiUrlStore();
+    const { user_id } = useUserIdStore();
     const [profile, setProfile] = useState(null);
-
-    useEffect(() => {
-        if (userId && apiUrl) {
-            getProfile();
-        } else {
-            console.log("User ID or API URL not found. Redirecting to login.");
-        }
-    }, [userId, apiUrl]);
 
     const getProfile = async () => {
         try {
-            const response = await axios.get(`${apiUrl}/users/${userId}`, {
+            const response = await axios.get(`${apiUrl}/users/${user_id}`, {
                 withCredentials: true,
             });
             window.alert("조회 성공");
             setProfile(response.data);
         } catch (error) {
-            console.log(userId);
+            console.log(user_id);
             window.alert("조회 실패");
             console.error(error);
         }
@@ -35,10 +27,13 @@ function Mypage() {
     }
 
     useEffect(() => {
-        getProfile();
-    }, [userId, apiUrl]);
+        if (user_id) {
+            getProfile();
+        }
+    }, [user_id, apiUrl]);
 
     if (!profile) {
+        console.log(user_id);
         return <div>Loading...</div>
     }
 
@@ -63,11 +58,11 @@ function Mypage() {
                         </li>
                         <li className="flex flex-col gap-[10px]">
                             {profile && <span className="text-base font-light text-black">{profile.name}</span>}
-                            <span className="text-base font-light text-black">27세</span>
+                            {profile && <span className="text-base font-light text-black">{profile.age}세</span>}
                             <span className="text-base font-light text-black">백엔드 개발자</span>
-                            <span className="text-base font-light text-black">Men</span>
+                            {profile && <span className="text-base font-light text-black">{profile.gender}</span>}
                             <span className="text-base font-light text-black">실리콘밸리</span>
-                            <span className="text-base font-light text-black">서울시 중구</span>
+                            {profile && <span className="text-base font-light text-black">{profile.loc}</span>}
                             <span className="text-base font-light text-black">창업</span>
                         </li>
                     </ul>
@@ -81,8 +76,9 @@ function Mypage() {
                         </div>
                     </div>
                     <Link to='/mypage/edit'>
-                        <Button className="absolute right-10 bottom-6" label="수정하기"></Button>
+                        <Button className="absolute right-10 bottom-20" label="수정하기"></Button>
                     </Link>
+                    <Button className="absolute right-10 bottom-6" label="탈퇴하기"></Button>
                 </div>
                 <div className="w-[800px] h-[220px] flex gap-[68px]">
                     <div className="w-[380px] h-full bg-custom-grey/10 rounded-[10px] shadow-custom-blue/30 shadow-lg border-2 border-custom-blue">
