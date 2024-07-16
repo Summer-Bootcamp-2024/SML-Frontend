@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import ProfileModal from './ProfileModal';
+import Credit from '../components/CreditModal'
 import { useApiUrlStore } from '../store/store';
 import { NavLink, useParams } from 'react-router-dom'
 import axios from 'axios';
 
-function FriendList() {
+function FriendList({}) {
   const { user_id } = useParams()
   const { apiUrl } = useApiUrlStore()
   const [stausModalOpen, setStatusModalOpen] = useState(false)
   const [friendlistData, setFriendListData] = useState([])
   const [friendId, setFriendId] = useState('')
+  const [creditModalOpen, setCreditModalOpen] = useState(false)
 
   const PostingOpenModal = (id) => {
     setFriendId(id)
@@ -17,6 +19,14 @@ function FriendList() {
   }
   const PostingClosedModal = () => {
     setStatusModalOpen(false)
+  }
+
+  const openCreditModal = () => { //선물하기 모달 열기
+    setCreditModalOpen(true)
+  
+  }
+  const onCloseModal = () => {
+    setCreditModalOpen(false)
   }
 
   
@@ -55,9 +65,10 @@ useEffect(() => {
   getFriendList();
 }, []); 
 
+
   return (
-    <div className="w-full h-[550px] flex justify-center items-center">
-      <div className="w-[650px] h-[500px] bg-custom-white rounded-[10px] overflow-y-auto pt-[20px]">
+    <div className="flex items-center justify-center w-full h-full">
+      <div className="w-[650px] h-[500px] bg-custom-white border-[1px] border-custom-grey rounded-[10px] overflow-y-auto pt-[20px]">
       {friendlistData.map((friend) => (
         <div key={friend.id} className="flex flex-col items-center justify-center border-b-[1px] border-custom-grey">
             <NavLink className="w-[500px] min-h-[55px] flex justify-between items-center cursor-pointer " onClick={()=>PostingOpenModal(friend.id)}>
@@ -73,8 +84,10 @@ useEffect(() => {
       </div>
       {stausModalOpen && (
         <ProfileModal PostingClosedModal={PostingClosedModal}
-        ProfileId={friendId}/>
+        ProfileId={friendId}
+        openCreditModal={openCreditModal}/>
       )}
+      {creditModalOpen && <Credit onCloseModal={onCloseModal}/>}
     </div> 
   );
 }
