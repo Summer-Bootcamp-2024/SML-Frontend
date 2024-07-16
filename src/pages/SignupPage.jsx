@@ -10,7 +10,7 @@ function SignupPage() {
         name: '',
         gender: '',
         region: '',
-        age: ''
+        age: '',
     });
 
     const navigate = useNavigate();
@@ -21,8 +21,9 @@ function SignupPage() {
 
     const handleSignup = async (e) => {
         e.preventDefault();
+        console.log(formData);
         try {
-            const response = await axios.post('http://localhost:8000/api/v1/users/signup', formData);
+            const response = await axios.post(`${apiUrl}/users/signup`, formData);
             window.alert('회원가입 성공');
             setTimeout(() => {
                 navigate('/login');

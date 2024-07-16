@@ -1,9 +1,47 @@
 import Button from '../components/Button';
 import Sidebar from '../components/Sidebar';
 import profileImgSquare from '../assets/images/myprofile/profileImgSquare.png';
-import { Link} from 'react-router-dom';
+import { Link, useParams} from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useApiUrlStore } from '../store/store';
 
 function Mypage() {
+    const userId = useApiUrlStore(state => state.userId);
+    const apiUrl = useApiUrlStore(state => state.apiUrl);
+    const [profile, setProfile] = useState(null);
+
+    useEffect(() => {
+        if (userId && apiUrl) {
+            getProfile();
+        } else {
+            console.log("User ID or API URL not found. Redirecting to login.");
+        }
+    }, [userId, apiUrl]);
+
+    const getProfile = async () => {
+        try {
+            const response = await axios.get(`${apiUrl}/users/${userId}`, {
+                withCredentials: true,
+            });
+            window.alert("조회 성공");
+            setProfile(response.data);
+        } catch (error) {
+            console.log(userId);
+            window.alert("조회 실패");
+            console.error(error);
+        }
+    
+    }
+
+    useEffect(() => {
+        getProfile();
+    }, [userId, apiUrl]);
+
+    if (!profile) {
+        return <div>Loading...</div>
+    }
+
     return (
         <div className="flex justify-end w-full h-[100vh]">
             <Sidebar></Sidebar>
@@ -24,7 +62,7 @@ function Mypage() {
                             <span className="text-base font-semibold text-black">관심분야</span>
                         </li>
                         <li className="flex flex-col gap-[10px]">
-                            <span className="text-base font-light text-black">John</span>
+                            {profile && <span className="text-base font-light text-black">{profile.name}</span>}
                             <span className="text-base font-light text-black">27세</span>
                             <span className="text-base font-light text-black">백엔드 개발자</span>
                             <span className="text-base font-light text-black">Men</span>
