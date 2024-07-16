@@ -67,8 +67,8 @@ useEffect(() => {
 
 
   return (
-    <div className="w-full h-[550px] flex justify-center items-center">
-      <div className="w-[650px] h-[500px] bg-custom-white rounded-[10px] overflow-y-auto pt-[20px]">
+    <div className="flex items-center justify-center w-full h-full">
+      <div className="w-[650px] h-[500px] bg-custom-white border-[1px] border-custom-grey rounded-[10px] overflow-y-auto pt-[20px]">
       {friendlistData.map((friend) => (
         <div key={friend.id} className="flex flex-col items-center justify-center border-b-[1px] border-custom-grey">
             <NavLink className="w-[500px] min-h-[55px] flex justify-between items-center cursor-pointer " onClick={()=>PostingOpenModal(friend.id)}>
