@@ -11,10 +11,10 @@ import { create } from 'zustand';
 export const useApiUrlStore = create((set) => ({
   apiUrl: 'http://localhost:8000/api/v1',
   setApiUrl: (url) => set((state) => ({ ...state, apiUrl: url })),
+}));
 
-  message : null,
-  setMessage: (msg) => set((state) => ({...state, message: msg})),
-
-  user_id :0,
-  setUser_id: (id) => set((state) => ({...state, user_id: id})),
+export const useUserIdStore = create((set) => ({
+  message: null,
+  user_id: 0,  // 초기 상태 값
+  setUserId: (userId) => set({ user_id :userId }),  // `userInfo` 상태를 업데이트하는 함수
 }));

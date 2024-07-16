@@ -2,8 +2,11 @@ import { useState } from "react";
 import Button from "../components/Button";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useApiUrlStore } from "../store/store";
 
 function SignupPage() {
+    const { apiUrl } = useApiUrlStore();
+
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -25,11 +28,8 @@ function SignupPage() {
         try {
             const response = await axios.post(`${apiUrl}/users/signup`, formData);
             window.alert('회원가입 성공');
-            setTimeout(() => {
-                navigate('/login');
-            }, 2000);
+            navigate('/login');
         } catch (err) {
-            console.log(err.axios);
             window.alert('실패');
         }
     }

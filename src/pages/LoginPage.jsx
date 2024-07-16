@@ -4,13 +4,14 @@ import Button from '../components/Button';
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useApiUrlStore } from "../store/store";
+import { useApiUrlStore, useUserIdStore } from "../store/store";
 
 
 
 
 function LoginPage() {
-    const { apiUrl, setUser_id } = useApiUrlStore();
+    const { apiUrl } = useApiUrlStore();
+    const { setUser_id } = useUserIdStore();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
@@ -22,7 +23,7 @@ function LoginPage() {
             const user_id = response.data.user_id;
             setUser_id(user_id);
             window.alert('로그인 성공');
-            navigate(`/list/${user_id}`);
+            navigate(`/list`);
 
         } catch (err) {
             window.alert('로그인 실패');
