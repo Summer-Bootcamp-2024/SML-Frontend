@@ -4,24 +4,24 @@ import Button from '../components/Button';
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useApiUrlStore } from "../store/store";
-
-
+import { useApiUrlStore, useUserIdStore } from '../store/store';
 
 
 function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const {apiUrl} = useApiUrlStore()
+    const {setUserId} = useUserIdStore()
 
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:8000/api/v1/auth/login', {email, password}, {withCredentials: true});
+            const response = await axios.post(`${apiUrl}/auth/login`, {email, password}, {withCredentials: true});
             window.alert('로그인 성공');
             const userid = response.data.user_id;
-            console.log(response.data)
-             navigate(`/list/${userid}`);
+            setUserId(response.data.user_id)
+             navigate('/list');
         } catch (err) {
             window.alert('로그인 실패');
             console.log(err);
