@@ -1,15 +1,16 @@
 import Button from '../components/Button';
 import Sidebar from '../components/Sidebar';
 import profileImgSquare from '../assets/images/myprofile/profileImgSquare.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useApiUrlStore, useUserIdStore } from '../store/store';
 
 function Mypage() {
     const { apiUrl } = useApiUrlStore();
-    const { user_id } = useUserIdStore();
+    const { user_id, setUserId } = useUserIdStore();
     const [profile, setProfile] = useState(null);
+    const navigate = useNavigate();
 
     const getProfile = async () => {
         try {
@@ -18,6 +19,7 @@ function Mypage() {
             });
             window.alert("조회 성공");
             setProfile(response.data);
+            console.log(response.data);
         } catch (error) {
             console.log(user_id);
             window.alert("조회 실패");
@@ -35,6 +37,20 @@ function Mypage() {
     if (!profile) {
         console.log(user_id);
         return <div>Loading...</div>
+    }
+
+    const deleteUser = async () => {
+        try {
+            const response = await axios.delete(`${apiUrl}/users/${user_id}`, {
+                withCredentials: true,
+            });
+            window.alert(response.data.message || "회원 탈퇴가 완료되었습니다.");
+            setUserId(null);
+            navigate('/');
+        } catch (error) {
+            console.log(error);
+            window.alert('회원 탈퇴 실패');
+        }
     }
 
     return (
@@ -78,7 +94,7 @@ function Mypage() {
                     <Link to='/mypage/edit'>
                         <Button className="absolute right-10 bottom-20" label="수정하기"></Button>
                     </Link>
-                    <Button className="absolute right-10 bottom-6" label="탈퇴하기"></Button>
+                    <Button onClick={deleteUser} className="absolute right-10 bottom-6" label="탈퇴하기"></Button>
                 </div>
                 <div className="w-[800px] h-[220px] flex gap-[68px]">
                     <div className="w-[380px] h-full bg-custom-grey/10 rounded-[10px] shadow-custom-blue/30 shadow-lg border-2 border-custom-blue">
