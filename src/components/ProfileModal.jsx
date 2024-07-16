@@ -16,6 +16,7 @@ function ProfileModal({ PostingClosedModal, ProfileId, openCreditModal }) {
         console.log(index)
     };
 
+    
 //친구 프로필 정보 조회
 const getFriendProfile = async (ProfileId) => {
     try {
@@ -29,6 +30,10 @@ const getFriendProfile = async (ProfileId) => {
       alert('프로필 정보를 불러오지 못했습니다');
     }
   };
+
+  useEffect(() => {
+    getFriendProfile(ProfileId)
+  }, []); 
   
   
   //이촌 목록 조회(친구의 친구)
@@ -45,6 +50,7 @@ const getFriendProfile = async (ProfileId) => {
     }
   };
 
+  
   //이촌 정보 조회
   const getFriendName = async (friend_id) => {
     try {
@@ -62,12 +68,21 @@ const getFriendProfile = async (ProfileId) => {
     }
   };
 
-
-  useEffect(() => {
-    getFriendProfile(ProfileId)
-  }, []); 
   
+  //일촌 삭제 
+const deleteFriend = async (ProfileId) => {
+  try {
+    const response = await axios.delete(`${apiUrl}/friends/${ProfileId}`, {
+      withCredentials: true,
+    });
+    console.log(response.data)
+  } catch (error) {
+    console.error('Error fetching friend data:', error);
+  }
+};
 
+
+ 
     return (
         <div className='fixed top-0 flex items-center justify-center w-[calc(100vw-296px)] min-h-screen border-2 backdrop-blur-sm'>
             <div className="absolute w-[500px] min-h-[650px] bg-custom-skyblue backdrop-blur">
@@ -111,7 +126,10 @@ const getFriendProfile = async (ProfileId) => {
                                     ))}
                                 </div>
                             </div>
+                            <div className='flex gap-[10px]'>
+                            <Button label={"일촌 삭제"} onClick={()=>deleteFriend(ProfileId)}/>
                             <Button label={"소개 받기"} onClick={clickedIndex !== null ? openCreditModal : null}/>
+                            </div>
                         </div>
                 </div>
             </div>
