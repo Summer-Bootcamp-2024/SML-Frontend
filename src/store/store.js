@@ -12,3 +12,9 @@ export const useApiUrlStore = create((set) => ({
   apiUrl: 'http://localhost:8000/api/v1',
   setApiUrl: (url) => set((state) => ({ ...state, apiUrl: url })),
 }));
+
+export const useUserIdStore = create((set) => ({
+  message: null,
+  user_id: 0,  // 초기 상태 값
+  setUserId: (userId) => set({ user_id :userId }), 
+}));
