@@ -5,7 +5,7 @@ import { MdClose } from "react-icons/md";
 import axios from 'axios';
 import { useApiUrlStore } from '../store/store';
 
-function ProfileModal({ PostingClosedModal, ProfileId }) {
+function ProfileModal({ PostingClosedModal, ProfileId, openCreditModal }) {
     const {apiUrl} = useApiUrlStore()
     const [clickedIndex, setClickedIndex] = useState(null);
     const [profileData, setProfileData] = useState('')
@@ -13,6 +13,7 @@ function ProfileModal({ PostingClosedModal, ProfileId }) {
     
     const handleItemClick = (index) => {
         setClickedIndex(index);
+        console.log(index)
     };
 
 //친구 프로필 정보 조회
@@ -110,7 +111,7 @@ const getFriendProfile = async (ProfileId) => {
                                     ))}
                                 </div>
                             </div>
-                            <Button label={"소개 받기"} />
+                            <Button label={"소개 받기"} onClick={clickedIndex !== null ? openCreditModal : null}/>
                         </div>
                 </div>
             </div>
