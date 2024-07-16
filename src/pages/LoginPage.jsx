@@ -14,9 +14,7 @@ function LoginPage() {
         try {
             const response = await axios.post('http://localhost:8000/api/v1/auth/login', {email, password}, {withCredentials: true});
             window.alert('로그인 성공');
-            setTimeout(() => {
-                navigate('/mypage');
-            }, 2000);
+            navigate('/list');
         } catch (err) {
             window.alert('로그인 실패');
             console.log(err);
