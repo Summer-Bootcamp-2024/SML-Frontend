@@ -1,16 +1,35 @@
+import axios from 'axios';
 import profileImg from '../assets/images/myprofile/profileImg.png'
 import { MdOutlineChat } from "react-icons/md";
 import { MdOutlinePersonSearch } from "react-icons/md";
 import { MdListAlt } from "react-icons/md";
 import { MdHome } from "react-icons/md";
 import { MdLogout } from "react-icons/md";
-import { NavLink, Link, useLocation } from 'react-router-dom';
+import { NavLink,  useLocation, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 function Sidebar() {
     const location = useLocation();
+    const navigate = useNavigate();
+    const [isLoggedIn, setIsLoggedIn] = useState(true);
 
     const isActive = (path) => {
-        return location.pathname === path || (path === '/mypage' && location.pathname === '/mypageedit');
+        return location.pathname === path || (path === '/mypage' && location.pathname === '/mypage/edit');
+    }
+
+    const handleLogout = async () => {
+        try {
+            const response = await axios.post('http://localhost:8000/api/v1/auth/logout', {}, {withCredentials:true});
+            window.alert('로그아웃 성공');
+            setIsLoggedIn(false);
+            setTimeout(() => {
+                navigate('/');
+            }, 2000);
+            
+        } catch (err) {
+            window.alert('로그아웃을 실패하는 경우가 있어?');
+            console.log(err);
+        }
     }
 
     return(
@@ -55,10 +74,12 @@ function Sidebar() {
                     </NavLink>
                 </ul>
                 </div>
-                <Link to="/login" className='flex items-center justify-baseline w-[190px] h-[40px] mb-[20px]'>
-                    <MdLogout className='w-5 h-5 text-custom-grey'/>
-                    <span className='font-medium cursor-pointer text-custom-grey ml-[10px]'>Log Out</span>
-                </Link>
+                {isLoggedIn && (
+                    <button onClick={handleLogout} className='flex items-center justify-baseline w-[190px] h-[40px] mb-[20px]'>
+                        <MdLogout className='w-5 h-5 text-custom-grey'/>
+                        <span className='font-medium cursor-pointer text-custom-grey ml-[10px]'>Log Out</span>
+                    </button>
+                )}
         </div>
     )
 }
