@@ -4,8 +4,6 @@ import FriendGraph from '../components/FriendGraph';
 import FriendList from '../components/FriendList';
 
 
-
-
 function FriendListPage() {
   const [sortOption, setSortOption] = useState('graph')
   
