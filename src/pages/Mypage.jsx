@@ -22,10 +22,7 @@ function Mypage() {
             const response = await axios.get(`${apiUrl}/users/${user_id}`, {
                 withCredentials: true,
             });
-            setTimeout(() => {
-                setProfile(response.data);
-            }, 1000);
-            
+            setProfile(response.data);
             setCurrentCredit(response.data.credit);
         } catch (error) {
             window.alert("조회 실패");
