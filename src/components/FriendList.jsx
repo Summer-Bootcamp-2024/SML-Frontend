@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ProfileModal from './ProfileModal';
 import Credit from '../components/CreditModal'
 import { useApiUrlStore, useUserIdStore } from '../store/store';
-import { NavLink, useParams } from 'react-router-dom'
+import { NavLink} from 'react-router-dom'
 import axios from 'axios';
 
 function FriendList({}) {
@@ -29,7 +29,7 @@ function FriendList({}) {
     setCreditModalOpen(false)
   }
 
-  
+
  // 친구 목록 조회
  const getFriendList = async () => {
   try {
@@ -43,6 +43,11 @@ function FriendList({}) {
     alert('일촌 목록을 불러오지 못했습니다');
   }
 };
+
+useEffect(() => {
+  getFriendList();
+}, []); 
+
 
 //친구 정보 조회
 const getFriend = async (friend_id) => {
@@ -61,14 +66,10 @@ const getFriend = async (friend_id) => {
   }
 };
 
-useEffect(() => {
-  getFriendList();
-}, []); 
-
 
   return (
     <div className="flex items-center justify-center w-full h-full">
-      <div className="w-[650px] h-[500px] bg-custom-white border-[1px] border-custom-grey rounded-[10px] overflow-y-auto pt-[20px]">
+      <div className="w-[650px] h-[500px] bg-custom-white border-[1px] border-custom-grey rounded-[10px] overflow-y-auto pt-[20px] ">
       {friendlistData.map((friend) => (
         <div key={friend.id} className="flex flex-col items-center justify-center border-b-[1px] border-custom-grey">
             <NavLink className="w-[500px] min-h-[55px] flex justify-between items-center cursor-pointer " onClick={()=>PostingOpenModal(friend.id)}>

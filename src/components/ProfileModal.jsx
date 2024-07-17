@@ -1,21 +1,26 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; 
 import profileimage from '../assets/images/profileImg2.png';
 import Button from './Button';
 import { MdClose } from "react-icons/md"; 
 import axios from 'axios';
-import { useApiUrlStore } from '../store/store';
+import { useApiUrlStore, useUserIdStore } from '../store/store';
 
 function ProfileModal({ PostingClosedModal, ProfileId, openCreditModal }) {
     const {apiUrl} = useApiUrlStore()
     const [clickedIndex, setClickedIndex] = useState(null);
     const [profileData, setProfileData] = useState('')
     const [secondfriendlist, SetSecondFriendList] = useState([])
+    const {user_id} = useUserIdStore()
+    const navigate = useNavigate()
+
     
     const handleItemClick = (index) => {
         setClickedIndex(index);
         console.log(index)
     };
 
+    
 //친구 프로필 정보 조회
 const getFriendProfile = async (ProfileId) => {
     try {
@@ -29,6 +34,10 @@ const getFriendProfile = async (ProfileId) => {
       alert('프로필 정보를 불러오지 못했습니다');
     }
   };
+
+  useEffect(() => {
+    getFriendProfile(ProfileId)
+  }, []); 
   
   
   //이촌 목록 조회(친구의 친구)
@@ -45,6 +54,7 @@ const getFriendProfile = async (ProfileId) => {
     }
   };
 
+  
   //이촌 정보 조회
   const getFriendName = async (friend_id) => {
     try {
@@ -62,12 +72,29 @@ const getFriendProfile = async (ProfileId) => {
     }
   };
 
-
-  useEffect(() => {
-    getFriendProfile(ProfileId)
-  }, []); 
+  
+  const deleteFriend = async (ProfileId) => {
+    try {
+      // user_id를 요청 본문에 포함시킵니다
+      const response = await axios.delete(`${apiUrl}/friends/${ProfileId}`, {
+        data: { user_id }, // 요청 본문에 user_id 포함
+        withCredentials: true,
+      });
+      alert('일촌이 삭제되었습니다.');
+      navigate('/list');
+    } catch (error) {
+      console.error('Error deleting friend:', error);
+      if (error.response && error.response.data) {
+        console.error('Error details:', error.response.data);
+      }
+      alert('친구 삭제를 실패했습니다');
+      navigate('/list');
+    }
+  };
   
 
+
+ 
     return (
         <div className='fixed top-0 flex items-center justify-center w-[calc(100vw-296px)] min-h-screen border-2 backdrop-blur-sm'>
             <div className="absolute w-[500px] min-h-[650px] bg-custom-skyblue backdrop-blur">
@@ -111,7 +138,10 @@ const getFriendProfile = async (ProfileId) => {
                                     ))}
                                 </div>
                             </div>
+                            <div className='flex gap-[10px]'>
+                            <Button label={"일촌 삭제"} onClick={()=>deleteFriend(ProfileId)}/>
                             <Button label={"소개 받기"} onClick={clickedIndex !== null ? openCreditModal : null}/>
+                            </div>
                         </div>
                 </div>
             </div>
