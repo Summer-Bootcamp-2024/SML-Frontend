@@ -24,7 +24,7 @@ function Mypage() {
             });
             setTimeout(() => {
                 setProfile(response.data);
-            }, 2000);
+            }, 1000);
             
             setCurrentCredit(response.data.credit);
         } catch (error) {
