@@ -6,10 +6,7 @@ import { useUserIdStore } from '../store/store';
 
 
 function FriendListPage() {
-  const { user_id } = useUserIdStore();
-
   const [sortOption, setSortOption] = useState('graph')
-  
   const Sortoption = [
     { value: 'graph', name: 'Friend Graph' },
     { value: 'list', name: 'Friend List' },
