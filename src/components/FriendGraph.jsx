@@ -31,6 +31,25 @@ function FriendGraph() {
         withCredentials: true,
       });
       setRelationData(response.data);
+      const friendIds = response.data.map(item => item.friend_id);
+    friendIds.forEach(friend_id => getFriend(friend_id));
+    } catch (error) {
+      console.error('Error fetching friend data:', error);
+    }
+  };
+
+  //친구 정보 조회
+  const getFriend = async (friend_id) => {
+    try {
+      const response = await axios.get(`${apiUrl}/users/${friend_id}`, {
+        withCredentials: true,
+      });
+      setFriendListData(prevFriendListData => {
+        if (!prevFriendListData.some(friend => friend.id === response.data.id)) {
+          return [...prevFriendListData, response.data];
+        }
+        return prevFriendListData;
+      });
     } catch (error) {
       console.error('Error fetching friend data:', error);
     }
@@ -132,7 +151,7 @@ function FriendGraph() {
 
     cyInstance.on('tap', 'node', function (evt) {
       const node = evt.target;
-      if (node.id() !== 'main') {
+      if (node.id() !== `${user_id}`) {
         PostingOpenModal(node.id());
       }
     });
@@ -150,7 +169,7 @@ function FriendGraph() {
     <div className="w-full h-full">
       <div id="cy" ref={cyRef} className='w-full h-full' />
       {statusModalOpen && (
-        <ProfileModal PostingClosedModal={PostingClosedModal} nodeId={selectedNodeId} />
+        <ProfileModal PostingClosedModal={PostingClosedModal} ProfileId={selectedNodeId} />
       )}
     </div>
   );
