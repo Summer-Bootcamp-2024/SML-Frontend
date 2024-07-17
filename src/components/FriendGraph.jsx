@@ -3,11 +3,17 @@ import cytoscape from 'cytoscape';
 import mainProfile from '../assets/images/myprofile/profileImgSquare.png';
 import node1img from '../assets/images/profileImg2.png';
 import ProfileModal from './ProfileModal';
+import { useApiUrlStore, useUserIdStore } from '../store/store';
+import axios from 'axios';
 
 function FriendGraph() {
+  const { user_id } = useUserIdStore();
+  const { apiUrl } = useApiUrlStore();
   const cyRef = useRef(null);
   const [statusModalOpen, setStatusModalOpen] = useState(false);
   const [selectedNodeId, setSelectedNodeId] = useState(null);
+  const [relationData, setRelationData] = useState([]);
+  const [cy, setCy] = useState(null);
 
   const PostingOpenModal = (nodeId) => {
     setSelectedNodeId(nodeId);
@@ -18,29 +24,60 @@ function FriendGraph() {
     setStatusModalOpen(false);
   };
 
+  //친구 관계도 조회
+  const getFriendRelation = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/relationships/${user_id}`, {
+        withCredentials: true,
+      });
+      setRelationData(response.data);
+    } catch (error) {
+      console.error('Error fetching friend data:', error);
+    }
+  };
+
   useEffect(() => {
-    const cy = cytoscape({
-      container: cyRef.current, // container to render in
+    getFriendRelation();
+  }, []);
 
-      elements: [ // list of graph elements to start with
-        { data: { id: 'main', image: mainProfile } }, // central node
-        { data: { id: 'node1', image: node1img } },
-        { data: { id: 'node2', image: node1img } },
-        { data: { id: 'node3', image: node1img } },
-        { data: { id: 'node4', image: node1img } },
-        { data: { id: 'node5', image: node1img } },
-        { data: { id: 'node6', image: node1img } },
-        { data: { id: 'node7', image: node1img } },
-        { data: { id: 'edge1', source: 'main', target: 'node1' } },
-        { data: { id: 'edge2', source: 'main', target: 'node2' } },
-        { data: { id: 'edge3', source: 'main', target: 'node3' } },
-        { data: { id: 'edge4', source: 'main', target: 'node4' } },
-        { data: { id: 'edge5', source: 'main', target: 'node5' } },
-        { data: { id: 'edge6', source: 'main', target: 'node6' } },
-        { data: { id: 'edge7', source: 'main', target: 'node7' } },
-      ],
+  useEffect(() => {
+    if (relationData.length === 0) return;
 
-      style: [ // the stylesheet for the graph
+    const elements = [];
+    const edges = [];
+
+    //element를 user로 지정
+    elements.push({ data: { id: user_id, image: mainProfile } });
+
+    //일촌관계를 반영하여 노드&엣지 구현
+    relationData.forEach(friendship => {
+      if (friendship.status === 'accepted' && !friendship.is_deleted) {
+        const { user_id: user, friend_id: friend } = friendship;
+
+        //일촌의 노드
+        if (!elements.find(e => e.data.id === friend)) {
+          elements.push({ data: { id: friend, image: node1img } });
+        }//관계별로 엣지 구분
+        edges.push({ data: { id: `edge-${user}-${friend}`, source: user, target: friend, color: '#50A4D3' } });
+
+        //이촌관계를 반영하여 노드&엣지 구현
+        relationData.forEach(otherFriendship => {
+          if (otherFriendship.user_id === friend && otherFriendship.friend_id !== user && !elements.find(e => e.data.id === otherFriendship.friend_id)) {
+            const otherFriend = otherFriendship.friend_id;
+
+            //이촌의 노드
+            elements.push({ data: { id: otherFriend, image: node1img } });
+            //관계별로 엣지 구분
+            edges.push({ data: { id: `edge-${friend}-${otherFriend}`, source: friend, target: otherFriend, color: '#404F60' } });
+          }
+        });
+      }
+    });
+
+    const cyInstance = cytoscape({
+      container: cyRef.current,
+      elements: [...elements, ...edges],
+      style: [
         {
           selector: 'node',
           style: {
@@ -55,7 +92,7 @@ function FriendGraph() {
           }
         },
         {
-          selector: 'node[id="main"]',
+          selector: `node[id="${user_id}"]`,
           style: {
             'height': 60,
             'width': 60,
@@ -63,7 +100,7 @@ function FriendGraph() {
           }
         },
         {
-          selector: 'node:selected)',
+          selector: 'node:selected',
           style: {
             'border-width': 3,
             'border-color': '#F9C77B',
@@ -85,32 +122,35 @@ function FriendGraph() {
           }
         }
       ],
-
       layout: {
         name: 'concentric',
-        concentric: node => node.id() === 'main' ? 1 : 0,
+        concentric: node => node.id() === user_id ? 1 : 0,
         levelWidth: nodes => 1,
-        spacingFactor: 1.2
+        spacingFactor: 1.5
       }
     });
 
-    cy.on('tap', 'node', function(evt) {
+    cyInstance.on('tap', 'node', function (evt) {
       const node = evt.target;
       if (node.id() !== 'main') {
         PostingOpenModal(node.id());
       }
     });
 
+    setCy(cyInstance);
+
     return () => {
-      cy.destroy(); // Clean up on unmount
+      if (cy) {
+        cy.destroy();
+      }
     };
-  }, []);
+  }, [relationData]);
 
   return (
-    <div className="w-full h-full ">
-      <div id="cy" ref={cyRef} className='w-full h-full'/>
+    <div className="w-full h-full">
+      <div id="cy" ref={cyRef} className='w-full h-full' />
       {statusModalOpen && (
-        <ProfileModal PostingClosedModal={PostingClosedModal} nodeId={selectedNodeId}/>
+        <ProfileModal PostingClosedModal={PostingClosedModal} nodeId={selectedNodeId} />
       )}
     </div>
   );
