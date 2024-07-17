@@ -17,7 +17,6 @@ function Mypage() {
             const response = await axios.get(`${apiUrl}/users/${user_id}`, {
                 withCredentials: true,
             });
-            window.alert("조회 성공");
             setProfile(response.data);
         } catch (error) {
             window.alert("조회 실패");
