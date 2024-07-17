@@ -1,15 +1,19 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; 
 import profileimage from '../assets/images/profileImg2.png';
 import Button from './Button';
 import { MdClose } from "react-icons/md"; 
 import axios from 'axios';
-import { useApiUrlStore } from '../store/store';
+import { useApiUrlStore, useUserIdStore } from '../store/store';
 
 function ProfileModal({ PostingClosedModal, ProfileId, openCreditModal }) {
     const {apiUrl} = useApiUrlStore()
     const [clickedIndex, setClickedIndex] = useState(null);
     const [profileData, setProfileData] = useState('')
     const [secondfriendlist, SetSecondFriendList] = useState([])
+    const {user_id} = useUserIdStore()
+    const navigate = useNavigate()
+
     
     const handleItemClick = (index) => {
         setClickedIndex(index);
@@ -69,17 +73,25 @@ const getFriendProfile = async (ProfileId) => {
   };
 
   
-  //일촌 삭제 
-const deleteFriend = async (ProfileId) => {
-  try {
-    const response = await axios.delete(`${apiUrl}/friends/${ProfileId}`, {
-      withCredentials: true,
-    });
-    console.log(response.data)
-  } catch (error) {
-    console.error('Error fetching friend data:', error);
-  }
-};
+  const deleteFriend = async (ProfileId) => {
+    try {
+      // user_id를 요청 본문에 포함시킵니다
+      const response = await axios.delete(`${apiUrl}/friends/${ProfileId}`, {
+        data: { user_id }, // 요청 본문에 user_id 포함
+        withCredentials: true,
+      });
+      alert('일촌이 삭제되었습니다.');
+      navigate('/list');
+    } catch (error) {
+      console.error('Error deleting friend:', error);
+      if (error.response && error.response.data) {
+        console.error('Error details:', error.response.data);
+      }
+      alert('친구 삭제를 실패했습니다');
+      navigate('/list');
+    }
+  };
+  
 
 
  

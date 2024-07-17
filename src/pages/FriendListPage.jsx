@@ -20,10 +20,6 @@ function FriendListPage() {
     console.log(sortOption)
   }
 
-  useEffect(() => {
-    handleUser();
-  }, []);
-
    
   
   return (
