@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 /**
  * Zustand 상태 관리를 위한 store를 생성합니다.
@@ -13,8 +14,16 @@ export const useApiUrlStore = create((set) => ({
   setApiUrl: (url) => set((state) => ({ ...state, apiUrl: url })),
 }));
 
-export const useUserIdStore = create((set) => ({
-  message: null,
-  user_id: 0,  // 초기 상태 값
-  setUserId: (userId) => set({ user_id :userId }), 
-}));
+export const useUserIdStore = create(
+  persist(
+    (set) => ({
+      user_id: 0,
+      setUserId: (id) => set({ user_id: id }),
+      logout: () => set({ user_id: 0 }), // 로그아웃 함수 추가
+    }),
+    {
+      name: 'user_id', // 로컬 스토리지에 저장될 키 이름
+      getStorage: () => localStorage, // 사용할 스토리지: localStorage
+    }
+  )
+);

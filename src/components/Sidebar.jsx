@@ -7,10 +7,12 @@ import { MdHome } from "react-icons/md";
 import { MdLogout } from "react-icons/md";
 import { NavLink,  useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useUserIdStore } from '../store/store';
 
 function Sidebar() {
     const location = useLocation();
     const navigate = useNavigate();
+    const { logout } = useUserIdStore();
     const [isLoggedIn, setIsLoggedIn] = useState(true);
 
     const isActive = (path) => {
@@ -21,6 +23,8 @@ function Sidebar() {
         try {
             const response = await axios.post('http://localhost:8000/api/v1/auth/logout', {}, {withCredentials:true});
             window.alert('로그아웃 성공');
+            logout();
+            localStorage.removeItem('user_id');
             setIsLoggedIn(false);
             setTimeout(() => {
                 navigate('/');
