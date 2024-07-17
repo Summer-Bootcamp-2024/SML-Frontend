@@ -19,26 +19,20 @@ function Mypage() {
             });
             window.alert("조회 성공");
             setProfile(response.data);
-            console.log(response.data);
         } catch (error) {
-            console.log(user_id);
             window.alert("조회 실패");
-            console.error(error);
         }
     
     }
 
     useEffect(() => {
-        if (user_id) {
-            getProfile();
-        }
-    }, [user_id, apiUrl]);
+         getProfile();
+    }, []);
 
-    /*이 부분은 user_id가 정상적으로 작동하면 다시 구현할 예정
-        if (!profile) {
-        console.log(user_id);
+
+    if (!profile) {
         return <div>Loading...</div>
-    }*/
+    }
 
     const deleteUser = async () => {
         try {
