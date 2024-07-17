@@ -1,19 +1,36 @@
 import axios from 'axios';
-import profileImg from '../assets/images/myprofile/profileImg.png'
 import { MdOutlineChat } from "react-icons/md";
 import { MdOutlinePersonSearch } from "react-icons/md";
 import { MdListAlt } from "react-icons/md";
 import { MdHome } from "react-icons/md";
 import { MdLogout } from "react-icons/md";
 import { NavLink,  useLocation, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { useUserIdStore } from '../store/store';
+import { useEffect, useState } from 'react';
+import { useApiUrlStore, useUserIdStore } from '../store/store';
+import basicProfile from '../assets/images/myprofile/basicProfile.png';
 
 function Sidebar() {
     const location = useLocation();
     const navigate = useNavigate();
-    const { logout } = useUserIdStore();
+    const { apiUrl} = useApiUrlStore();
+    const { logout, user_id } = useUserIdStore();
     const [isLoggedIn, setIsLoggedIn] = useState(true);
+    const [profile, setProfile] = useState({});
+
+    const getProfile = async () => {
+        try {
+            const response = await axios.get(`${apiUrl}/users/${user_id}`, {
+                withCredentials: true,
+            });
+            setProfile(response.data);
+        } catch (err) {
+
+        }
+    }
+
+    useEffect(() => {
+        getProfile();
+    }, []);
 
     const isActive = (path) => {
         return location.pathname === path || (path === '/mypage' && location.pathname === '/mypage/edit');
@@ -30,7 +47,6 @@ function Sidebar() {
             
         } catch (err) {
             window.alert('로그아웃을 실패하는 경우가 있어?');
-            console.log(err);
         }
     }
 
@@ -39,9 +55,9 @@ function Sidebar() {
             <div className="w-[190px] text-[24px] font-extrabold text-custom-indigo mt-[20px]">SML</div>
             <div className='w-[220px] h-[650px] flex flex-col items-center pt-[36px]'>
                 <div className="flex items-center justify-between w-[190px] h-[80px] mb-[30px] pb-[5px] border-b-[1px] border-custom-grey">
-                    <img className="w-[70px] h-[70px] rounded-[115px]" src={profileImg}/>
+                    <img className="w-[70px] h-[70px] rounded-[115px]" src={profile.image_url || basicProfile}/>
                     <div className='flex items-center p-[10px]'>
-                        <span className='flex items-end h-[30px] text-[18px] font-normal mr-[2px]'>장희수</span>
+                        <span className='flex items-end h-[30px] text-[18px] font-normal mr-[2px]'>{profile.name}</span>
                         <span className='flex items-end h-[30px] text-[16x] font-extrabold'>님</span>
                     </div>
                 </div>
