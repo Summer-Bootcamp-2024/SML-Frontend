@@ -5,11 +5,16 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useApiUrlStore, useUserIdStore } from '../store/store';
+import ChargeModal from '../components/ChargeModal';
+import Lottie from "lottie-react";
+import network from '../components/network.json';
 
 function Mypage() {
     const { apiUrl } = useApiUrlStore();
     const { user_id, setUserId } = useUserIdStore();
     const [profile, setProfile] = useState(null);
+    const [chargeModalOpen, setChargeModalOpen] = useState(false);
+    const [currentCredit, setCurrentCredit] = useState(0);
     const navigate = useNavigate();
 
     const getProfile = async () => {
@@ -17,7 +22,11 @@ function Mypage() {
             const response = await axios.get(`${apiUrl}/users/${user_id}`, {
                 withCredentials: true,
             });
-            setProfile(response.data);
+            setTimeout(() => {
+                setProfile(response.data);
+            }, 2000);
+            
+            setCurrentCredit(response.data.credit);
         } catch (error) {
             window.alert("조회 실패");
         }
@@ -30,7 +39,25 @@ function Mypage() {
 
 
     if (!profile) {
-        return <div>Loading...</div>
+        return <div className='w-[100vw] h-[100vh] flex justify-center items-center'>
+            <div className="flex flex-col justify-center items-center w-[300px] h-[300px]">
+                <Lottie animationData={network} loop={true} className="w-[400px] h-[400px] text-blue-300"/>
+                <div className='text-[32px] text-custom-indigo font-bold'>loading...</div>
+            </div>
+        </div>
+    }
+
+    const openChargeModal = () => {
+        setChargeModalOpen(true);
+    }
+
+    const closeChargeModal = () => {
+        setChargeModalOpen(false);
+    }
+
+    const updateCredit = (addedCredit) => {
+        setCurrentCredit(currentCredit + addedCredit);
+        closeChargeModal();
     }
 
     const deleteUser = async () => {
@@ -38,11 +65,14 @@ function Mypage() {
             const response = await axios.delete(`${apiUrl}/users/${user_id}`, {
                 withCredentials: true,
             });
-            window.alert(response.data.message || "회원 탈퇴가 완료되었습니다.");
-            setUserId(null);
-            navigate('/');
+            
+            if (response.status === 200) {
+                window.alert(response.data.message || "회원 탈퇴가 완료되었습니다.");
+                localStorage.removeItem('user_id');
+                setUserId(null);
+                navigate('/');
+                }
         } catch (error) {
-            console.log(error);
             window.alert('회원 탈퇴 실패');
         }
     }
@@ -69,20 +99,20 @@ function Mypage() {
                         <li className="flex flex-col gap-[10px]">
                             {profile && <span className="text-base font-light text-black">{profile.name}</span>}
                             {profile && <span className="text-base font-light text-black">{profile.age}세</span>}
-                            <span className="text-base font-light text-black">백엔드 개발자</span>
+                            <span className="text-base font-light text-black">{profile.job}</span>
                             {profile && <span className="text-base font-light text-black">{profile.gender}</span>}
-                            <span className="text-base font-light text-black">실리콘밸리</span>
-                            {profile && <span className="text-base font-light text-black">{profile.loc}</span>}
-                            <span className="text-base font-light text-black">창업</span>
+                            <span className="text-base font-light text-black">{profile.company}</span>
+                            {profile && <span className="text-base font-light text-black">{profile.region}</span>}
+                            <span className="text-base font-light text-black">{profile.category}</span>
                         </li>
                     </ul>
                     <div className="ml-[45px] mt-20 w-[218.86px] h-[98.18px] bg-custom-white rounded-[10px] shadow-xl border border-custom-grey">
                         <div className="w-full h-[42px] flex justify-center items-center gap-[50px]">
                             <span className="text-lg font-extrabold underline text-custom-indigo">CREDIT</span>
-                            <span className="text-base font-medium cursor-pointer text-custom-grey">충전하기</span>
+                            <span onClick={openChargeModal} className="text-base font-medium cursor-pointer text-custom-grey">충전하기</span>
                         </div>
                         <div className="w-full h-[45px] flex justify-center items-center">
-                            <span className="text-base font-bold text-custom-indigo">12345 credit</span>
+                            <span className="text-base font-bold text-custom-indigo">{currentCredit} credit</span>
                         </div>
                     </div>
                     <Link to='/mypage/edit'>
@@ -137,6 +167,9 @@ function Mypage() {
                     </div>
                 </div>
             </div>
+            {chargeModalOpen && (
+                <ChargeModal onCloseModal={closeChargeModal} currentCredit={currentCredit} onUpdateCredit={updateCredit}></ChargeModal>
+            )}
         </div>
     )
 }
