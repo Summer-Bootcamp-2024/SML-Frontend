@@ -34,10 +34,11 @@ function Mypage() {
         }
     }, [user_id, apiUrl]);
 
-    if (!profile) {
+    /*이 부분은 user_id가 정상적으로 작동하면 다시 구현할 예정
+        if (!profile) {
         console.log(user_id);
         return <div>Loading...</div>
-    }
+    }*/
 
     const deleteUser = async () => {
         try {
