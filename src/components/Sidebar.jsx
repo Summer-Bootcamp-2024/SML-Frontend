@@ -26,9 +26,7 @@ function Sidebar() {
             logout();
             localStorage.removeItem('user_id');
             setIsLoggedIn(false);
-            setTimeout(() => {
-                navigate('/');
-            }, 2000);
+            navigate('/');
             
         } catch (err) {
             window.alert('로그아웃을 실패하는 경우가 있어?');
