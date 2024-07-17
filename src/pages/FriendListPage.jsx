@@ -2,9 +2,12 @@ import React, { useState, useRef, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import FriendGraph from '../components/FriendGraph';
 import FriendList from '../components/FriendList';
+import { useUserIdStore } from '../store/store';
 
 
 function FriendListPage() {
+  const { user_id } = useUserIdStore();
+
   const [sortOption, setSortOption] = useState('graph')
   
   const Sortoption = [
@@ -16,6 +19,10 @@ function FriendListPage() {
     setSortOption(e.target.value)
     console.log(sortOption)
   }
+
+  useEffect(() => {
+    handleUser();
+  }, []);
 
    
   

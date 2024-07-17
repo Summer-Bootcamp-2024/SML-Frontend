@@ -1,9 +1,59 @@
 import Button from '../components/Button';
 import Sidebar from '../components/Sidebar';
 import profileImgSquare from '../assets/images/myprofile/profileImgSquare.png';
-import { Link} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useApiUrlStore, useUserIdStore } from '../store/store';
 
 function Mypage() {
+    const { apiUrl } = useApiUrlStore();
+    const { user_id, setUserId } = useUserIdStore();
+    const [profile, setProfile] = useState(null);
+    const navigate = useNavigate();
+
+    const getProfile = async () => {
+        try {
+            const response = await axios.get(`${apiUrl}/users/${user_id}`, {
+                withCredentials: true,
+            });
+            window.alert("조회 성공");
+            setProfile(response.data);
+            console.log(response.data);
+        } catch (error) {
+            console.log(user_id);
+            window.alert("조회 실패");
+            console.error(error);
+        }
+    
+    }
+
+    useEffect(() => {
+        if (user_id) {
+            getProfile();
+        }
+    }, [user_id, apiUrl]);
+
+    /*이 부분은 user_id가 정상적으로 작동하면 다시 구현할 예정
+        if (!profile) {
+        console.log(user_id);
+        return <div>Loading...</div>
+    }*/
+
+    const deleteUser = async () => {
+        try {
+            const response = await axios.delete(`${apiUrl}/users/${user_id}`, {
+                withCredentials: true,
+            });
+            window.alert(response.data.message || "회원 탈퇴가 완료되었습니다.");
+            setUserId(null);
+            navigate('/');
+        } catch (error) {
+            console.log(error);
+            window.alert('회원 탈퇴 실패');
+        }
+    }
+
     return (
         <div className="flex justify-end w-full h-[100vh]">
             <Sidebar></Sidebar>
@@ -24,12 +74,12 @@ function Mypage() {
                             <span className="text-base font-semibold text-black">관심분야</span>
                         </li>
                         <li className="flex flex-col gap-[10px]">
-                            <span className="text-base font-light text-black">John</span>
-                            <span className="text-base font-light text-black">27세</span>
+                            {profile && <span className="text-base font-light text-black">{profile.name}</span>}
+                            {profile && <span className="text-base font-light text-black">{profile.age}세</span>}
                             <span className="text-base font-light text-black">백엔드 개발자</span>
-                            <span className="text-base font-light text-black">Men</span>
+                            {profile && <span className="text-base font-light text-black">{profile.gender}</span>}
                             <span className="text-base font-light text-black">실리콘밸리</span>
-                            <span className="text-base font-light text-black">서울시 중구</span>
+                            {profile && <span className="text-base font-light text-black">{profile.loc}</span>}
                             <span className="text-base font-light text-black">창업</span>
                         </li>
                     </ul>
@@ -43,8 +93,9 @@ function Mypage() {
                         </div>
                     </div>
                     <Link to='/mypage/edit'>
-                        <Button className="absolute right-10 bottom-6" label="수정하기"></Button>
+                        <Button className="absolute right-10 bottom-20" label="수정하기"></Button>
                     </Link>
+                    <Button onClick={deleteUser} className="absolute right-10 bottom-6" label="탈퇴하기"></Button>
                 </div>
                 <div className="w-[800px] h-[220px] flex gap-[68px]">
                     <div className="w-[380px] h-full bg-custom-grey/10 rounded-[10px] shadow-custom-blue/30 shadow-lg border-2 border-custom-blue">
