@@ -22,9 +22,7 @@ function Sidebar() {
             const response = await axios.post('http://localhost:8000/api/v1/auth/logout', {}, {withCredentials:true});
             window.alert('로그아웃 성공');
             setIsLoggedIn(false);
-            setTimeout(() => {
-                navigate('/');
-            }, 2000);
+            navigate('/');
             
         } catch (err) {
             window.alert('로그아웃을 실패하는 경우가 있어?');

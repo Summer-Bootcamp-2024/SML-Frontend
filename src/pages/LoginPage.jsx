@@ -19,7 +19,6 @@ function LoginPage() {
         try {
             const response = await axios.post(`${apiUrl}/auth/login`, {email, password}, {withCredentials: true});
             window.alert('로그인 성공');
-            const userid = response.data.user_id;
             setUserId(response.data.user_id)
              navigate('/list');
         } catch (err) {

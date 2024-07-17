@@ -16,5 +16,5 @@ export const useApiUrlStore = create((set) => ({
 export const useUserIdStore = create((set) => ({
   message: null,
   user_id: 0,  // 초기 상태 값
-  setUserId: (userId) => set({ user_id :userId }), 
+  setUserId: (userId) => set({ user_id :userId }),  // `userInfo` 상태를 업데이트하는 함수
 }));
