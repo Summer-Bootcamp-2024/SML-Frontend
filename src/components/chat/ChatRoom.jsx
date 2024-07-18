@@ -1,7 +1,32 @@
 import profileImg from '../../assets/images/myprofile/profileImg.png'
-
+import axios from 'axios';
+import { useApiUrlStore, useUserIdStore } from '../../store/store';
 
 function ChatRoom({roomListData, onChatRoomClick}) {
+    const{apiUrl} = useApiUrlStore()
+    const {user_id} = useUserIdStore()
+
+      {/*
+  // 소개 요청 전송
+  const postFriendStatus = async () => {
+    try {
+      const response = await axios.post(`${apiUrl}/friends/${selectedRoom.user2_id}`, { user_id }, {
+        withCredentials: true,
+      });
+      console.log(response.data);
+      setFriendStatus(true);
+
+      // 채팅방 클릭 시 소개요청 채팅 자동으로 전송
+      sendMessage(`${user_id}님께서 ${selectedRoom.user2_name}님을 소개받기 원합니다!`);
+
+    } catch (error) {
+      console.error('Error fetching friend data:', error);
+      alert('일촌요청에 실패했습니다');
+    }
+  };
+
+
+  */}
   
   return (
         <div className='flex items-center justify-center w-[40%] mr-[-30px] h-screen bg-white'>
