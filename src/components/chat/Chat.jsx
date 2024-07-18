@@ -1,16 +1,17 @@
 import sendimg from '../../assets/images/sendimg.png';
 import axios from 'axios';
 import { useApiUrlStore, useUserIdStore } from '../../store/store';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function Chat({ selectedRoom }) {
   const { apiUrl } = useApiUrlStore();
   const { user_id } = useUserIdStore();
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
+  const [status, setStatus] = ('pending')
   const [friendstatus, setFriendStatus] = useState(false);
 
-  // 메세지 전송
+  // 채팅 전송
   const sendMessage = (messageContent) => {
     if (messageContent.trim() !== '') {
       const newMessage = {
@@ -23,18 +24,15 @@ function Chat({ selectedRoom }) {
     }
   };
 
+
   // 일촌 요청 전송
   const postFriendStatus = async () => {
     try {
-      const response = await axios.post(`${apiUrl}/friends/${selectedRoom.user2_id}`, { user_id }, {
+      const response = await axios.get(`${apiUrl}/friends/${selectedRoom.room_id}`, {
         withCredentials: true,
       });
       console.log(response.data);
-      setFriendStatus(true);
-
-      // 일촌 요청 후 메시지 추가
-      sendMessage(`${selectedRoom.user2_name}님께 일촌을 신청합니다!`);
-
+      setMessages(responsed.data)
     } catch (error) {
       console.error('Error fetching friend data:', error);
       alert('일촌요청에 실패했습니다');
@@ -60,6 +58,38 @@ function Chat({ selectedRoom }) {
     }
   };
 
+  {/*
+    // 수락요청 수락/거절
+  const updateFriendStatus = async () => {
+    const putstatus = { status };
+
+    try {
+      const response = await axios.put(`${apiUrl}/friends/${friend_id}`, putstatus, {
+        withCredentials: true,
+      });
+    } catch (error) {
+      console.error('Error fetching friend data:', error);
+      alert('일촌관계 변경을 실패했습니다');
+    }
+  };
+  */}
+
+  //채팅 내역 조회
+  const getChatHistory = async () => {
+    try {
+      const response = await axios.put(`${apiUrl}/messages/${selectedRoom.user2_id}`, putstatus, {
+        withCredentials: true,
+      });
+    } catch (error) {
+      console.error('Error fetching friend data:', error);
+      alert('일촌관계 변경을 실패했습니다');
+    }
+  }
+
+    useEffect(()=> {
+      getChatHistory()
+    }, [])
+
   // 엔터 키를 누르면 메시지 전송
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
@@ -67,12 +97,14 @@ function Chat({ selectedRoom }) {
     }
   };
 
+
+
   return (
     <div className="flex items-center justify-center w-[60%] h-screen ml-[-30px] bg-white">
       <div className="w-[650px] h-[600px] border-2 border-custom-grey rounded-[10px] flex items-center justify-center bg-white shadow-lg">
         <div className="flex flex-col justify-center w-[90%] h-full">
           <div className="flex items-center w-full h-[80px] border-b-[1px] mt-[10px] border-custom-grey">
-            <img className="w-[50px] h-[50px] rounded-[115px] ml-[20px]" src={selectedRoom.user2_img} alt="Profile" />
+            <img className="w-[50px] h-[50px] rounded-[115px] ml-[20px]" src={selectedRoom.user2_img}/>
             <span className="text-[16px] font-bold ml-[10px]">{selectedRoom.user2_name}</span>
             {!friendstatus && (
               <button className="text-[14px] font-semibold text-custom-blue ml-auto mr-[20px]" onClick={postFriendStatus}>일촌 요청</button>
