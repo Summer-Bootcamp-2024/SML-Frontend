@@ -9,8 +9,9 @@ import { useEffect, useState } from 'react';
 function ChatPage() {
     const {apiUrl} = useApiUrlStore()
     const {user_id} = useUserIdStore()
-    const [user2_id, setUser2_Id] = useState([])
-    const [user2_name, setUser2_Name] = useState([])
+    const [roomData, setRoomData] = useState([])
+    const [selectRoom, setSelectRoom] = useState([])
+    
     
 //채팅방 조회
 const getChatRoom = async () => {
@@ -18,13 +19,14 @@ const getChatRoom = async () => {
       const response = await axios.get(`${apiUrl}/chatrooms/${user_id}`, {
         withCredentials: true,
       });
-      console.log(response.data)
-      
-      if(response.data.length>0){
-      const ids = response.data.map(friend => friend.user2_id);
-      const names = response.data.map(friend => friend.user2_name);
-      setUser2_Id(ids);
-      setUser2_Name(names);
+      if (response.data.length>0) {
+        const userDetailsArray = response.data.map(item => ({
+          room_id : item.id,
+          user2_id: item.user2_id,
+          user2_name: item.user2_name,
+          user2_img: item.user2_image_url,
+        }));
+        setRoomData(userDetailsArray);
     } 
     else {
         console.log('채팅방이 없습니다');
@@ -32,6 +34,11 @@ const getChatRoom = async () => {
       console.error('Error fetching friend data:', error);
       alert('채팅방을 불러오지 못했습니다');
     }
+  };
+
+  const handleChatRoomClick = (roomId) => {
+    const selected = roomData.find(room => room.room_id === roomId);
+    setSelectRoom(selected);
   };
   
   useEffect(() => {
@@ -43,10 +50,8 @@ const getChatRoom = async () => {
     <div className='flex'>
         <Sidebar/>
         <div className='flex justify-center w-[calc(100vw-296px)] h-screen'>
-            <ChatRoom className='w-[40%]'
-            user2_id={user2_id}
-            user2_name={user2_name}/>
-            <Chat className='w-[60%]'/>
+            <ChatRoom className='w-[40%]' roomListData={roomData} onChatRoomClick={handleChatRoomClick}/>
+            <Chat className='w-[60%]' selectedRoom={selectRoom}/>
         </div>
     </div>
   );

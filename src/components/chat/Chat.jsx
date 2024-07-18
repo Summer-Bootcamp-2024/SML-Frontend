@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useApiUrlStore } from '../../store/store';
 import { useState, useEffect } from 'react';
 
-function Chat() {
+function Chat({selectedRoom}) {
   const { apiUrl } = useApiUrlStore();
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
@@ -48,9 +48,9 @@ function Chat() {
     <div className="flex items-center justify-center w-[60%] h-screen ml-[-30px] bg-white">
       <div className="w-[650px] h-[600px] border-2 border-custom-grey rounded-[10px] flex items-center justify-center bg-white shadow-lg">
         <div className="flex flex-col justify-center w-[90%] h-full">
-          <div className="flex items-center w-full h-[80px] border-b-[1px] border-custom-grey">
-            <img className="w-[40px] h-[40px] rounded-[115px] ml-[20px]" src={profileImg} alt="Profile"/>
-            <span className="text-[16px] font-bold ml-[10px]">김대희</span>
+          <div className="flex items-center w-full h-[80px] border-b-[1px] mt-[10px] border-custom-grey">
+            <img className="w-[50px] h-[50px] rounded-[115px] ml-[20px]" src={selectedRoom.user2_img}/>
+            <span className="text-[16px] font-bold ml-[10px]">{selectedRoom.user2_name}</span>
             <button className="text-[14px] font-semibold text-custom-blue ml-auto mr-[20px]" onClick={postFriendStatus}>일촌 요청</button>
           </div>
           <div className="flex flex-col justify-end w-full h-[440px] overflow-y-auto p-[10px]">
