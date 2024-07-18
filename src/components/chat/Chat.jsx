@@ -3,13 +3,13 @@ import axios from 'axios';
 import { useApiUrlStore, useUserIdStore } from '../../store/store';
 import { useEffect, useState } from 'react';
 
-function Chat({ selectedRoom }) {
+function Chat({ selectedRoom,friendstatus }) {
   const { apiUrl } = useApiUrlStore();
   const { user_id } = useUserIdStore();
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
-  const [status, setStatus] = ('pending')
-  const [friendstatus, setFriendStatus] = useState(false);
+  const [status, setStatus] = useState('pending')
+  
 
   // 채팅 전송
   const sendMessage = (messageContent) => {
@@ -25,8 +25,8 @@ function Chat({ selectedRoom }) {
   };
 
 
-  // 일촌 요청 전송
-  const postFriendStatus = async () => {
+  // 기존 채팅 내역조회
+  const getChatHistory = async () => {
     try {
       const response = await axios.get(`${apiUrl}/friends/${selectedRoom.room_id}`, {
         withCredentials: true,
@@ -39,10 +39,6 @@ function Chat({ selectedRoom }) {
     }
   };
 
-  // 일촌 상태 변경
-  const handleStatusChange = (newStatus) => {
-    setStatus(newStatus);
-  }
 
   // 일촌요청 수락/거절
   const updateFriendStatus = async () => {
@@ -52,6 +48,7 @@ function Chat({ selectedRoom }) {
       const response = await axios.put(`${apiUrl}/friends/${friend_id}`, putstatus, {
         withCredentials: true,
       });
+      console.log(response.data)
     } catch (error) {
       console.error('Error fetching friend data:', error);
       alert('일촌관계 변경을 실패했습니다');
@@ -74,21 +71,30 @@ function Chat({ selectedRoom }) {
   };
   */}
 
-  //채팅 내역 조회
-  const getChatHistory = async () => {
+
+    //status가 accepted일 경우에만 채팅방 생성
+  const createChatRoom = async () => {
+    const id = {
+      user1_id: user_id,
+      user2_id: selectedRoom.user2_id,
+    }
     try {
-      const response = await axios.put(`${apiUrl}/messages/${selectedRoom.user2_id}`, putstatus, {
+      const response = await axios.post(`${apiUrl}/chatrooms`, id, {
         withCredentials: true,
       });
+      console.log(response.data)
     } catch (error) {
       console.error('Error fetching friend data:', error);
       alert('일촌관계 변경을 실패했습니다');
     }
-  }
+  };
 
     useEffect(()=> {
       getChatHistory()
+      createChatRoom()
     }, [])
+
+    
 
   // 엔터 키를 누르면 메시지 전송
   const handleKeyDown = (event) => {
@@ -119,10 +125,10 @@ function Chat({ selectedRoom }) {
                     <>
                       <button
                         className='w-[80px] h-[35px] bg-custom-white rounded-[10px] mr-[20px] border-[1px] border-custom-grey'
-                        onClick={() => { handleStatusChange('accepted'); updateFriendStatus(); }}>수락</button>
+                        onClick={() => { setStatus('accepted'); updateFriendStatus(); createChatRoom(); }}>수락</button>
                       <button
                         className='w-[80px] h-[35px] bg-custom-white rounded-[10px] border-[1px] border-custom-grey'
-                        onClick={() => { handleStatusChange('rejected'); updateFriendStatus(); }}>거절</button>
+                        onClick={() => { setStatus('rejected'); updateFriendStatus(); }}>거절</button>
                     </>
                   }
                 </div>
