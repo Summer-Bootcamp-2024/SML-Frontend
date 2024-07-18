@@ -12,7 +12,7 @@ function ProfileSlide({ isOpen, openCreditModal,onCloseSlide}) {
 
     return (
         <div
-            className={`fixed top-[125px] right-20 h-[calc(100vh-150px)] bg-custom-skyblue transition-transform duration-300 ${isOpen ? '' : 'translate-x-[400px]'}`}
+            className={`fixed top-[175px] rounded-[10px] border-2 border-custom-blue right-20 h-[calc(100vh-140px)] pb-[3%] bg-custom-skyblue transition-transform duration-300 ${isOpen ? '' : 'translate-x-[400px]'}`}
                 style={{
                     width: '500px',
                     // 'overflow-y-auto'를 추가하여 내부 내용만 스크롤되도록 설정합니다.
@@ -22,11 +22,11 @@ function ProfileSlide({ isOpen, openCreditModal,onCloseSlide}) {
             <button className="flex justify-end w-full" onClick={onCloseSlide}>
                 <MdKeyboardDoubleArrowRight className='w-[46px] h-[39px] mr-[10px] mt-[10px] text-custom-grey'/>
             </button>
-            <div className='flex flex-col items-center justify-center'>
+            <div className='flex flex-col items-center justify-center mt-[-30px]'>
                 <div className='text-[24px] font-black text-custom-indigo underline underline-offset-2 mb-[10px]'>PROFILE</div>
                 <div className='w-[400px] min-h-[500px] flex flex-col items-center'>
                     <div className='flex items-center justify-between w-[90%] mt-[10px]'>
-                        <img src={profileimage} className='w-[150px] min-h-[150px]'></img>
+                        <img src={profileimage} className='w-[130px] min-h-[130px]'></img>
                         <div className='w-[50%] flex justify-between'>
                             <div className='flex flex-col'>
                                 <span className='font-semibold mb-[5px]'>이름</span>

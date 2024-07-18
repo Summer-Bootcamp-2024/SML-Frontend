@@ -88,12 +88,12 @@ function SearchPage() {
   return (
     <div className="flex w-full h-[100vh] ">
       <Sidebar></Sidebar>
-      <div className="flex flex-col  items-center w-[calc(100vw-296px)] h-full overflow-y-auto">
-        <div className="flex h-[150px] items-center justify-start w-full border-b-[1px] border-custom-grey">
+      <div className="flex flex-col items-center w-[calc(100vw-296px)] h-full overflow-y-auto">
+        <div className="flex h-[200px] p-[3%] items-center justify-start w-full border-b-[1px] border-custom-grey">
           <Search></Search>
         </div>
         <div
-          className={`flex justify-center items-center flex-grow w-full h-full transition-transform duration-300 border-2  border-green-400 ${selectProfile ? 'translate-x-[-400px]' : ''}`}>
+          className={`mt-[5%] flex justify-center items-center flex-grow w-full h-full transition-transform duration-300 ${selectProfile ? 'translate-x-[-500px]' : ''}`}>
           <ProfileList profiles={profiles} onCardClick={handleCardClick} className=""></ProfileList>
         </div>
         {selectProfile &&(
