@@ -2,13 +2,36 @@ import React, {useState } from 'react';
 import profileimage from '../../../assets/images/profileImg2.png';
 import Button from '../../Button';
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
+import axios from 'axios';
+import { useApiUrlStore, useUserIdStore } from '../../../store/store';
+import { useEffect } from 'react';
 
-function ProfileSlide({ isOpen, openCreditModal,onCloseSlide}) {
+function ProfileSlide({ isOpen, openCreditModal,onCloseSlide, ProfileId }) {
+    const { apiUrl } = useApiUrlStore();
     const [clickedIndex, setClickedIndex] = useState(null); //일촌목록 선택 여부
+    const [profileData, setProfileData] = useState('');
     
     const handleItemClick = (index) => {
         setClickedIndex(index);
     };
+
+    //친구 프로필 정보 조회
+    const getFriendProfile = async (ProfileId) => {
+        try {
+          const response = await axios.get(`${apiUrl}/users/${ProfileId}`, {
+            withCredentials: true,
+          });
+          setProfileData(response.data)
+          getFriendList(ProfileId)
+        } catch (error) {
+          console.error('Error fetching friend data:', error);
+          alert('프로필 정보를 불러오지 못했습니다');
+        }
+      };
+    
+      useEffect(() => {
+        getFriendProfile(ProfileId);
+      }, []); 
 
     return (
         <div
@@ -36,11 +59,11 @@ function ProfileSlide({ isOpen, openCreditModal,onCloseSlide}) {
                                 <span className='font-semibold mb-[5px]'>관심 분야</span>
                             </div>
                             <div className='flex flex-col'>
-                                <span className='mb-[5px]'>Jomin-hn</span>
-                                <span className='mb-[5px]'>27세</span>
-                                <span className='mb-[5px]'>바리스타</span>
-                                <span className='mb-[5px]'>서울시 중구</span>
-                                <span className='mb-[5px]'>창업</span>
+                                <span className='mb-[5px]'>{profileData.name}</span>
+                                <span className='mb-[5px]'>{profileData.age}세</span>
+                                <span className='mb-[5px]'>{profileData.job}</span>
+                                <span className='mb-[5px]'>{profileData.region}</span>
+                                <span className='mb-[5px]'>{profileData.category}</span>
                             </div>
                         </div>
                     </div>
