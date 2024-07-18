@@ -20,12 +20,27 @@ const getChatRoom = async () => {
         withCredentials: true,
       });
       if (response.data.length>0) {
-        const userDetailsArray = response.data.map(item => ({
-          room_id : item.id,
-          user2_id: item.user2_id,
-          user2_name: item.user2_name,
-          user2_img: item.user2_image_url,
-        }));
+        const userDetailsArray = response.data.map(item => {
+          let room_user_id = 0;
+          let name = null;
+         let user_img = null;
+         
+         if (user_id === item.user1_id) {
+          room_user_id = item.user2_id;
+          name = item.user2_name;
+          user_img = item.user2_image_url;
+        } else {
+          room_user_id = item.user1_id;
+          name = item.user1_name;
+          user_img = item.user1_image_url; 
+        }
+        return {
+          room_id: item.id,
+          user_id: room_user_id,
+          user_name: name,
+          user_img: user_img, // 변수 수정
+          }});
+          
         setRoomData(userDetailsArray);
     } 
     else {
@@ -40,7 +55,7 @@ const getChatRoom = async () => {
     const selected = roomData.find(room => room.room_id === roomId);
     setSelectRoom(selected);
   };
-  
+  console.log(roomData)
   useEffect(() => {
     getChatRoom()
   }, [])

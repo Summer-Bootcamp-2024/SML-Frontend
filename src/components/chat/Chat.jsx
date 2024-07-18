@@ -1,149 +1,175 @@
 import sendimg from '../../assets/images/sendimg.png';
 import axios from 'axios';
 import { useApiUrlStore, useUserIdStore } from '../../store/store';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-function Chat({ selectedRoom,friendstatus }) {
+function Chat({ selectedRoom, friendstatus }) {
   const { apiUrl } = useApiUrlStore();
   const { user_id } = useUserIdStore();
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
-  const [status, setStatus] = useState('pending')
-  
+  const [status, setStatus] = useState('pending');
+  const socketRef = useRef(null);
 
-  // 채팅 전송
+  useEffect(() => {
+    if (selectedRoom.room_id && user_id) {
+      const socket = new WebSocket(`ws://localhost:8000/ws/${selectedRoom.room_id}/${user_id}`);
+
+      socket.onopen = () => {
+        console.log("WebSocket 연결이 열렸습니다");
+      };
+
+      socket.onmessage = (e) => {
+        const parsedData = JSON.parse(e.data);
+        console.log("백엔드에서 송신된 데이터:", parsedData);
+        setMessages((prevMessages) => [...prevMessages, parsedData]);
+      };
+
+      socket.onclose = () => {
+        console.log('WebSocket 연결이 닫혔습니다');
+      };
+
+      socket.onerror = (error) => {
+        console.error("WebSocket error:", error);
+      };
+
+      socketRef.current = socket;
+
+      return () => {
+        if (socketRef.current) {
+          socketRef.current.close();
+        }
+      };
+    }
+  }, [selectedRoom.room_id, user_id]);
+
   const sendMessage = (messageContent) => {
     if (messageContent.trim() !== '') {
       const newMessage = {
         content: messageContent,
-        sender: 'user',
-        withButton: friendstatus, // 버튼이 필요한 경우 true로 설정
+        sender: `${user_id}`,
+        withButton: friendstatus,
       };
-      setMessages((prevMessages) => [...prevMessages, newMessage]);
+
+      if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
+        socketRef.current.send(JSON.stringify(newMessage));
+        setMessages((prevMessages) => [...prevMessages, newMessage]);
+      }
+
       setInputMessage('');
     }
   };
 
-
-  // 기존 채팅 내역조회
   const getChatHistory = async () => {
+    if (selectedRoom.room_id) {
+      try {
+        const response = await axios.get(`${apiUrl}/messages/${selectedRoom.room_id}`, {
+          withCredentials: true,
+        });
+        console.log("기존 채팅내역:", response.data);
+        setMessages(response.data);
+      } catch (error) {
+        console.error('Error fetching chat history:', error);
+        alert('채팅 내역을 가져오는데 실패했습니다');
+      }
+    }
+  };
+
+  const postFriendStatus = async () => {
     try {
-      const response = await axios.get(`${apiUrl}/friends/${selectedRoom.room_id}`, {
+      const response = await axios.post(`${apiUrl}/friends/${selectedRoom.user2_id}`, null, {
         withCredentials: true,
       });
       console.log(response.data);
-      setMessages(responsed.data)
     } catch (error) {
-      console.error('Error fetching friend data:', error);
-      alert('일촌요청에 실패했습니다');
+      console.error('Error posting friend request:', error);
+      alert('일촌 요청에 실패했습니다');
     }
   };
 
-  //일촌요청
-  const postFriendStatus = async () => {
-    try {
-      const response = await axios.post(`${apiUrl}/friends/${friend_id}`, {
-        withCredentials: true,
-      });
-      console.log(response.data)
-    } catch (error) {
-      console.error('Error fetching friend data:', error);
-      alert('일촌요청에 실패했습니다');
-    }
-  };
-
-
-  // 일촌요청 수락/거절
   const updateFriendStatus = async () => {
     const putstatus = { status };
 
     try {
-      const response = await axios.put(`${apiUrl}/friends/${friend_id}`, putstatus, {
+      const response = await axios.put(`${apiUrl}/friends/${selectedRoom.user2_id}`, putstatus, {
         withCredentials: true,
       });
-      console.log(response.data)
+      console.log(response.data);
     } catch (error) {
-      console.error('Error fetching friend data:', error);
-      alert('일촌관계 변경을 실패했습니다');
+      console.error('Error updating friend status:', error);
+      alert('일촌 관계 변경에 실패했습니다');
     }
   };
 
-  {/*
-    // 수락요청 수락/거절
-  const updateFriendStatus = async () => {
-    const putstatus = { status };
-
-    try {
-      const response = await axios.put(`${apiUrl}/friends/${friend_id}`, putstatus, {
-        withCredentials: true,
-      });
-    } catch (error) {
-      console.error('Error fetching friend data:', error);
-      alert('일촌관계 변경을 실패했습니다');
-    }
-  };
-  */}
-
-
-    //status가 accepted일 경우에만 채팅방 생성
   const createChatRoom = async () => {
-    const id = {
-      user1_id: user_id,
-      user2_id: selectedRoom.user2_id,
-    }
-    try {
-      const response = await axios.post(`${apiUrl}/chatrooms`, id, {
-        withCredentials: true,
-      });
-      console.log(response.data)
-    } catch (error) {
-      console.error('Error fetching friend data:', error);
-      alert('채팅방 생성을 실패했습니다');
+    if (status === 'accepted') {
+      const id = {
+        user1_id: user_id,
+        user2_id: selectedRoom.user2_id,
+      };
+      try {
+        const response = await axios.post(`${apiUrl}/chatrooms`, id, {
+          withCredentials: true,
+        });
+        console.log(response.data);
+      } catch (error) {
+        console.error('Error creating chat room:', error);
+        alert('채팅방 생성에 실패했습니다');
+      }
     }
   };
 
-    useEffect(()=> {
-      getChatHistory()
-      createChatRoom()
-    }, [])
+  const handleFriendStatusUpdate = async (newStatus) => {
+    setStatus(newStatus);
+    await updateFriendStatus();
+    if (newStatus === 'accepted') {
+      await createChatRoom();
+    }
+  };
 
-    
+  useEffect(() => {
+    getChatHistory();
+    createChatRoom();
+  }, [selectedRoom.room_id]);
 
-  // 엔터 키를 누르면 메시지 전송
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
       sendMessage(inputMessage);
     }
   };
 
-
-
   return (
     <div className="flex items-center justify-center w-[60%] h-screen ml-[-30px] bg-white">
       <div className="w-[650px] h-[600px] border-2 border-custom-grey rounded-[10px] flex items-center justify-center bg-white shadow-lg">
         <div className="flex flex-col justify-center w-[90%] h-full">
           <div className="flex items-center w-full h-[80px] border-b-[1px] mt-[10px] border-custom-grey">
-            <img className="w-[50px] h-[50px] rounded-[115px] ml-[20px]" src={selectedRoom.user2_img}/>
-            <span className="text-[16px] font-bold ml-[10px]">{selectedRoom.user2_name}</span>
-            {!friendstatus && (
-              <button className="text-[14px] font-semibold text-custom-blue ml-auto mr-[20px]" onClick={postFriendStatus}>일촌 요청</button>
-            )}
+            <img className="w-[50px] h-[50px] rounded-[115px] ml-[20px]" src={selectedRoom.user_img} />
+            <span className="text-[16px] font-bold ml-[10px]">{selectedRoom.user_name}</span>
+            <button className="text-[14px] font-semibold text-custom-blue ml-auto mr-[20px]" onClick={postFriendStatus}>
+              일촌 요청
+            </button>
           </div>
           <div className="flex flex-col justify-end w-full h-[440px] overflow-y-auto p-[10px]">
             {messages.map((message, index) => (
-              <div key={index} className={`flex items-center w-full my-[4px] ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`flex items-center max-w-[80%] p-[10px] ${message.sender === 'user' ? 'bg-custom-blue text-custom-white' : 'bg-custom-white text-black'} rounded-[20px] text-[16px]`}>
+              <div key={index} className={`flex items-center w-full my-[4px] ${message.sender === `${user_id}` ? 'justify-end' : 'justify-start'}`}>
+                <div className={`flex items-center max-w-[80%] p-[10px] ${message.sender === `${user_id}` ? 'bg-custom-blue text-custom-white' : 'bg-custom-white text-black'} rounded-[20px] text-[16px]`}>
                   {message.content}
-                  {message.withButton &&
-                    <>
+                  {message.withButton && (
+                    <div>
                       <button
                         className='w-[80px] h-[35px] bg-custom-white rounded-[10px] mr-[20px] border-[1px] border-custom-grey'
-                        onClick={() => { setStatus('accepted'); updateFriendStatus(); createChatRoom(); }}>수락</button>
+                        onClick={() => handleFriendStatusUpdate('accepted')}
+                      >
+                        수락
+                      </button>
                       <button
                         className='w-[80px] h-[35px] bg-custom-white rounded-[10px] border-[1px] border-custom-grey'
-                        onClick={() => { setStatus('rejected'); updateFriendStatus(); }}>거절</button>
-                    </>
-                  }
+                        onClick={() => handleFriendStatusUpdate('rejected')}
+                      >
+                        거절
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
