@@ -12,7 +12,7 @@ function ProfileSlide({ isOpen, openCreditModal,onCloseSlide}) {
 
     return (
         <div
-            className={`fixed top-[125px] right-20 h-[calc(100vh-150px)] bg-custom-skyblue transition-transform duration-300 ${isOpen ? '' : 'translate-x-[400px]'}`}
+            className={`fixed top-[175px] rounded-[10px] border-2 border-custom-blue right-20 h-[calc(100vh-140px)] pb-[3%] bg-custom-skyblue transition-transform duration-300 ${isOpen ? '' : 'translate-x-[400px]'}`}
                 style={{
                     width: '500px',
                     // 'overflow-y-auto'를 추가하여 내부 내용만 스크롤되도록 설정합니다.
