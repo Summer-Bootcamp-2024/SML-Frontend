@@ -34,9 +34,10 @@ function Chat() {
   // 일촌요청 전송
   const postFriendStatus = async () => {
     try {
-      await axios.post(`${apiUrl}/friends/${friend_id}`, {
+      const response = await axios.post(`${apiUrl}/friends/${friend_id}`, {
         withCredentials: true,
       });
+      console.log(response.data)
     } catch (error) {
       console.error('Error fetching friend data:', error);
       alert('일촌요청에 실패했습니다');
