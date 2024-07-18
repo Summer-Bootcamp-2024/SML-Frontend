@@ -39,6 +39,19 @@ function Chat({ selectedRoom,friendstatus }) {
     }
   };
 
+  //일촌요청
+  const postFriendStatus = async () => {
+    try {
+      const response = await axios.post(`${apiUrl}/friends/${friend_id}`, {
+        withCredentials: true,
+      });
+      console.log(response.data)
+    } catch (error) {
+      console.error('Error fetching friend data:', error);
+      alert('일촌요청에 실패했습니다');
+    }
+  };
+
 
   // 일촌요청 수락/거절
   const updateFriendStatus = async () => {
@@ -85,7 +98,7 @@ function Chat({ selectedRoom,friendstatus }) {
       console.log(response.data)
     } catch (error) {
       console.error('Error fetching friend data:', error);
-      alert('일촌관계 변경을 실패했습니다');
+      alert('채팅방 생성을 실패했습니다');
     }
   };
 

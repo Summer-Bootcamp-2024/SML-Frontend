@@ -1,11 +1,12 @@
 import profileImg from '../../assets/images/myprofile/profileImg.png'
 import axios from 'axios';
+import { useState } from 'react';
 import { useApiUrlStore, useUserIdStore } from '../../store/store';
 
 function ChatRoom({roomListData, onChatRoomClick}) {
     const{apiUrl} = useApiUrlStore()
     const {user_id} = useUserIdStore()
-    const [friendstatus, setFriendStatus] = useState(false);
+    const [friendstatus, _setFriendStatus] = useState(false);
 
       {/*
   // 소개 요청 전송
@@ -15,7 +16,7 @@ function ChatRoom({roomListData, onChatRoomClick}) {
         withCredentials: true,
       });
       console.log(response.data);
-      setFriendStatus(true);
+
 
       // 채팅방 클릭 시 소개요청 채팅 자동으로 전송
       sendMessage(`${user_id}님께서 ${selectedRoom.user2_name}님을 소개받기 원합니다!`);
@@ -37,7 +38,7 @@ function ChatRoom({roomListData, onChatRoomClick}) {
                     <div key={room.room_id} className='flex items-center w-full h-[60px] border-b-[1px] border-custom-grey'
                     onClick={()=>onChatRoomClick(room.room_id)}
                     friendstatus={friendstatus}>
-                    <img className="w-[50px] h-[50px] rounded-[115px] ml-[20px] " src={room.user2_img}/>
+                    <img className="w-[50px] h-[50px] rounded-[115px] ml-[20px] border-2 border-custom-indigo" src={room.user2_img}/>
                         <span className='text-[16px] font-bold ml-[15px]'>{room.user2_name}</span>
                     </div>
                     ))}
