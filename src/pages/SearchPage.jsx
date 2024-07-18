@@ -5,10 +5,14 @@ import profileImg from '../assets/images/myprofile/profileImg.png'
 import { useState } from 'react'
 import ProfileSlide from '../components/search/profile/ProfileSlide'
 import Credit from '../components/CreditModal'
+import { useUserIdStore, useApiUrlStore } from '../store/store'
 
 function SearchPage() {
-  const [creditModalOpen, setCreditModalOpen] = useState(false)
-  const [selectProfile, setSelectProfile] = useState(null)
+  const { user_id } = useUserIdStore();
+  const { apiUrl } = useApiUrlStore();
+  const [creditModalOpen, setCreditModalOpen] = useState(false);
+  const [selectProfile, setSelectProfile] = useState(null);
+  const [friendId, setFriendId] = useState('');
 
   const profiles = [
     {

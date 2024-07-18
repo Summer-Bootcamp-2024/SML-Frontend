@@ -1,10 +1,13 @@
 import { useState } from "react";
 import Button from "./Button";
-import { Link } from "react-router-dom";
 import ChargeModal from "./ChargeModal";
 import { MdClose } from "react-icons/md"; 
+import { useApiUrlStore } from "../store/store";
+import axios from "axios";
 
-function Credit({onCloseModal}) {
+
+function Credit({onCloseModal, user_id, friendId }) {
+    const { apiUrl } = useApiUrlStore();
     const [chargeModalOpen, setChargeModalOpen] = useState(false);
     const [currentCredit, setCurrentCredit] = useState(0);
     const [giftCredit, setGiftCredit] = useState('');
@@ -21,14 +24,23 @@ function Credit({onCloseModal}) {
         setGiftCredit(e.target.value);
     }
 
-    const handleGiftSubmit = (e) => {
+    const handleGiftSubmit = async (e) => {
+        e.preventDefault();
         if (parseInt(giftCredit) > currentCredit) {
-            e.preventDefault();
             alert("선물할 크레딧이 현재 보유 크레딧보다 많습니다.");
         }
-        else if (currentCredit === 0) {
-            e.preventDefault();
-            alert("크레딧을 입력해주세요.");
+        else {
+            try {
+                const response = await axios.post(`${apiUrl}/chatrooms`, {
+                    user1_id: user_id,
+                    user2_id: friendId
+                });
+                window.alert("채팅방 생성 성공");
+                const chatRoomId = response.data.id;
+            } catch (err) {
+                window.alert('채팅방 생성 실패');
+                console.log(err);
+            }
         }
     }
     
@@ -44,7 +56,7 @@ function Credit({onCloseModal}) {
                                 <span>현재 보유 크레딧 {currentCredit} credit</span>
                             </div>
                         </div>
-                        <form>
+                        <form onSubmit={handleGiftSubmit}>
                             <div className='flex w-[80%] h-[80px] gap-[10px] justify-center items-center'>
                                 <input 
                                 type="text" 
@@ -56,9 +68,7 @@ function Credit({onCloseModal}) {
                                 <span className="font-black">credit</span>
                             </div>
                             <div className="flex gap-[40px]">
-                                <Link to='/chat'>
-                                    <Button label={"선물하기"} onClick={handleGiftSubmit}/>
-                                </Link>
+                                <Button label={"선물하기"} type="submit"/>
                                 <Button label={"충전하기"} onClick={setChargeModalOpen}/>
                             </div>
                         </form>
