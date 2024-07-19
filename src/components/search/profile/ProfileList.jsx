@@ -6,12 +6,8 @@ function ProfileList({ profiles, onCardClick }) {
       {profiles.map((profile, index) => (
         <ProfileCard
           key={index}
-          name={profile.name}
-          job={profile.job}
-          loc={profile.loc}
-          interest={profile.interest}
-          imgSrc={profile.imgSrc}
-          onClick={() => onCardClick(profile)}></ProfileCard>
+          profile={profile}
+          onClick={onCardClick}></ProfileCard>
       ))}
     </div>
   )
