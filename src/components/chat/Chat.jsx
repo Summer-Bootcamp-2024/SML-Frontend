@@ -10,7 +10,9 @@ function Chat({ selectedRoom, friendstatus }) {
   const [inputMessage, setInputMessage] = useState('');
   const [status, setStatus] = useState('pending');
   const socketRef = useRef(null);
+  const messagesEndRef = useRef(null); // Ref to track the end of messages list
 
+  //이중 JSON 파싱
   const parseContent = (content) => {
     if (typeof content === 'string') {
       try {
@@ -29,7 +31,7 @@ function Chat({ selectedRoom, friendstatus }) {
       const socket = new WebSocket(`ws://localhost:8000/ws/${selectedRoom.room_id}/${user_id}`);
 
       socket.onopen = () => {
-        console.log("WebSocket 연결이 열렸습니다");
+        console.log("WebSocket Connected");
       };
 
       socket.onmessage = (e) => {
@@ -46,7 +48,7 @@ function Chat({ selectedRoom, friendstatus }) {
       };
 
       socket.onclose = () => {
-        console.log('WebSocket 연결이 닫혔습니다');
+        console.log('WebSocket Closed');
       };
 
       socket.onerror = (error) => {
@@ -62,6 +64,17 @@ function Chat({ selectedRoom, friendstatus }) {
       };
     }
   }, [selectedRoom.room_id, user_id]);
+
+  useEffect(() => {
+    getChatHistory();
+    // createChatRoom();
+  }, [selectedRoom.room_id]);
+
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
 
   const sendMessage = (messageContent) => {
     if (messageContent.trim() !== '') {
@@ -86,8 +99,6 @@ function Chat({ selectedRoom, friendstatus }) {
         const response = await axios.get(`${apiUrl}/messages/${selectedRoom.room_id}`, {
           withCredentials: true,
         });
-        console.log("기존 채팅내역:", response.data);
-
         const parsedMessages = response.data.map((msg) => ({
           ...msg,
           content: parseContent(msg.content),
@@ -114,7 +125,6 @@ function Chat({ selectedRoom, friendstatus }) {
 
   const updateFriendStatus = async () => {
     const putstatus = { status };
-
     try {
       const response = await axios.put(`${apiUrl}/friends/${selectedRoom.user2_id}`, putstatus, {
         withCredentials: true,
@@ -134,11 +144,6 @@ function Chat({ selectedRoom, friendstatus }) {
     }
   };
 
-  useEffect(() => {
-    getChatHistory();
-    // createChatRoom();
-  }, [selectedRoom.room_id]);
-
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
       sendMessage(inputMessage);
@@ -156,7 +161,7 @@ function Chat({ selectedRoom, friendstatus }) {
               일촌 요청
             </button>
           </div>
-          <div className="flex flex-col justify-end w-full h-[440px] overflow-y-auto p-[10px]">
+          <div className="flex flex-col w-full h-[440px] overflow-y-auto border-2 p-[10px]">
             {messages.map((message, index) => (
               <div key={index} className={`flex items-center w-full my-[4px] ${message.sender_id === user_id ? 'justify-end' : 'justify-start'}`}>
                 <div className={`flex items-center max-w-[80%] p-[10px] ${message.sender_id === user_id ? 'bg-custom-blue text-custom-white' : 'bg-custom-white text-black'} rounded-[20px] text-[16px]`}>
@@ -180,6 +185,7 @@ function Chat({ selectedRoom, friendstatus }) {
                 </div>
               </div>
             ))}
+            <div ref={messagesEndRef} />
           </div>
           <div className="flex items-center justify-start w-full h-[80px] border-t-[1px] border-custom-grey">
             <input
