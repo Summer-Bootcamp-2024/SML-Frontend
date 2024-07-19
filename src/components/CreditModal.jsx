@@ -1,27 +1,45 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "./Button";
 import ChargeModal from "./ChargeModal";
 import { MdClose } from "react-icons/md"; 
-import { useApiUrlStore } from "../store/store";
+import { useApiUrlStore, useUserIdStore } from "../store/store";
 import axios from "axios";
 
 
-function Credit({onCloseModal, user_id, friendId }) {
+function Credit({onCloseModal, friendId }) {
     const { apiUrl } = useApiUrlStore();
+    const { user_id } = useUserIdStore();
     const [chargeModalOpen, setChargeModalOpen] = useState(false);
     const [currentCredit, setCurrentCredit] = useState(0);
     const [giftCredit, setGiftCredit] = useState('');
 
     const toggleChargeModal = () => {
-        setChargeModalOpen(!chargeModalOpen);
-    }    
-    const updateCredit = (addedCredit) => {
-        setCurrentCredit(currentCredit + addedCredit);
-        toggleChargeModal();
-    }
-
+        setChargeModalOpen(prev => !prev);
+    }  
+    
     const handleGiftInputChange = (e) => {
         setGiftCredit(e.target.value);
+    }
+
+    const getCredit = async () => {
+        try {
+            const response = await axios.get(`${apiUrl}/users/${user_id}`, {
+                withCredentials: true,
+            });
+            setCurrentCredit(response.data.credit);
+        } catch (err) {
+            window.alert('크레딧 조회 실패');
+        }
+            
+      }
+
+    useEffect(() => {
+        getCredit();
+    }, []);
+
+    const updateCredit = (addedCredit) => {
+        setCurrentCredit((prevCredit) => prevCredit + addedCredit);
+        toggleChargeModal();
     }
 
     const handleGiftSubmit = async (e) => {
@@ -69,14 +87,14 @@ function Credit({onCloseModal, user_id, friendId }) {
                             </div>
                             <div className="flex gap-[40px]">
                                 <Button label={"선물하기"} type="submit"/>
-                                <Button label={"충전하기"} onClick={setChargeModalOpen}/>
+                                <Button label={"충전하기"} onClick={toggleChargeModal}/>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
             {chargeModalOpen && (
-                <ChargeModal  onCloseModal={onCloseModal} onUpdateCredit={updateCredit} currentCredit={currentCredit}/>
+                <ChargeModal onCloseModal={() => setChargeModalOpen(false)} currentCredit={currentCredit} onUpdateCredit={updateCredit}/>
             )}
         </div>
     )
