@@ -1,17 +1,34 @@
 import { useState } from "react";
 import Button from "./Button";
 import { MdClose } from "react-icons/md"; 
+import axios from "axios";
+import { useApiUrlStore, useUserIdStore } from "../store/store";
 
-function ChargeModal({onCloseModal, onUpdateCredit, currentCredit}) {
-    const [selectedCredit, setSelectedCredit] = useState(null);
+function ChargeModal({onCloseModal, currentCredit, onUpdateCredit}) {
+    const { apiUrl } = useApiUrlStore();
+    const { user_id } = useUserIdStore();
+    const [selectedCredit, setSelectedCredit] = useState(0);
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleButtonClick = (credit) => {
         setSelectedCredit(credit);
     }
     
-    const handleCharge = () => {
+    const handleCharge = async () => {
         if (selectedCredit) {
-            onUpdateCredit(selectedCredit);
+            setIsLoading(true);
+            try {
+                const response = await axios.put(`${apiUrl}/users/${user_id}/credit`, {
+                    credits: selectedCredit
+                });
+                onUpdateCredit(selectedCredit);
+                setSelectedCredit(0);
+                onCloseModal();
+            } catch (err) {
+                window.alert('충전 실패');
+            } finally {
+                setIsLoading(false);
+            }
         }
     }
 
@@ -46,7 +63,7 @@ function ChargeModal({onCloseModal, onUpdateCredit, currentCredit}) {
                             </div>
                         </div>
                         <div className="flex items-end w-[30%] h-full">
-                            <Button label={"충전하기"} onClick={handleCharge}></Button>
+                            <Button label={isLoading ? "충전중..." : "충전하기"} onClick={handleCharge} disabled={isLoading}></Button>
                         </div>
                     </div>
                 </div>

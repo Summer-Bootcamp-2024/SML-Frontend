@@ -53,8 +53,7 @@ function Mypage() {
     }
 
     const updateCredit = (addedCredit) => {
-        setCurrentCredit(currentCredit + addedCredit);
-        closeChargeModal();
+        setCurrentCredit((prevCredit) => prevCredit + addedCredit);
     }
 
     const deleteUser = async () => {
