@@ -11,6 +11,19 @@ function Chat({ selectedRoom, friendstatus }) {
   const [status, setStatus] = useState('pending');
   const socketRef = useRef(null);
 
+  const parseContent = (content) => {
+    if (typeof content === 'string') {
+      try {
+        const contentObj = JSON.parse(content);
+        return contentObj.content || content; // contentObj가 content 필드를 가질 경우 그것을 사용
+      } catch (error) {
+        console.error("Error parsing nested JSON:", error);
+        return content;
+      }
+    }
+    return content;
+  };
+
   useEffect(() => {
     if (selectedRoom.room_id && user_id) {
       const socket = new WebSocket(`ws://localhost:8000/ws/${selectedRoom.room_id}/${user_id}`);
@@ -22,20 +35,9 @@ function Chat({ selectedRoom, friendstatus }) {
       socket.onmessage = (e) => {
         try {
           const parsedData = JSON.parse(e.data);
-          let content = parsedData.content;
-
-          if (typeof content === 'string') {
-            try {
-              const contentObj = JSON.parse(content);
-              content = contentObj.content || content; // contentObj가 content 필드를 가질 경우 그것을 사용
-            } catch (error) {
-              console.error("Error parsing nested JSON:", error);
-            }
-          }
-
           const messageData = {
             ...parsedData,
-            content: content,
+            content: parseContent(parsedData.content),
           };
           setMessages((prevMessages) => [...prevMessages, messageData]);
         } catch (error) {
@@ -65,21 +67,14 @@ function Chat({ selectedRoom, friendstatus }) {
     if (messageContent.trim() !== '') {
       const newMessage = {
         type: 'message',
-      
-          content: messageContent,
-      
-        client_id: user_id,
+        content: messageContent,
+        sender_id: user_id,
         withButton: friendstatus,
       };
 
       if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
         socketRef.current.send(JSON.stringify(newMessage));
       }
-
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        newMessage // 보낸 메시지를 배열에 추가
-      ]);
 
       setInputMessage('');
     }
@@ -92,7 +87,12 @@ function Chat({ selectedRoom, friendstatus }) {
           withCredentials: true,
         });
         console.log("기존 채팅내역:", response.data);
-        setMessages(response.data);
+
+        const parsedMessages = response.data.map((msg) => ({
+          ...msg,
+          content: parseContent(msg.content),
+        }));
+        setMessages(parsedMessages);
       } catch (error) {
         console.error('Error fetching chat history:', error);
         alert('채팅 내역을 가져오는데 실패했습니다');
@@ -158,8 +158,8 @@ function Chat({ selectedRoom, friendstatus }) {
           </div>
           <div className="flex flex-col justify-end w-full h-[440px] overflow-y-auto p-[10px]">
             {messages.map((message, index) => (
-              <div key={index} className={`flex items-center w-full my-[4px] ${message.client_id === user_id ? 'justify-end' : 'justify-start'}`}>
-                <div className={`flex items-center max-w-[80%] p-[10px] ${message.client_id === user_id ? 'bg-custom-blue text-custom-white' : 'bg-custom-white text-black'} rounded-[20px] text-[16px]`}>
+              <div key={index} className={`flex items-center w-full my-[4px] ${message.sender_id === user_id ? 'justify-end' : 'justify-start'}`}>
+                <div className={`flex items-center max-w-[80%] p-[10px] ${message.sender_id === user_id ? 'bg-custom-blue text-custom-white' : 'bg-custom-white text-black'} rounded-[20px] text-[16px]`}>
                   {message.content}
                   {message.withButton && (
                     <div>
