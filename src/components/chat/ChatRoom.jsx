@@ -38,8 +38,8 @@ function ChatRoom({roomListData, onChatRoomClick}) {
                     <div key={room.room_id} className='flex items-center w-full h-[60px] border-b-[1px] border-custom-grey'
                     onClick={()=>onChatRoomClick(room.room_id)}
                     friendstatus={friendstatus}>
-                    <img className="w-[50px] h-[50px] rounded-[115px] ml-[20px] border-2 border-custom-indigo" src={room.user2_img}/>
-                        <span className='text-[16px] font-bold ml-[15px]'>{room.user2_name}</span>
+                    <img className="w-[50px] h-[50px] rounded-[115px] ml-[20px] border-2 border-custom-indigo" src={room.user_img}/>
+                        <span className='text-[16px] font-bold ml-[15px]'>{room.user_name}</span>
                     </div>
                     ))}
                 </div>
