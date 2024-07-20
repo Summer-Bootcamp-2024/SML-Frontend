@@ -38,7 +38,7 @@ function SearchPage() {
       <Sidebar></Sidebar>
       <div className="flex flex-col items-center w-[calc(100vw-296px)] h-full">
         <div className="flex h-[150px] items-center justify-start w-full border-b-[1px] border-custom-grey">
-          <SearchBar setSearchResults={setSearchResults} apiUrl={apiUrl} />
+          <SearchBar setSearchResults={setSearchResults} />
         </div>
         <div className="flex items-center justify-center w-full h-full">
           {searchResults.length === 0 ? (
@@ -48,12 +48,12 @@ function SearchPage() {
               <span className="font-bold">원하는 관심분야를 검색하면 해당되는 이촌을 보여드립니다</span>
             </div>
           ) : (
-            <div className={`mt-[5%] flex justify-center items-center flex-grow w-full h-full transition-transform duration-300 ${selectProfile ? 'translate-x-[-500px]' : ''}`}>
+            <div className={`mt-[5%] flex justify-center items-center flex-grow w-full h-full transition-transform duration-300 ${selectProfile ? 'translate-x-[-400px]' : ''}`}>
               <ProfileList profiles={searchResults} onCardClick={handleCardClick} />
             </div>
           )}
           {selectProfile && (
-            <ProfileSlide isOpen={true} onCloseSlide={closeProfile} openCreditModal={openCreditModal} />
+            <ProfileSlide isOpen={true} onCloseSlide={closeProfile} openCreditModal={openCreditModal} ProfileId={selectProfile}/>
           )}
           {creditModalOpen && <Credit onCloseModal={onCloseModal} />}
         </div>

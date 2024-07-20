@@ -7,7 +7,7 @@ function ProfileList({ profiles, onCardClick }) {
         <ProfileCard
           key={index}
           profile={profile}
-          onClick={onCardClick}></ProfileCard>
+          onCardClick={onCardClick}></ProfileCard>
       ))}
     </div>
   )
