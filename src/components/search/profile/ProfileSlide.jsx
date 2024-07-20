@@ -92,7 +92,7 @@ function ProfileSlide({ isOpen, openCreditModal,onCloseSlide, ProfileId }) {
         if (myFriendList.length > 0 && profileFreindList.length > 0) {
             getCommonFriendList();
         }
-      }, []);
+      }, [profileFreindList]);
 
     return (
         <div
