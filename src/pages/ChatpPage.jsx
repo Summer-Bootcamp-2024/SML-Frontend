@@ -23,22 +23,26 @@ const getChatRoom = async () => {
         const userDetailsArray = response.data.map(item => {
           let room_user_id = 0;
           let name = null;
-         let user_img = null;
+          let other = null;
+          let user_img = null;
          
          if (user_id === item.user1_id) {
           room_user_id = item.user2_id;
-          name = item.user2_name;
+          name = item.user1_name;
+          other = item.user2_name;
           user_img = item.user2_image_url;
         } else {
           room_user_id = item.user1_id;
-          name = item.user1_name;
+          name = item.user2_name;
+          other = item.user1_name;
           user_img = item.user1_image_url; 
         }
         return {
           room_id: item.id,
-          user_id: room_user_id,
+          other_id: room_user_id,
           user_name: name,
-          user_img: user_img, // 변수 수정
+          other_name: other,
+          other_img: user_img, // 변수 수정
           }});
           
         setRoomData(userDetailsArray);
@@ -47,7 +51,6 @@ const getChatRoom = async () => {
         console.log('채팅방이 없습니다');
     }} catch (error) {
       console.error('Error fetching friend data:', error);
-      alert('채팅방을 불러오지 못했습니다');
     }
   };
 
