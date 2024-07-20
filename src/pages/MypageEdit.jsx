@@ -93,7 +93,7 @@ function MypageEdit() {
     }
 
     return (
-        <div className="flex justify-end w-full h-[100vh]">
+        <div className="flex justify-end w-full h-[100vh] font-[Pretendard]">
             <Sidebar />
             <div className="flex flex-col gap-[46px] justify-center items-center w-[calc(100vw-296px)] h-[100vh]">
                 <div className="flex w-[840px] h-[450px] bg-custom-grey/10 rounded-[10px] shadow-custom-blue/30 shadow-lg border-2 border-custom-blue">

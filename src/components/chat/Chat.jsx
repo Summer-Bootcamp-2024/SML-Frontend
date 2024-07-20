@@ -241,7 +241,7 @@ function Chat({ selectedRoom, getChatRoom }) {
   };
 
   return (
-    <div className="flex items-center justify-center w-[60%] h-screen ml-[-30px] bg-white">
+    <div className="flex items-center justify-center w-[60%] h-screen ml-[-30px] bg-white font-[Pretendard]">
       <div className="w-[650px] h-[600px] border-2 border-custom-grey rounded-[10px] flex items-center justify-center bg-white shadow-lg">
         <div className="flex flex-col justify-center w-[90%] h-full">
           <div className="flex items-center justify-between w-full h-[80px] mt-[10px]">

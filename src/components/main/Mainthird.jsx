@@ -8,7 +8,7 @@ function Mainthird() {
         <div className='flex'>
           <div className='w-[1200px] flex items-center justify-between'>
             <div className="flex flex-col p-[20px]">
-              <div className="flex flex-col justify-center">
+              <div className="flex flex-col justify-center font-[GmarketSansMedium]">
                 <div>
                   <span className="text-[48px] font-bold mr-[15px]">내친구는</span>  
                   <span className="text-[48px] font-bold text-custom-blue mr-[15px]">일촌</span>
@@ -18,7 +18,7 @@ function Mainthird() {
                   <span className="text-[48px] font-bold text-custom-blue">이촌</span>
                 </div>
               </div>
-              <div className="flex flex-col items-start">
+              <div className="flex flex-col items-start font-[Pretendard]">
                 <span className='text-[16px] font-semibold'>일촌과 이촌으로 나와의 관계도를 한눈에 파악할 수 있어요!</span>
               </div>
             </div>

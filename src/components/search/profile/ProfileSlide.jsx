@@ -113,18 +113,18 @@ function ProfileSlide({ isOpen, openCreditModal,onCloseSlide, ProfileId }) {
                         <img src={profileimage} className='w-[130px] min-h-[130px]'></img>
                         <div className='w-[50%] flex justify-between'>
                             <div className='flex flex-col'>
-                                <span className='font-semibold mb-[5px]'>이름</span>
-                                <span className='font-semibold mb-[5px]'>나이</span>
-                                <span className='font-semibold mb-[5px]'>직업</span>
-                                <span className='font-semibold mb-[5px]'>위치</span>
-                                <span className='font-semibold mb-[5px]'>관심 분야</span>
+                                <span className='font-semibold w-[80px] h-[30px] flex items-center justify-start'>이름</span>
+                                <span className='font-semibold w-[80px] h-[30px] flex items-center justify-start'>나이</span>
+                                <span className='font-semibold w-[80px] h-[30px] flex items-center justify-start'>직업</span>
+                                <span className='font-semibold w-[80px] h-[30px] flex items-center justify-start'>위치</span>
+                                <span className='font-semibold w-[80px] h-[30px] flex items-center justify-start'>관심 분야</span>
                             </div>
                             <div className='flex flex-col'>
-                                <span className='mb-[5px]'>{profileData.name}</span>
-                                <span className='mb-[5px]'>{profileData.age}세</span>
-                                <span className='mb-[5px]'>{profileData.job}</span>
-                                <span className='mb-[5px]'>{profileData.region}</span>
-                                <span className='mb-[5px]'>{profileData.category}</span>
+                                <span className='h-[30px] w-[80px] flex items-center justify-start'>{profileData.name}</span>
+                                <span className='h-[30px] w-[80px] flex items-center justify-start'>{profileData.age}세</span>
+                                <span className='h-[30px] w-[80px] flex items-center justify-start'>{profileData.job}</span>
+                                <span className='h-[30px] w-[80px] flex items-center justify-start'>{profileData.region}</span>
+                                <span className='h-[30px] w-[80px] flex items-center justify-start'>{profileData.category}</span>
                             </div>
                         </div>
                     </div>

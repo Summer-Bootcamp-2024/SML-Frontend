@@ -35,10 +35,10 @@ function SignupPage() {
     }
 
     return (
-        <div className="flex w-full h-[100vh] items-center justify-center bg-[#D7ECFF]">
+        <div className="flex w-full h-[100vh] items-center justify-center bg-[#D7ECFF] font-[Pretendard] ">
             <div className="flex flex-col gap-[28px] justify-center items-center w-[450px] h-[550px] rounded-[20px] shadow-2xl bg-white">
-                <h1 className="text-2xl font-extrabold tracking-tight text-gray-600">Sign up</h1>
-                <form onSubmit={handleSignup} className="flex flex-col gap-[15px] items-center">
+                <h1 className="text-2xl font-extrabold tracking-tight text-gray-600 font-[GmarketSansMedium]">Sign up</h1>
+                <form onSubmit={handleSignup} className="flex flex-col gap-[15px] items-center ">
                     <input 
                     type="text" 
                     placeholder="name"

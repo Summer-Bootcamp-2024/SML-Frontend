@@ -31,7 +31,7 @@ function ChatRoom({roomListData, onChatRoomClick}) {
   */}
   
   return (
-        <div className='flex items-center justify-center w-[40%] mr-[-30px] h-screen bg-white'>
+        <div className='flex items-center justify-center w-[40%] mr-[-30px] h-screen bg-white font-[Pretendard]'>
             <div className='w-[350px] h-[600px] border-2 border-custom-grey rounded-[10px] flex justify-center items-center overflow-y-auto shadow-lg'>
                 <div className='flex flex-col  w-[90%] h-[90%]'>
                     {roomListData.map((room) => (
