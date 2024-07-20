@@ -1,6 +1,6 @@
-function ProfileImg({src}) {
+function ProfileImg({image_url}) {
     return (
-        <img src={src}
+        <img src={image_url}
         className="w-[100px] h-[100px] rounded-full" />
     )
 }
