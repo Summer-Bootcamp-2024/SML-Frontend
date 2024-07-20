@@ -8,30 +8,91 @@ import { useEffect } from 'react';
 
 function ProfileSlide({ isOpen, openCreditModal,onCloseSlide, ProfileId }) {
     const { apiUrl } = useApiUrlStore();
+    const { user_id } = useUserIdStore();
     const [clickedIndex, setClickedIndex] = useState(null); //일촌목록 선택 여부
     const [profileData, setProfileData] = useState('');
+    const [myFriendList, setMyFriendList] = useState([]);
+    const [profileFreindList, setProfileFreindList] = useState([]);
+    const [commonFriendList, setCommonFriendList] = useState([]);
     
     const handleItemClick = (index) => {
         setClickedIndex(index);
     };
 
-    //친구 프로필 정보 조회
+    //검색 결과 프로필 정보 조회
     const getFriendProfile = async (ProfileId) => {
         try {
           const response = await axios.get(`${apiUrl}/users/${ProfileId}`, {
             withCredentials: true,
           });
-          setProfileData(response.data)
-          getFriendList(ProfileId)
+          setProfileData(response.data);
+          getProfileFriends(ProfileId);
         } catch (error) {
           console.error('Error fetching friend data:', error);
           alert('프로필 정보를 불러오지 못했습니다');
         }
       };
-    
+
+      //내 친구 목록 조회
+      const getMyFriends = async () => {
+        try {
+            const response = await axios.get(`${apiUrl}/friends/list/${user_id}`, {
+                withCredentials: true,
+            });
+            setMyFriendList(response.data);
+        } catch (err) {
+            console.log(err);
+            alert('내 친구 목록을 불러오지 못했습니다');
+        }
+      }
+
+      //검색 결과로 나온 사용자의 친구 목록 조회
+      const getProfileFriends = async (ProfileId) => {
+        try {
+            const response = await axios.get(`${apiUrl}/friends/list/${ProfileId}`, {
+                withCredentials: true,
+            });
+            setProfileFreindList(response.data);
+        } catch (err) {
+            alert('사용자의 친구 목록을 불러오지 못했습니다');
+        }
+      }
+
+      //나와 같이 아는 일촌 목록 조회
+      const getCommonFriendList = async () => {
+        const common = myFriendList.filter(myFriend => 
+            profileFreindList.some(profileFriend => profileFriend.id === myFriend.id)
+        );
+        console.log(common);
+        
+        const detailedCommonFriends = await Promise.all(common.map(async (friend) => {
+            try {
+                const response = await axios.get(`${apiUrl}/users/${friend.friend_id}`, {
+                    withCredentials: true,
+                });
+                return response.data;
+            } catch (err) {
+                return null;
+            }
+        }));
+
+        setCommonFriendList(detailedCommonFriends.filter(friend => friend !== null));
+      }
+
       useEffect(() => {
+        console.log(ProfileId);
+        console.log(user_id);
         getFriendProfile(ProfileId);
+        getMyFriends();
       }, []); 
+
+      useEffect(() => {
+        console.log(myFriendList);
+        console.log(profileFreindList);
+        if (myFriendList.length > 0 && profileFreindList.length > 0) {
+            getCommonFriendList();
+        }
+      }, [profileFreindList]);
 
     return (
         <div
@@ -72,14 +133,14 @@ function ProfileSlide({ isOpen, openCreditModal,onCloseSlide, ProfileId }) {
                             <span className='ml-[25px] text-[18px] font-semibold text-custom-white'>일촌 목록</span>
                         </div>
                         <div className='flex-col w-full h-[220px] overflow-y-auto bg-custom-white rounded-b-[10px]'>
-                            {['김민지', '이철수', '박영희', '홍길동', '이순신'].map((name, index) => (
+                            {commonFriendList.map((friend, index) => (
                                 <div
-                                    key={index}
+                                    key={friend.id}
                                     className={`flex w-full min-h-[40px] justify-between border-b-[1px] border-custom-grey cursor-pointer ${clickedIndex === index ? 'bg-custom-orange bg-opacity-50 border-custom-orange border-2 font-bold' : ''}`}
                                     onClick={() => handleItemClick(index)}
                                 >
-                                    <div className='flex items-center ml-[30px]'>{name}</div>
-                                    <div className='flex items-center text-[14px] text-custom-blue mr-[30px]'>#테니스</div>
+                                    <div className='flex items-center ml-[30px]'>{friend.name}</div>
+                                    <div className='flex items-center text-[14px] text-custom-blue mr-[30px]'>#{friend.category}</div>
                                 </div>
                             ))}
                         </div>

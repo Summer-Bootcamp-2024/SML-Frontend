@@ -6,7 +6,7 @@ import { useApiUrlStore, useUserIdStore } from "../store/store";
 import axios from "axios";
 
 
-function Credit({onCloseModal, friendId }) {
+function Credit({ onCloseModal, friendId }) {
     const { apiUrl } = useApiUrlStore();
     const { user_id } = useUserIdStore();
     const [chargeModalOpen, setChargeModalOpen] = useState(false);
@@ -57,7 +57,7 @@ function Credit({onCloseModal, friendId }) {
                 const chatRoomId = response.data.id;
             } catch (err) {
                 window.alert('채팅방 생성 실패');
-                console.log(err);
+                console.log(err.response.data.detail);
             }
         }
     }

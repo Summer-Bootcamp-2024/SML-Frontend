@@ -40,7 +40,6 @@ function FriendList({}) {
     friendIds.forEach(friend_id => getFriend(friend_id));
   } catch (error) {
     console.error('Error fetching friend list:', error);
-    alert('일촌 목록을 불러오지 못했습니다');
   }
 };
 
