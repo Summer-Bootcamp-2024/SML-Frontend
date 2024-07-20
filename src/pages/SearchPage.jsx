@@ -90,7 +90,7 @@ function SearchPage() {
   }
 
   return (
-    <div className="flex w-full h-[100vh] ">
+    <div className="flex w-full h-[100vh] font-[Pretendard] ">
       <Sidebar></Sidebar>
       <div className="flex flex-col items-center w-[calc(100vw-296px)] h-full overflow-y-auto">
         <div className="flex h-[200px] p-[3%] items-center justify-start w-full border-b-[1px] border-custom-grey">

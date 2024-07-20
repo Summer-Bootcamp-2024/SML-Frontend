@@ -20,7 +20,7 @@ function FriendListPage() {
    
   
   return (
-   <div className='flex'>
+   <div className='flex font-[Pretendard]'>
     <Sidebar/>
     <div className='flex flex-col justify-center w-[calc(100vw-296px)] h-screen'>
       <div className=' h-[20%] flex items-center border-b-[1px] border-custom-grey '>

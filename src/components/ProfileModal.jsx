@@ -96,7 +96,7 @@ const getFriendProfile = async (ProfileId) => {
 
  
     return (
-        <div className='fixed top-0 flex items-center justify-center w-[calc(100vw-296px)] min-h-screen border-2 backdrop-blur-sm'>
+        <div className='fixed top-0 flex items-center justify-center w-[calc(100vw-296px)] min-h-screen border-2 backdrop-blur-sm font-[Pretendard]'>
             <div className="absolute w-[500px] min-h-[650px] bg-custom-skyblue backdrop-blur">
                 <button className="flex justify-end w-full" onClick={PostingClosedModal}><MdClose className='w-[20px] h-[20px] mr-[10px] mt-[10px]'/></button>
                 <div className='flex flex-col items-center'>
@@ -113,11 +113,11 @@ const getFriendProfile = async (ProfileId) => {
                                         <span className='font-semibold w-[80px] h-[30px] flex items-center justify-start'>관심 분야</span>
                                     </div>
                                     <div className='flex flex-col ml-[10px]'>
-                                        <span className='h-[30px] flex items-center justify-start'>{profileData.name}</span>
-                                        <span className='h-[30px] flex items-center justify-start'>{profileData.age}</span>
-                                        <span className='h-[30px] flex items-center justify-start'>{profileData.job}</span>
-                                        <span className='h-[30px] flex items-center justify-start'>{profileData.region}</span>
-                                        <span className='h-[30px] flex items-center justify-start'>{profileData.category}</span>
+                                        <span className='h-[30px] w-[80px] flex items-center justify-start'>{profileData.name}</span>
+                                        <span className='h-[30px] w-[80px] flex items-center justify-start'>{profileData.age}세</span>
+                                        <span className='h-[30px] w-[80px] flex items-center justify-start'>{profileData.job}</span>
+                                        <span className='h-[30px] w-[80px] flex items-center justify-start'>{profileData.region}</span>
+                                        <span className='h-[30px] w-[80px] flex items-center justify-start'>{profileData.category}</span>
                                     </div>
                                 </div>
                             </div>

@@ -33,7 +33,7 @@ function ChargeModal({onCloseModal, currentCredit, onUpdateCredit}) {
     }
 
     return (
-        <div className={`fixed flex items-center justify-center w-[calc(100vw-296px)] min-h-screen border-2 backdrop-blur-sm`}>
+        <div className={`fixed flex items-center justify-center w-[calc(100vw-296px)] min-h-screen border-2 backdrop-blur-sm font-[Pretendard]`}>
             <div className="flex flex-col justify-center items-center w-[700px] h-[450px] bg-custom-white backdrop-blur rounded-[10px] border border-custom-grey">
             <button className="flex justify-end mt-[-40px] mb-[10px] w-full" onClick={onCloseModal}><MdClose className='w-[20px] h-[20px] mr-[10px]'/></button>
                 <div className='flex flex-col gap-[60px] w-[550px] h-[350px] justify-center items-center p-[20px]comcoiccom'>

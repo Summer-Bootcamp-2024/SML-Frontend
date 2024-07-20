@@ -9,7 +9,7 @@ function Mainsecond() {
         <div className="flex">
           <div className="w-[1200px] flex items-center justify-between">
             <div className="flex flex-col p-[20px]">
-              <div className="flex flex-col">
+              <div className="flex flex-col font-[GmarketSansMedium]">
                 <div>
                   <span className="text-[48px] font-bold mr-[15px]">마음을</span>
                   <span className="text-[48px] font-bold text-custom-blue">크레딧</span>
@@ -20,7 +20,7 @@ function Mainsecond() {
                   <span className="text-[48px] font-bold text-custom-blue">매칭</span>
                 </div>
               </div>
-              <div className="flex flex-col items-start">
+              <div className="flex flex-col items-start font-[Pretendard]">
                 <span className="text-[16px] font-semibold">
                   크레딧을 선물하여 내 일촌의 지인을 소개받아
                 </span>

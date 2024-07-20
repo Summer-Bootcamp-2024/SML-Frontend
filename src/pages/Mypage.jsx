@@ -74,7 +74,7 @@ function Mypage() {
     }
 
     return (
-        <div className="flex justify-end w-full h-[100vh]">
+        <div className="flex justify-end w-full h-[100vh] font-[Pretendard]">
             <Sidebar></Sidebar>
             <div className="flex flex-col gap-[46px] justify-center items-center w-[calc(100vw-296px)] h-[100vh]">
                 <div className="relative flex w-[800px] h-[350px] bg-custom-blue/30 rounded-[10px] shadow-custom-blue/30 shadow-lg border-2 border-custom-blue">

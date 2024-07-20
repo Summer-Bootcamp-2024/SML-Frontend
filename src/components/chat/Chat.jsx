@@ -151,11 +151,11 @@ function Chat({ selectedRoom, friendstatus }) {
   };
 
   return (
-    <div className="flex items-center justify-center w-[60%] h-screen ml-[-30px] bg-white">
+    <div className="flex items-center justify-center w-[60%] h-screen ml-[-30px] bg-white font-[Pretendard]">
       <div className="w-[650px] h-[600px] border-2 border-custom-grey rounded-[10px] flex items-center justify-center bg-white shadow-lg">
         <div className="flex flex-col justify-center w-[90%] h-full">
           <div className="flex items-center w-full h-[80px] border-b-[1px] mt-[10px] border-custom-grey">
-            <img className="w-[50px] h-[50px] rounded-[115px] ml-[20px]" src={selectedRoom.user_img} />
+            <img className="w-[50px] h-[50px] rounded-[115px] ml-[20px]" src={profileImg} />
             <span className="text-[16px] font-bold ml-[10px]">{selectedRoom.user_name}</span>
             <button className="text-[14px] font-semibold text-custom-blue ml-auto mr-[20px]" onClick={postFriendStatus}>
               일촌 요청
