@@ -8,7 +8,7 @@ function Mainfirst() {
         <div className='flex'>
           <div className='w-[1200px] flex items-center justify-between'>
             <div className="flex flex-col p-[20px]">
-              <div className="flex justify-center ">
+              <div className="flex justify-center font-[GmarketSansMedium]">
                 <span className="text-[48px] font-bold text-custom-blue mr-[15px] ">Search, Match</span>
                 <span className="text-[48px] font-bold mr-[15px]">and</span>
                 <span className="text-[48px] font-bold text-custom-blue">Link</span>
