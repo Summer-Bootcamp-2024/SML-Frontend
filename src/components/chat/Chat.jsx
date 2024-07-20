@@ -1,5 +1,5 @@
 import sendimg from '../../assets/images/sendimg.png';
-import profileimg from '../../assets/images/myprofile/profileImg.png'
+import profileimg from '../../assets/images/myprofile/profileImg.png';
 import axios from 'axios';
 import { useApiUrlStore, useUserIdStore } from '../../store/store';
 import { useEffect, useRef, useState } from 'react';
@@ -65,9 +65,7 @@ function Chat({ selectedRoom }) {
         }
       };
     }
-  }, [selectedRoom.room_id,user_id]);
-
-
+  }, [selectedRoom.room_id, user_id]);
 
   //무한스크롤 구현
   useEffect(() => {
@@ -75,7 +73,6 @@ function Chat({ selectedRoom }) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages]);
-
 
   //채팅 전송
   const sendMessage = (messageContent) => {
@@ -93,7 +90,6 @@ function Chat({ selectedRoom }) {
     }
   };
 
-
   //기존 채팅 내역 조회
   const getChatHistory = async () => {
     if (selectedRoom.room_id) {
@@ -108,11 +104,11 @@ function Chat({ selectedRoom }) {
         setMessages(parsedMessages)
 
         //기존 채팅 내역이 없고 user_id가 A와 동일할 경우
-        if(parsedMessages.length===0 && user_id ===1){
+        if (parsedMessages.length === 0 && user_id === 1) {
           sendMessage(`${selectedRoom.user_name}님께서 ${selectedRoom.other_name}님을 소개받기 원합니다!`);
           sendMessage("소개요청 버튼을 눌러서 지인을 소개 해보세요!")
-        } 
-      }catch (error) {
+        }
+      } catch (error) {
         console.error('Error fetching chat history:', error);
         alert('채팅 내역을 가져오는데 실패했습니다');
       }
@@ -124,31 +120,12 @@ function Chat({ selectedRoom }) {
     // createChatRoom();
   }, [selectedRoom.room_id]);
 
-
   //BC채팅방 생성
   const createBCChatRoom = async () => {
-    const id = { 
-      user1_id : 2,
-      user2_id : 3
-     };
-    try {
-      const response = await axios.post(`${apiUrl}/chatrooms/`, id, {
-        withCredentials: true,
-      });
-      console.log(response.data);
-    } catch (error) {
-      console.error('Error updating friend status:', error);
-      console.log("채팅방을 만들지 못했습니다");
-    }
-  };
-
-
-  //CA채팅방 생성
-  const createCAChatRoom = async () => {
-    const creatroomid = { 
-      user1_id : 1,
-      user2_id : 3
-     };
+    const creatroomid = {
+      user1_id: 2,
+      user2_id: 3
+    };
     try {
       const response = await axios.post(`${apiUrl}/chatrooms/`, creatroomid, {
         withCredentials: true,
@@ -160,14 +137,64 @@ function Chat({ selectedRoom }) {
     }
   };
 
-
-  //일촌요청
-  const postFriendStatus = async () => {
+  //CA채팅방 생성
+  const createCAChatRoom = async () => {
+    const creatroomid = {
+      user1_id: 1,
+      user2_id: 3
+    };
     try {
-      const response = await axios.post(`${apiUrl}/friends/${selectedRoom.user2_id}`, null, {
+      const response = await axios.post(`${apiUrl}/chatrooms/`, creatroomid, {
         withCredentials: true,
       });
       console.log(response.data);
+    } catch (error) {
+      console.error('Error updating friend status:', error);
+      console.log("채팅방을 만들지 못했습니다");
+    }
+  };
+
+  //소개요청 버튼 클릭
+  const handleClicked = () => {
+    const userConfirmed = window.confirm(`${selectedRoom.user2_id} 소개하기를 진행할까요? \n보답으로 소정의 크레딧을 드려요 (확인:수락 취소:거절)`)
+    if (userConfirmed) { //확인 눌렀을 경우
+      createBCChatRoom() // 채팅방 생성
+    } else {
+      setStatus("rejected") //취소 눌렀을 경우 
+      updateIntroduceStatus() //status rejected 전달
+    }
+  }
+
+  //소개요청 status 수정
+  const updateIntroduceStatus = async () => {
+    const introducestatus = {
+      status: status
+    };
+    try {
+      const request_id = 1;
+      const response = await axios.put(`${apiUrl}/introduction_request/${request_id}`, introducestatus, {
+        withCredentials: true,
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error updating friend status:', error);
+      alert('소개요청에 실패했습니다')
+    }
+  };
+
+  //일촌요청
+  const postFriendStatus = async () => {
+    sendMessage(`${selectedRoom.user_name}님께서 ${selectedRoom.other_name}님을 일촌을 신청했습니다!`);
+    const postfriendId = {
+      user_id: user_id
+    }
+    try {
+      const friend_id = 1;
+      const response = await axios.post(`${apiUrl}/friends/${friend_id}`, postfriendId, {
+        withCredentials: true,
+      });
+      console.log(response.data);
+
     } catch (error) {
       console.error('Error posting friend request:', error);
       alert('일촌 요청에 실패했습니다');
@@ -176,20 +203,22 @@ function Chat({ selectedRoom }) {
 
   //일촌status변경
   const handleFriendStatusUpdate = async (newStatus) => {
-    setStatus(newStatus);
-    await updateFriendStatus();
-    if (newStatus === 'accepted') {
-      // await createChatRoom();
+    const friendConfirmed = window.confirm(`${selectedRoom.user2_id} 일촌 신청을 받으시겠어요? \n일촌이 되면 크레딧을 선물 받아요 (확인:수락 취소:거절)`)
+    if (friendConfirmed) { //확인 눌렀을 경우
+      setStatus("accepted")
+      updateFriendStatus(status) // 일촌 status변경
+    } else {
+      setStatus("rejected") //취소 눌렀을 경우 
+      updateIntroduceStatus() //status rejected 전달
     }
   };
 
-
   //일촌관계수정
-  const updateFriendStatus = async () => {
+  const updateFriendStatus = async (status) => {
     const putstatus = {
-      user_id : 1,
+      user_id: 1,
       status: status,
-     };
+    };
     try {
       const response = await axios.put(`${apiUrl}/friends/${friend_id}`, putstatus, {
         withCredentials: true,
@@ -200,38 +229,6 @@ function Chat({ selectedRoom }) {
       alert('일촌요청에 실패했습니다')
     }
   };
-
-
-  //소개요청 버튼 클릭
-  const handleClicked = () =>{
-    const userConfirmed = window.confirm("소개하기를 진행하겠습니까?")
-    if(userConfirmed){ //확인 눌렀을 경우
-      createBCChatRoom() // 채팅방 생성
-    }else{
-      setStatus("rejected") //취소 눌렀을 경우 
-      updateIntroduceStatus() //status rejected 전달
-    }
-  }
-
-  //소개요청 status 수정
-  const updateIntroduceStatus = async () => {
-    const introducestatus = {
-      status: status
-     };
-    try {
-      const request_id = 1;
-      const response = await axios.put(`${apiUrl}/introduction_request/${request_id}`, introducestatus, {
-        withCredentials: true,
-      });
-      console.log(response.data);
-      console.log(status)
-    } catch (error) {
-      console.error('Error updating friend status:', error);
-      alert('소개요청에 실패했습니다')
-      console.log(status);
-    }
-  };
-
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {
@@ -247,14 +244,20 @@ function Chat({ selectedRoom }) {
             <img className="w-[50px] h-[50px] rounded-[115px] ml-[20px] border-2 border-custom-indigo" src={profileimg} />
             <span className="text-[16px] font-bold ml-[10px]">{selectedRoom.other_name}</span>
             <div className=''>
-              {user_id !=1 ? (
-              <button className="text-[14px] font-semibold text-custom-blue ml-auto mr-[20px]" onClick={handleClicked}>
-              소개 요청
-              </button>): null
+              {user_id != 1 ? (
+                <button className="text-[14px] font-semibold text-custom-blue ml-auto mr-[20px]" onClick={handleClicked}>
+                  소개 요청
+                </button>) : null
               }
+              {user_id === 3 ? (
+                 <button className="text-[14px] font-semibold text-custom-blue ml-auto mr-[20px]" onClick={handleFriendStatusUpdate}>
+                 일촌요청 받기
+               </button>
+              ) :(
               <button className="text-[14px] font-semibold text-custom-blue ml-auto mr-[20px]" onClick={postFriendStatus}>
                 일촌 요청
               </button>
+              )}
             </div>
           </div>
           <div className="flex flex-col w-full h-[440px] overflow-y-auto border-2 p-[10px]">
