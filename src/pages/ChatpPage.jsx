@@ -58,7 +58,7 @@ const getChatRoom = async () => {
     const selected = roomData.find(room => room.room_id === roomId);
     setSelectRoom(selected);
   };
-  console.log(roomData)
+  
   useEffect(() => {
     getChatRoom()
   }, [])
@@ -69,7 +69,7 @@ const getChatRoom = async () => {
         <Sidebar/>
         <div className='flex justify-center w-[calc(100vw-296px)] h-screen'>
             <ChatRoom className='w-[40%]' roomListData={roomData} onChatRoomClick={handleChatRoomClick}/>
-            <Chat className='w-[60%]' selectedRoom={selectRoom}/>
+            <Chat className='w-[60%]' selectedRoom={selectRoom} getChatRoom={getChatRoom}/>
         </div>
     </div>
   );

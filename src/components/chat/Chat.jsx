@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useApiUrlStore, useUserIdStore } from '../../store/store';
 import { useEffect, useRef, useState } from 'react';
 
-function Chat({ selectedRoom }) {
+function Chat({ selectedRoom, getChatRoom }) {
   const { apiUrl } = useApiUrlStore();
   const { user_id } = useUserIdStore();
   const [messages, setMessages] = useState([]);
@@ -130,6 +130,7 @@ function Chat({ selectedRoom }) {
       const response = await axios.post(`${apiUrl}/chatrooms/`, creatroomid, {
         withCredentials: true,
       });
+      getChatRoom()
       console.log(response.data);
     } catch (error) {
       console.error('Error updating friend status:', error);
@@ -147,6 +148,7 @@ function Chat({ selectedRoom }) {
       const response = await axios.post(`${apiUrl}/chatrooms/`, creatroomid, {
         withCredentials: true,
       });
+      getChatRoom()
       console.log(response.data);
     } catch (error) {
       console.error('Error updating friend status:', error);
@@ -219,14 +221,16 @@ function Chat({ selectedRoom }) {
       user_id: 1,
       status: status,
     };
+    const friend_id =3;
     try {
       const response = await axios.put(`${apiUrl}/friends/${friend_id}`, putstatus, {
         withCredentials: true,
       });
+      sendMessage('일촌이 됐어요!');
       console.log(response.data);
     } catch (error) {
       console.error('Error updating friend status:', error);
-      alert('일촌요청에 실패했습니다')
+      alert('일촌관계 수정에 실패했습니다')
     }
   };
 
