@@ -4,6 +4,7 @@ import ChargeModal from "./ChargeModal";
 import { MdClose } from "react-icons/md"; 
 import { useApiUrlStore, useUserIdStore } from "../store/store";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 
 function Credit({ onCloseModal, friendId }) {
@@ -12,6 +13,7 @@ function Credit({ onCloseModal, friendId }) {
     const [chargeModalOpen, setChargeModalOpen] = useState(false);
     const [currentCredit, setCurrentCredit] = useState(0);
     const [giftCredit, setGiftCredit] = useState('');
+    const navigate = useNavigate();
 
     const toggleChargeModal = () => {
         setChargeModalOpen(prev => !prev);
@@ -44,6 +46,7 @@ function Credit({ onCloseModal, friendId }) {
 
     const handleGiftSubmit = async (e) => {
         e.preventDefault();
+        console.log(friendId);
         if (parseInt(giftCredit) > currentCredit) {
             alert("선물할 크레딧이 현재 보유 크레딧보다 많습니다.");
         }
@@ -54,10 +57,10 @@ function Credit({ onCloseModal, friendId }) {
                     user2_id: friendId
                 });
                 window.alert("채팅방 생성 성공");
-                const chatRoomId = response.data.id;
+                navigate('/chat');
             } catch (err) {
                 window.alert('채팅방 생성 실패');
-                console.log(err.response.data.detail);
+                console.log(err);
             }
         }
     }

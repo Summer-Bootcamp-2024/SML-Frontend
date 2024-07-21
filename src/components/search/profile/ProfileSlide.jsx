@@ -1,10 +1,9 @@
-import React, {useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import profileimage from '../../../assets/images/profileImg2.png';
 import Button from '../../Button';
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import axios from 'axios';
 import { useApiUrlStore, useUserIdStore } from '../../../store/store';
-import { useEffect } from 'react';
 
 function ProfileSlide({ isOpen, openCreditModal,onCloseSlide, ProfileId }) {
     const { apiUrl } = useApiUrlStore();
@@ -28,7 +27,6 @@ function ProfileSlide({ isOpen, openCreditModal,onCloseSlide, ProfileId }) {
           setProfileData(response.data);
           getProfileFriends(ProfileId);
         } catch (error) {
-          console.error('Error fetching friend data:', error);
           alert('프로필 정보를 불러오지 못했습니다');
         }
       };
@@ -41,7 +39,6 @@ function ProfileSlide({ isOpen, openCreditModal,onCloseSlide, ProfileId }) {
             });
             setMyFriendList(response.data);
         } catch (err) {
-            console.log(err);
             alert('내 친구 목록을 불러오지 못했습니다');
         }
       }
@@ -63,7 +60,6 @@ function ProfileSlide({ isOpen, openCreditModal,onCloseSlide, ProfileId }) {
         const common = myFriendList.filter(myFriend => 
             profileFreindList.some(profileFriend => profileFriend.id === myFriend.id)
         );
-        console.log(common);
         
         const detailedCommonFriends = await Promise.all(common.map(async (friend) => {
             try {
@@ -80,15 +76,11 @@ function ProfileSlide({ isOpen, openCreditModal,onCloseSlide, ProfileId }) {
       }
 
       useEffect(() => {
-        console.log(ProfileId);
-        console.log(user_id);
         getFriendProfile(ProfileId);
         getMyFriends();
-      }, []); 
+      }, [ProfileId]); 
 
       useEffect(() => {
-        console.log(myFriendList);
-        console.log(profileFreindList);
         if (myFriendList.length > 0 && profileFreindList.length > 0) {
             getCommonFriendList();
         }
@@ -145,7 +137,7 @@ function ProfileSlide({ isOpen, openCreditModal,onCloseSlide, ProfileId }) {
                             ))}
                         </div>
                     </div>
-                    <Button label={"소개 받기"} onClick={clickedIndex !== null ? openCreditModal : null}/>
+                    <Button label={"소개 받기"} onClick={clickedIndex !== null ? () => openCreditModal(commonFriendList[clickedIndex].id) : null}/>
                 </div>
                 
             </div>
