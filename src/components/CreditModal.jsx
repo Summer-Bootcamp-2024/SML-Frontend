@@ -2,14 +2,15 @@ import { useEffect, useState } from "react";
 import Button from "./Button";
 import ChargeModal from "./ChargeModal";
 import { MdClose } from "react-icons/md"; 
-import { useApiUrlStore, useUserIdStore } from "../store/store";
+import { useApiUrlStore, useUserIdStore, useIntroductionRequestStore } from "../store/store";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 
-function Credit({ onCloseModal, friendId }) {
+function Credit({ onCloseModal, friendId, ProfileId }) {
     const { apiUrl } = useApiUrlStore();
     const { user_id } = useUserIdStore();
+    const { createIntroductionRequest } = useIntroductionRequestStore();
     const [chargeModalOpen, setChargeModalOpen] = useState(false);
     const [currentCredit, setCurrentCredit] = useState(0);
     const [giftCredit, setGiftCredit] = useState('');
@@ -52,21 +53,26 @@ function Credit({ onCloseModal, friendId }) {
         }
         else {
             try {
+                //채팅방 생성 api 호출
                 const response = await axios.post(`${apiUrl}/chatrooms`, {
                     user1_id: user_id,
                     user2_id: friendId
                 });
                 window.alert("채팅방 생성 성공");
+
+                //소개 요청 생성 api 호출
+                await createIntroductionRequest(user_id, ProfileId, friendId);
+                window.alert("소개 요청 성공");
                 navigate('/chat');
             } catch (err) {
-                window.alert('채팅방 생성 실패');
+                window.alert('api 요청 실패');
                 console.log(err);
             }
         }
     }
     
     return (
-        <div className={`fixed top-0 flex items-center justify-center w-[calc(100vw-296px)] min-h-screen border-2 bg-white/50 backdrop-blur-md font-[Pretendard]`}>
+        <div className={`fixed top-0 flex items-center justify-center w-[calc(100vw-296px)] min-h-screen border-2 bg-white/50 backdrop-blur-md`}>
             <div className=" flex flex-col items-center justify-center w-[500px] h-[300px] bg-custom-white rounded-[10px] border-[1px] border-custom-grey">
             <button className="flex justify-end w-[90%]" onClick={onCloseModal}><MdClose className='w-[20px] h-[20px] mr-[10px] '/></button>
                 <div className='flex flex-col items-center p-[20px]'>

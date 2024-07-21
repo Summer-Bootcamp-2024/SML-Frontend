@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import axios from 'axios';
 
 /**
  * Zustand 상태 관리를 위한 store를 생성합니다.
@@ -28,4 +29,25 @@ export const useUserIdStore = create(
   )
 );
 
-//
+export const useIntroductionRequestStore = create((set, get) => ({
+  introductionRequests: [],
+  createIntroductionRequest: async (user_id, target_user_id, intermediary_user_id) => {
+    const apiUrl = useApiUrlStore.getState().apiUrl;
+
+    try {
+      const response = await axios.post(`${apiUrl}/introduction_request/`, {
+        user_id,
+        target_user_id,
+        intermediary_user_id
+      });
+
+      set((state) => ({
+        introductionRequests: [...state.introductionRequests, response.data],
+      }));
+    } catch (err) {
+      console.log(err.response.data);
+      alert('소개 요청 실패');
+    }
+  }
+    
+}));

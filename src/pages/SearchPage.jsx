@@ -14,6 +14,7 @@ function SearchPage() {
   const [creditModalOpen, setCreditModalOpen] = useState(false);
   const [selectProfile, setSelectProfile] = useState(null);
   const [friendId, setFriendId] = useState(null);
+  const [intermediaryUserId, setIntermediaryUserId] = useState(null);
 
   const [searchResults, setSearchResults] = useState([]);
 
@@ -25,8 +26,9 @@ function SearchPage() {
     setSelectProfile(null);
   };
 
-  const openCreditModal = (selectedFriendId) => { // 선물하기 모달 열기
+  const openCreditModal = (selectedFriendId, intermediaryId) => { // 선물하기 모달 열기
     setFriendId(selectedFriendId);
+    setIntermediaryUserId(intermediaryId);
     setCreditModalOpen(true);
   };
 
@@ -35,7 +37,7 @@ function SearchPage() {
   };
 
   return (
-    <div className="flex w-full h-[100vh] font-[Pretendard] ">
+    <div className="flex w-full h-[100vh]">
       <Sidebar></Sidebar>
       <div className="flex flex-col items-center w-[calc(100vw-296px)] h-full">
         <div className="flex h-[150px] items-center justify-start w-full border-b-[1px] border-custom-grey">
@@ -54,9 +56,9 @@ function SearchPage() {
             </div>
           )}
           {selectProfile && (
-            <ProfileSlide isOpen={true} onCloseSlide={closeProfile} openCreditModal={openCreditModal} ProfileId={selectProfile.id}/>
+            <ProfileSlide isOpen={true} onCloseSlide={closeProfile} openCreditModal={(id) => openCreditModal(id, selectProfile.id)} ProfileId={selectProfile.id}/>
           )}
-          {creditModalOpen && <Credit onCloseModal={onCloseModal} friendId={friendId}/>}
+          {creditModalOpen && <Credit onCloseModal={onCloseModal} friendId={friendId} ProfileId={selectProfile.id}/>}
         </div>
       </div>
     </div>
