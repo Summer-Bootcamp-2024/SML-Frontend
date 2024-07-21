@@ -1,10 +1,9 @@
-import React, {useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import profileimage from '../../../assets/images/profileImg2.png';
 import Button from '../../Button';
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import axios from 'axios';
 import { useApiUrlStore, useUserIdStore } from '../../../store/store';
-import { useEffect } from 'react';
 
 function ProfileSlide({ isOpen, openCreditModal,onCloseSlide, ProfileId }) {
     const { apiUrl } = useApiUrlStore();
@@ -79,7 +78,7 @@ function ProfileSlide({ isOpen, openCreditModal,onCloseSlide, ProfileId }) {
       useEffect(() => {
         getFriendProfile(ProfileId);
         getMyFriends();
-      }, []); 
+      }, [ProfileId]); 
 
       useEffect(() => {
         if (myFriendList.length > 0 && profileFreindList.length > 0) {
@@ -138,7 +137,7 @@ function ProfileSlide({ isOpen, openCreditModal,onCloseSlide, ProfileId }) {
                             ))}
                         </div>
                     </div>
-                    <Button label={"소개 받기"} onClick={clickedIndex !== null ? openCreditModal : null}/>
+                    <Button label={"소개 받기"} onClick={clickedIndex !== null ? () => openCreditModal(commonFriendList[clickedIndex].id) : null}/>
                 </div>
                 
             </div>

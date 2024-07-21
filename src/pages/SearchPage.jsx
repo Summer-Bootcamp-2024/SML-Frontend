@@ -13,7 +13,7 @@ function SearchPage() {
   const { apiUrl } = useApiUrlStore();
   const [creditModalOpen, setCreditModalOpen] = useState(false);
   const [selectProfile, setSelectProfile] = useState(null);
-  const [friendId, setFriendId] = useState('');
+  const [friendId, setFriendId] = useState(null);
 
   const [searchResults, setSearchResults] = useState([]);
 
@@ -25,7 +25,8 @@ function SearchPage() {
     setSelectProfile(null);
   };
 
-  const openCreditModal = () => { // 선물하기 모달 열기
+  const openCreditModal = (selectedFriendId) => { // 선물하기 모달 열기
+    setFriendId(selectedFriendId);
     setCreditModalOpen(true);
   };
 
@@ -53,9 +54,9 @@ function SearchPage() {
             </div>
           )}
           {selectProfile && (
-            <ProfileSlide isOpen={true} onCloseSlide={closeProfile} openCreditModal={openCreditModal} ProfileId={selectProfile}/>
+            <ProfileSlide isOpen={true} onCloseSlide={closeProfile} openCreditModal={openCreditModal} ProfileId={selectProfile.id}/>
           )}
-          {creditModalOpen && <Credit onCloseModal={onCloseModal} />}
+          {creditModalOpen && <Credit onCloseModal={onCloseModal} friendId={friendId}/>}
         </div>
       </div>
     </div>
