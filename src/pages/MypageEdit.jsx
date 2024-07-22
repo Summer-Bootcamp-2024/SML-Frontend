@@ -9,7 +9,7 @@ import axios from "axios";
 function MypageEdit() {
     const { apiUrl } = useApiUrlStore();
     const { user_id } = useUserIdStore();
-    const [postImg, setPostImg] = useState([]);
+    const [_postImg, setPostImg] = useState([]);
     const [previewImg, setPreviewImg] = useState([]);
     const [profileData, setProfileData] = useState({
         name: '',
@@ -50,7 +50,31 @@ function MypageEdit() {
         fetchProfileData();
     }, []);
 
-    const showImg = () => {
+    const postProfileImg = async (e) => {
+        try {
+            const selectedFile = e.target.files?.[0];
+            if (!selectedFile) {
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', selectedFile);
+
+            const response = await axios.put(`${apiUrl}/users/profile/${user_id}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+                withCredentials: true,
+            });
+
+            setProfileData({...profileData, image_url: response.data.s3Url});
+        } catch (err) {
+            window.alert('프로필 이미지 업로드 실패');
+        }
+
+    }
+
+    const showImg = (e) => {
         //imgRef가 참조하는 요소 존재, 그 요소에 파일이 있는지 확인
         if (imgRef.current && imgRef.current.files) {
             //img 변수에 사용자가 선택한 첫 번째 파일 저장
@@ -64,12 +88,9 @@ function MypageEdit() {
             //파일을 다 읽으면 onload가 발생하고, 변환된 url을 미리보기 상태에 저장
             reader.onload = () => {
                 setPreviewImg(reader.result);
-                setProfileData({
-                   ...profileData,
-                    image_url: reader.result
-                });
             }
         }
+        postProfileImg(e); //이미지 미리보기 후 서버에 업로드
     }
 
     const handleInputChange = (e) => {
@@ -82,8 +103,9 @@ function MypageEdit() {
 
     const handleUpdateProfile = async (e) => {
         e.preventDefault();
+        
         try {
-            const response = await axios.put(`${apiUrl}/users/${user_id}`, profileData, {
+            await axios.put(`${apiUrl}/users/${user_id}`, profileData, {
                 withCredentials: true,
             });
             navigate('/mypage');
@@ -108,7 +130,7 @@ function MypageEdit() {
                                 <MdPhotoCamera size={60} className="text-white" />
                             )}
                             </label>
-                            <label className="text-sm font-medium text-custom-indigo">프로필 사진 선택</label>
+                            <label htmlFor="photo" className="text-sm font-medium cursor-pointer text-custom-indigo">프로필 사진 선택</label>
                         </form>
                     </div>
                     <div className="flex w-[80%] gap-[30px] pt-[75px] pl-[68px]">
