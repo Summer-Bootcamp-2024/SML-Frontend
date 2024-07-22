@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; 
-import profileimage from '../assets/images/profileImg2.png';
 import Button from './Button';
 import { MdClose } from "react-icons/md"; 
 import axios from 'axios';
 import { useApiUrlStore, useUserIdStore } from '../store/store';
 
-function ProfileModal({ PostingClosedModal, ProfileId, openCreditModal }) {
+function ProfileModal({ PostingClosedModal, ProfileId, openIntroModal }) {
     const {apiUrl} = useApiUrlStore()
     const [clickedIndex, setClickedIndex] = useState(null);
     const [profileData, setProfileData] = useState('')
@@ -103,7 +102,7 @@ const getFriendProfile = async (ProfileId) => {
                     <div className='text-[24px] font-black text-custom-indigo underline underline-offset-2 mb-[10px]'>PROFILE</div>
                         <div className='w-[400px] min-h-[500px] flex flex-col items-center'>
                             <div className='flex items-center justify-between mt-[10px]'>
-                                <img src={profileimage} className='w-[150px] min-h-[150px]'></img>
+                                <img src={profileData.image_url} className='w-[150px] min-h-[150px]'></img>
                                 <div className='flex justify-between ml-[10px]'>
                                     <div className='flex flex-col'>
                                         <span className='font-semibold w-[80px] h-[30px] flex items-center justify-start'>이름</span>
@@ -140,7 +139,7 @@ const getFriendProfile = async (ProfileId) => {
                             </div>
                             <div className='flex gap-[10px]'>
                             <Button label={"일촌 삭제"} onClick={()=>deleteFriend(ProfileId)}/>
-                            <Button label={"소개 받기"} onClick={clickedIndex !== null ? openCreditModal : null}/>
+                            <Button label={"소개 받기"} onClick={clickedIndex !== null ? openIntroModal : null}/>
                             </div>
                         </div>
                 </div>

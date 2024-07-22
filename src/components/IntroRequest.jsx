@@ -7,7 +7,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 
-function Credit({ onCloseModal, friendId, ProfileId }) {
+function IntroRequest({ onCloseModal, friendId, ProfileId }) {
     const { apiUrl } = useApiUrlStore();
     const { user_id } = useUserIdStore();
     const { createIntroductionRequest } = useIntroductionRequestStore();
@@ -109,4 +109,4 @@ function Credit({ onCloseModal, friendId, ProfileId }) {
     )
 }
 
-export default Credit;
+export default IntroRequest;
