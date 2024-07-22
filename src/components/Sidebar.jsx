@@ -24,7 +24,7 @@ function Sidebar() {
             });
             setProfile(response.data);
         } catch (err) {
-
+            window.alert('프로필 조회 실패');
         }
     }
 

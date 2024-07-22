@@ -5,6 +5,7 @@ import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
 import { useApiUrlStore, useUserIdStore } from "../store/store";
 import axios from "axios";
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 
 function MypageEdit() {
     const { apiUrl } = useApiUrlStore();
@@ -24,6 +25,19 @@ function MypageEdit() {
 
     const imgRef = useRef(null);
     const navigate = useNavigate();
+
+    //S3 설정
+    const S3_BUCKET = 'm-team-bucket';
+    const REGION = 'ap-northeast-2';
+
+    //업로드 할 파일 정보 설정
+    const s3Client = new S3Client({
+        region: REGION,
+        credentials: {
+            accessKeyId: 'AKIA6ODUZREPJZJU7HMV',
+            secretAccessKey: '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',
+        }
+    });
 
     useEffect(() => {
         const fetchProfileData = async () => {
@@ -50,6 +64,26 @@ function MypageEdit() {
         fetchProfileData();
     }, []);
 
+    //S3에 파일 업로드
+    const uploadToS3 = async (file) => {
+        const fileName = `${Date.now()}_${file.name}`;
+        const params = {
+            Bucket: S3_BUCKET,
+            Key: fileName,
+            Body: file,
+            ACL: 'public-read',
+        }
+
+        try {
+            const command = new PutObjectCommand(params);
+            const data = await s3Client.send(command);
+            return `https://${S3_BUCKET}.s3.${REGION}.amazonaws.com/${fileName}`;
+        } catch (err) {
+            console.log(err);
+            throw err;
+        }
+    }
+
     const showImg = () => {
         //imgRef가 참조하는 요소 존재, 그 요소에 파일이 있는지 확인
         if (imgRef.current && imgRef.current.files) {
@@ -64,10 +98,6 @@ function MypageEdit() {
             //파일을 다 읽으면 onload가 발생하고, 변환된 url을 미리보기 상태에 저장
             reader.onload = () => {
                 setPreviewImg(reader.result);
-                setProfileData({
-                   ...profileData,
-                    image_url: reader.result
-                });
             }
         }
     }
@@ -82,8 +112,18 @@ function MypageEdit() {
 
     const handleUpdateProfile = async (e) => {
         e.preventDefault();
+
+        if (postImg) {
+            try {
+                const image_url = await uploadToS3(postImg);
+                profileData.image_url = image_url;
+            } catch (err) {
+                window.alert('이미지 업로드 실패');
+                return;
+            }
+        }
         try {
-            const response = await axios.put(`${apiUrl}/users/${user_id}`, profileData, {
+            await axios.put(`${apiUrl}/users/${user_id}`, profileData, {
                 withCredentials: true,
             });
             navigate('/mypage');
