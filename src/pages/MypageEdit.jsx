@@ -68,7 +68,6 @@ function MypageEdit() {
             });
 
             setProfileData({...profileData, image_url: response.data.s3Url});
-            window.alert('프로필 이미지 업로드 성공');
         } catch (err) {
             window.alert('프로필 이미지 업로드 실패');
         }
