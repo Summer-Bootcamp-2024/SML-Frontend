@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from 'react';
 function Chat({ selectedRoom, getChatRoom }) {
   const { apiUrl } = useApiUrlStore();
   const { user_id } = useUserIdStore();
+  
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
   const [status, setStatus] = useState('pending');
@@ -123,8 +124,8 @@ function Chat({ selectedRoom, getChatRoom }) {
   //BC채팅방 생성
   const createBCChatRoom = async () => {
     const creatroomid = {
-      user1_id: 2,
-      user2_id: 3
+      user1_id: 3,
+      user2_id: 4
     };
     try {
       const response = await axios.post(`${apiUrl}/chatrooms/`, creatroomid, {
@@ -141,8 +142,8 @@ function Chat({ selectedRoom, getChatRoom }) {
   //CA채팅방 생성
   const createCAChatRoom = async () => {
     const creatroomid = {
-      user1_id: 1,
-      user2_id: 3
+      user1_id: 4,
+      user2_id: 1
     };
     try {
       const response = await axios.post(`${apiUrl}/chatrooms/`, creatroomid, {
@@ -160,7 +161,7 @@ function Chat({ selectedRoom, getChatRoom }) {
   const handleClicked = () => {
     const userConfirmed = window.confirm(`${selectedRoom.user2_id} 소개하기를 진행할까요? \n보답으로 소정의 크레딧을 드려요 (확인:수락 취소:거절)`)
     if (userConfirmed) { //확인 눌렀을 경우
-      createBCChatRoom() // 채팅방 생성
+      createCAChatRoom() // 채팅방 생성
     } else {
       setStatus("rejected") //취소 눌렀을 경우 
       updateIntroduceStatus() //status rejected 전달
