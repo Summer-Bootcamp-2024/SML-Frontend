@@ -211,7 +211,7 @@ function Chat({ selectedRoom, getChatRoom }) {
       updateFriendStatus(status) // 일촌 status변경
     } else {
       setStatus("rejected") //취소 눌렀을 경우 
-      updateIntroduceStatus() //status rejected 전달
+      updateFriendStatus(status) //status rejected 전달
     }
   };
 

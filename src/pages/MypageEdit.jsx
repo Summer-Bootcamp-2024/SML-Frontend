@@ -5,12 +5,11 @@ import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
 import { useApiUrlStore, useUserIdStore } from "../store/store";
 import axios from "axios";
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 
 function MypageEdit() {
     const { apiUrl } = useApiUrlStore();
     const { user_id } = useUserIdStore();
-    const [postImg, setPostImg] = useState([]);
+    const [_postImg, setPostImg] = useState([]);
     const [previewImg, setPreviewImg] = useState([]);
     const [profileData, setProfileData] = useState({
         name: '',
@@ -25,19 +24,6 @@ function MypageEdit() {
 
     const imgRef = useRef(null);
     const navigate = useNavigate();
-
-    //S3 설정
-    const S3_BUCKET = 'm-team-bucket';
-    const REGION = 'ap-northeast-2';
-
-    //업로드 할 파일 정보 설정
-    const s3Client = new S3Client({
-        region: REGION,
-        credentials: {
-            accessKeyId: 'AKIA6ODUZREPJZJU7HMV',
-            secretAccessKey: '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',
-        }
-    });
 
     useEffect(() => {
         const fetchProfileData = async () => {
@@ -64,27 +50,32 @@ function MypageEdit() {
         fetchProfileData();
     }, []);
 
-    //S3에 파일 업로드
-    const uploadToS3 = async (file) => {
-        const fileName = `${Date.now()}_${file.name}`;
-        const params = {
-            Bucket: S3_BUCKET,
-            Key: fileName,
-            Body: file,
-            ACL: 'public-read',
+    const postProfileImg = async (e) => {
+        try {
+            const selectedFile = e.target.files?.[0];
+            if (!selectedFile) {
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('file', selectedFile);
+
+            const response = await axios.put(`${apiUrl}/users/profile/${user_id}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+                withCredentials: true,
+            });
+
+            setProfileData({...profileData, image_url: response.data.s3Url});
+            window.alert('프로필 이미지 업로드 성공');
+        } catch (err) {
+            window.alert('프로필 이미지 업로드 실패');
         }
 
-        try {
-            const command = new PutObjectCommand(params);
-            const data = await s3Client.send(command);
-            return `https://${S3_BUCKET}.s3.${REGION}.amazonaws.com/${fileName}`;
-        } catch (err) {
-            console.log(err);
-            throw err;
-        }
     }
 
-    const showImg = () => {
+    const showImg = (e) => {
         //imgRef가 참조하는 요소 존재, 그 요소에 파일이 있는지 확인
         if (imgRef.current && imgRef.current.files) {
             //img 변수에 사용자가 선택한 첫 번째 파일 저장
@@ -100,6 +91,7 @@ function MypageEdit() {
                 setPreviewImg(reader.result);
             }
         }
+        postProfileImg(e); //이미지 미리보기 후 서버에 업로드
     }
 
     const handleInputChange = (e) => {
@@ -112,16 +104,7 @@ function MypageEdit() {
 
     const handleUpdateProfile = async (e) => {
         e.preventDefault();
-
-        if (postImg) {
-            try {
-                const image_url = await uploadToS3(postImg);
-                profileData.image_url = image_url;
-            } catch (err) {
-                window.alert('이미지 업로드 실패');
-                return;
-            }
-        }
+        
         try {
             await axios.put(`${apiUrl}/users/${user_id}`, profileData, {
                 withCredentials: true,
@@ -148,7 +131,7 @@ function MypageEdit() {
                                 <MdPhotoCamera size={60} className="text-white" />
                             )}
                             </label>
-                            <label className="text-sm font-medium text-custom-indigo">프로필 사진 선택</label>
+                            <label htmlFor="photo" className="text-sm font-medium cursor-pointer text-custom-indigo">프로필 사진 선택</label>
                         </form>
                     </div>
                     <div className="flex w-[80%] gap-[30px] pt-[75px] pl-[68px]">
