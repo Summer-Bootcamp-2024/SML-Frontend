@@ -54,12 +54,11 @@ function GiftCreditModal({ onClose, friendId, targetUserId }) {
             try {
                 const response = await axios.post(`${apiUrl}/gifts`, {
                     user_id: user_id,
-                    connector_id: friendId,
                     friend_id: targetUserId,
                     ct_money: parseInt(giftCredit),
                 });
                 window.alert('크레딧 선물 성공');
-                onCloseModal();
+                onClose();
             } catch (err) {
                 console.log(friendId);
                 console.log(targetUserId);
