@@ -5,7 +5,7 @@ import { MdClose } from "react-icons/md";
 import axios from 'axios';
 import { useApiUrlStore, useUserIdStore } from '../store/store';
 
-function ProfileModal({ PostingClosedModal, ProfileId, openIntroModal }) {
+function ProfileModal({ PostingClosedModal, ProfileId, openCreditModal }) {
     const {apiUrl} = useApiUrlStore()
     const [clickedIndex, setClickedIndex] = useState(null);
     const [profileData, setProfileData] = useState('')
@@ -139,7 +139,7 @@ const getFriendProfile = async (ProfileId) => {
                             </div>
                             <div className='flex gap-[10px]'>
                             <Button label={"일촌 삭제"} onClick={()=>deleteFriend(ProfileId)}/>
-                            <Button label={"소개 받기"} onClick={clickedIndex !== null ? openIntroModal : null}/>
+                            <Button label={"소개 받기"} onClick={clickedIndex !== null ? openCreditModal : null}/>
                             </div>
                         </div>
                 </div>

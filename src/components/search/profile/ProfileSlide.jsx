@@ -5,7 +5,7 @@ import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import axios from 'axios';
 import { useApiUrlStore, useUserIdStore } from '../../../store/store';
 
-function ProfileSlide({ isOpen, openIntroModal, onCloseSlide, ProfileId }) {
+function ProfileSlide({ isOpen, openCreditModal, onCloseSlide, ProfileId }) {
     const { apiUrl } = useApiUrlStore();
     const { user_id } = useUserIdStore();
     const [clickedIndex, setClickedIndex] = useState(null); //일촌목록 선택 여부
@@ -137,7 +137,7 @@ function ProfileSlide({ isOpen, openIntroModal, onCloseSlide, ProfileId }) {
                             ))}
                         </div>
                     </div>
-                    <Button label={"소개 받기"} onClick={clickedIndex !== null ? () => openIntroModal(commonFriendList[clickedIndex].id, ProfileId) : null}/>
+                    <Button label={"소개 받기"} onClick={clickedIndex !== null ? () => openCreditModal(commonFriendList[clickedIndex].id, ProfileId) : null}/>
                 </div>
                 
             </div>

@@ -4,7 +4,7 @@ import ChatRoom from '../components/chat/ChatRoom';
 import axios from 'axios';
 import { useApiUrlStore, useUserIdStore } from '../store/store';
 import { useEffect, useState } from 'react';
-import CreditModal from '../components/CreditModal';
+import GiftCreditModal from '../components/GiftCreditModal';
 
 
 function ChatPage() {
@@ -12,7 +12,7 @@ function ChatPage() {
     const {user_id} = useUserIdStore()
     const [roomData, setRoomData] = useState([])
     const [selectRoom, setSelectRoom] = useState([])
-    const [creditModalOpen, setCreditModalOpen] = useState(false);
+    const [giftCreditModalOpen, setGiftCreditModalOpen] = useState(false);
     const [friendId, setFriendId] = useState(null);
     const [targetUserId, setTargetUserId] = useState(null);
     
@@ -71,12 +71,12 @@ const getChatRoom = async () => {
     getChatRoom()
   }, [])
 
-  const handleOpenCreditModal = () => {
-    setCreditModalOpen(true);
+  const handleOpenGiftCreditModal = () => {
+    setGiftCreditModalOpen(true);
   };
 
-  const handleCloseCreditModal = () => {
-    setCreditModalOpen(false);
+  const handleCloseGiftCreditModal = () => {
+    setGiftCreditModalOpen(false);
   };
     
   return (
@@ -84,8 +84,8 @@ const getChatRoom = async () => {
         <Sidebar/>
         <div className='flex justify-center w-[calc(100vw-296px)] h-screen'>
             <ChatRoom className='w-[40%]' roomListData={roomData} onChatRoomClick={handleChatRoomClick}/>
-            <Chat className='w-[60%]' selectedRoom={selectRoom} getChatRoom={getChatRoom} onOpenCreditModal={handleOpenCreditModal}/>
-            {creditModalOpen && <CreditModal onClose={handleCloseCreditModal} friendId={friendId} targetUserId={targetUserId}/>}
+            <Chat className='w-[60%]' selectedRoom={selectRoom} getChatRoom={getChatRoom} onOpenGiftCreditModal={handleOpenGiftCreditModal}/>
+            {giftCreditModalOpen && <GiftCreditModal onClose={handleCloseGiftCreditModal} friendId={friendId} targetUserId={targetUserId}/>}
         </div>
     </div>
   );

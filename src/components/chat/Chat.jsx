@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useApiUrlStore, useUserIdStore } from '../../store/store';
 import { useEffect, useRef, useState } from 'react';
 
-function Chat({ selectedRoom, getChatRoom, onOpenCreditModal }) {
+function Chat({ selectedRoom, getChatRoom, onOpenGiftCreditModal }) {
   const { apiUrl } = useApiUrlStore();
   const { user_id } = useUserIdStore();
   const [messages, setMessages] = useState([]);
@@ -242,7 +242,7 @@ function Chat({ selectedRoom, getChatRoom, onOpenCreditModal }) {
 
   const handleFriendRequest = () => {
     postFriendStatus();
-    onOpenCreditModal();
+    onOpenGiftCreditModal();
   }
 
   return (

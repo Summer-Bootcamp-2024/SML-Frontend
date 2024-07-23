@@ -7,7 +7,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 
-function IntroRequest({ onCloseModal, friendId, ProfileId }) {
+function GiftCreditModal({ onClose, friendId, targetUserId }) {
     const { apiUrl } = useApiUrlStore();
     const { user_id } = useUserIdStore();
     const { createIntroductionRequest } = useIntroductionRequestStore();
@@ -47,25 +47,23 @@ function IntroRequest({ onCloseModal, friendId, ProfileId }) {
 
     const handleGiftSubmit = async (e) => {
         e.preventDefault();
-        console.log(friendId);
         if (parseInt(giftCredit) > currentCredit) {
             alert("선물할 크레딧이 현재 보유 크레딧보다 많습니다.");
         }
         else {
             try {
-                //채팅방 생성 api 호출
-                const response = await axios.post(`${apiUrl}/chatrooms`, {
-                    user1_id: user_id,
-                    user2_id: friendId
+                const response = await axios.post(`${apiUrl}/gifts`, {
+                    user_id: user_id,
+                    connector_id: friendId,
+                    friend_id: targetUserId,
+                    ct_money: parseInt(giftCredit),
                 });
-                window.alert("채팅방 생성 성공");
-
-                //소개 요청 생성 api 호출
-                await createIntroductionRequest(user_id, ProfileId, friendId);
-                window.alert("소개 요청 성공");
-                navigate('/chat');
+                window.alert('크레딧 선물 성공');
+                onCloseModal();
             } catch (err) {
-                window.alert('api 요청 실패');
+                console.log(friendId);
+                console.log(targetUserId);
+                window.alert('크레딧 선물 실패');
                 console.log(err);
             }
         }
@@ -74,7 +72,7 @@ function IntroRequest({ onCloseModal, friendId, ProfileId }) {
     return (
         <div className={`fixed top-0 flex items-center justify-center w-[calc(100vw-296px)] min-h-screen border-2 bg-white/50 backdrop-blur-md`}>
             <div className=" flex flex-col items-center justify-center w-[500px] h-[300px] bg-custom-white rounded-[10px] border-[1px] border-custom-grey">
-            <button className="flex justify-end w-[90%]" onClick={onCloseModal}><MdClose className='w-[20px] h-[20px] mr-[10px] '/></button>
+            <button className="flex justify-end w-[90%]" onClick={onClose}><MdClose className='w-[20px] h-[20px] mr-[10px] '/></button>
                 <div className='flex flex-col items-center p-[20px]'>
                     <div className='text-[20px] font-black mb-[10px]'>상대방에게 선물할 크레딧을 입력하세요!</div>
                     <div className='w-[400px] flex flex-col items-center'>
@@ -109,4 +107,4 @@ function IntroRequest({ onCloseModal, friendId, ProfileId }) {
     )
 }
 
-export default IntroRequest;
+export default GiftCreditModal;
