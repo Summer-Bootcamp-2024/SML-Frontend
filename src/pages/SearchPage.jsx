@@ -5,7 +5,6 @@ import { useState } from 'react';
 import ProfileSlide from '../components/search/profile/ProfileSlide';
 import IntroRequest from '../components/IntroRequest';
 import { MdPeople } from "react-icons/md";
-import IntroRequest from '../components/IntroRequest';
 
 function SearchPage() {
   const [introModalOpen, setIntroModalOpen] = useState(false);
