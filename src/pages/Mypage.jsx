@@ -15,6 +15,8 @@ function Mypage() {
     const [profile, setProfile] = useState(null);
     const [chargeModalOpen, setChargeModalOpen] = useState(false);
     const [currentCredit, setCurrentCredit] = useState(0);
+    const [sentGifts, setSentGifts] = useState([]);
+    const [receivedGifts, setReceivedGifts] = useState([]);
     const navigate = useNavigate();
 
     const getProfile = async () => {
@@ -30,8 +32,40 @@ function Mypage() {
     
     }
 
+    const getSentGifts = async () => {
+        try {
+            const response = await axios.get(`${apiUrl}/transactions/sent/${user_id}`, {
+                withCredentials: true,
+            });
+            setSentGifts(Array.isArray(response.data.transactions) ? response.data.transactions : []);
+        } catch (err) {
+            if (err.response && err.response.status === 404) {
+                setSentGifts([]); // 빈 배열로 설정
+            } else {
+                window.alert("보낸 선물 기록 조회 실패");
+            }
+        }
+    }
+
+    const getReceivedGifts = async () => {
+        try {
+            const response = await axios.get(`${apiUrl}/transactions/received/${user_id}`, {
+                withCredentials: true,
+            });
+            setReceivedGifts(Array.isArray(response.data.transactions) ? response.data.transactions : []);
+        } catch (err) {
+            if (err.response && err.response.status === 404) {
+                setReceivedGifts([]); // 빈 배열로 설정
+            } else {
+                window.alert("보낸 선물 기록 조회 실패");
+            }
+        }
+    }
+
     useEffect(() => {
          getProfile();
+         getSentGifts();
+         getReceivedGifts();
     }, []);
 
 
@@ -123,19 +157,25 @@ function Mypage() {
                         </div>
                         <div className='w-full pl-[40px] gap-[20px] h-[100px] flex'>
                             <ul className='flex flex-col gap-[20px] text-black text-base font-normal'>
-                                <span>2024. 01. 01</span>
-                                <span>2024. 03. 05</span>
-                                <span>2024. 03. 21</span>
+                                {sentGifts.map(gift => (
+                                    <li key={gift.id}>
+                                        <span>{new Date(gift.updated_at).toLocaleDateString()}</span>
+                                    </li>
+                                ))}
                             </ul>
                             <ul className='flex flex-col gap-[20px] text-black text-base font-normal'>
-                                <span>김대희님</span>
-                                <span>원영서님</span>
-                                <span>진기태님</span>
+                                {sentGifts.map(gift => (
+                                    <li key={gift.id}>
+                                        <span>{gift.friend_id}</span>
+                                    </li>
+                                ))}
                             </ul>
                             <ul className='flex flex-col gap-[20px] text-black text-base font-normal'>
-                                <span>-5000 credit</span>
-                                <span>-123400 credit</span>
-                                <span>-200 credit</span>
+                                {sentGifts.map(gift => (
+                                     <li key={gift.id}>
+                                        <span>{`-${gift.ct_money} credit`}</span>
+                                    </li>
+                                ))}
                             </ul>
                         </div>
                     </div>
@@ -145,19 +185,25 @@ function Mypage() {
                         </div>
                         <div className='w-full pl-[40px] gap-[20px] h-[100px] flex'>
                             <ul className='flex flex-col gap-[20px] text-black text-base font-normal'>
-                                <span>2024. 01. 01</span>
-                                <span>2024. 03. 05</span>
-                                <span>2024. 03. 21</span>
+                                {receivedGifts.map(gift => (
+                                    <li key={gift.id}>
+                                        <span>{new Date(gift.updated_at).toLocaleDateString()}</span>
+                                    </li>
+                                ))}
                             </ul>
                             <ul className='flex flex-col gap-[20px] text-black text-base font-normal'>
-                                <span>김대희님</span>
-                                <span>원영서님</span>
-                                <span>진기태님</span>
+                                {receivedGifts.map(gift => (
+                                    <li key={gift.id}>
+                                        <span>{gift.friend_id}</span>
+                                    </li>
+                                ))}
                             </ul>
                             <ul className='flex flex-col gap-[20px] text-black text-base font-normal'>
-                                <span>+5000 credit</span>
-                                <span>+123400 credit</span>
-                                <span>+200 credit</span>
+                                {receivedGifts.map(gift => (
+                                    <li key={gift.id}>
+                                        <span>{`+${gift.ct_money*0.9} credit`}</span>
+                                    </li>
+                                ))}
                             </ul>
                         </div>
                     </div>

@@ -20,7 +20,6 @@ function LoginPage() {
             const response = await axios.post(`${apiUrl}/auth/login`, {email, password}, {withCredentials: true});
             window.alert('로그인 성공');
             setUserId(response.data.user_id);
-            console.log(response.data.user_id);
             navigate('/list');
         } catch (err) {
             window.alert('로그인 실패');
