@@ -45,3 +45,34 @@ export const useIntroduceStore = create((set) => ({
     },
     setIntroduceData: (introduceData) => set({ introduceData: introduceData }),
   }))
+
+
+
+  //프로필정보 
+export const useProfileStore = create((set) => ({
+  profileData: {
+    id: 0,
+    name: '',
+    region: '',
+    gender: '',
+    status: '',
+    age: 0,
+    job: '',
+    company: '',
+    category:  '',
+    image_url: "https://None.s3.None.amazonaws.com/default_profile.png",
+    credit: 0,
+    created_at: "string",
+    updated_at: "str"
+    },
+    setProfileData: (profileData) => set({ profileData: profileData }),
+  }))
+
+
+  export const useRequestIdStore = create((set) => ({
+    requestId: null, // 초기값
+    setRequestId: (id) => set({ requestId: id }),
+  }));
+
+  export default useRequestIdStore;
+

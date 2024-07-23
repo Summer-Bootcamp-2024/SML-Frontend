@@ -13,6 +13,7 @@ function ChatPage() {
     const [selectRoom, setSelectRoom] = useState([])
     
     
+    
 //채팅방 조회
 const getChatRoom = async () => {
     try {
@@ -22,23 +23,27 @@ const getChatRoom = async () => {
       if (response.data.length>0) {
         const userDetailsArray = response.data.map(item => {
           let room_user_id = 0;
+          let me=0;
           let name = null;
           let other = null;
           let user_img = null;
          
          if (user_id === item.user1_id) {
           room_user_id = item.user2_id;
+          me = item.user1_id;
           name = item.user1_name;
           other = item.user2_name;
           user_img = item.user2_image_url;
         } else {
           room_user_id = item.user1_id;
+          me = item.user2_id;
           name = item.user2_name;
           other = item.user1_name;
           user_img = item.user1_image_url; 
         }
         return {
           room_id: item.id,
+          user_id: me,
           other_id: room_user_id,
           user_name: name,
           other_name: other,
@@ -69,7 +74,7 @@ const getChatRoom = async () => {
         <Sidebar/>
         <div className='flex justify-center w-[calc(100vw-296px)] h-screen'>
             <ChatRoom className='w-[40%]' roomListData={roomData} onChatRoomClick={handleChatRoomClick}/>
-            <Chat className='w-[60%]' selectedRoom={selectRoom} getChatRoom={getChatRoom}/>
+            <Chat className='w-[60%]' selectedRoom={selectRoom}/>
         </div>
     </div>
   );
