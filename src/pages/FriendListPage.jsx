@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
-import FriendGraph from '../components/FriendGraph';
-import FriendList from '../components/FriendList';
+import FriendGraph from '../components/friend/FriendGraph';
+import FriendList from '../components/friend/FriendList';
 import { useUserIdStore } from '../store/store';
 
 

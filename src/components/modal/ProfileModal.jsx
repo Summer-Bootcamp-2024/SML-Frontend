@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; 
-import Button from './Button';
+import Button from '../Button';
 import { MdClose } from "react-icons/md"; 
 import axios from 'axios';
-import { useApiUrlStore, useUserIdStore } from '../store/store';
+import { useApiUrlStore, useUserIdStore } from '../../store/store';
 
 function ProfileModal({ PostingClosedModal, ProfileId, openCreditModal }) {
     const {apiUrl} = useApiUrlStore()

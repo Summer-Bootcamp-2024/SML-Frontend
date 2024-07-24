@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from "../Button";
-import CheckLottie from "../checklottie.jsx";
-import FailLottie from "../faillottie.jsx";
+import CheckLottie from "../lottie/checklottie.jsx";
+import FailLottie from "../lottie/faillottie.jsx";
 
 function LoginModal({ onClose, signupSuccess, navigate }) {
 
