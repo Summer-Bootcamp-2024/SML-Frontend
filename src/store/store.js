@@ -9,12 +9,15 @@ import axios from 'axios';
  * `apiUrl`은 API 요청을 보낼 기본 URL을 저장합니다.
  * `setApiUrl`은 `apiUrl` 상태를 업데이트하는 함수입니다.
  */
+
+
 //api 주소
 export const useApiUrlStore = create((set) => ({
   apiUrl: 'http://localhost:8000/api/v1',
   setApiUrl: (url) => set((state) => ({ ...state, apiUrl: url })),
 }));
 
+//로그인 user_id
 export const useUserIdStore = create(
   persist(
     (set) => ({
@@ -29,25 +32,3 @@ export const useUserIdStore = create(
   )
 );
 
-export const useIntroductionRequestStore = create((set, get) => ({
-  introductionRequests: [],
-  createIntroductionRequest: async (user_id, target_user_id, intermediary_user_id) => {
-    const apiUrl = useApiUrlStore.getState().apiUrl;
-
-    try {
-      const response = await axios.post(`${apiUrl}/introduction_request/`, {
-        user_id,
-        target_user_id,
-        intermediary_user_id
-      });
-
-      set((state) => ({
-        introductionRequests: [...state.introductionRequests, response.data],
-      }));
-    } catch (err) {
-      console.log(err.response.data);
-      alert('소개 요청 실패');
-    }
-  }
-    
-}));

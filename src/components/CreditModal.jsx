@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Button from "./Button";
 import ChargeModal from "./ChargeModal";
 import { MdClose } from "react-icons/md"; 
-import { useApiUrlStore, useUserIdStore, useIntroductionRequestStore } from "../store/store";
+import { useApiUrlStore, useUserIdStore, useIntroduceStore } from "../store/store";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 function Credit({ onCloseModal, friendId, ProfileId }) {
     const { apiUrl } = useApiUrlStore();
     const { user_id } = useUserIdStore();
-    const { createIntroductionRequest } = useIntroductionRequestStore();
+    const { introduceData, setIntroduceData } = useIntroduceStore();
     const [chargeModalOpen, setChargeModalOpen] = useState(false);
     const [currentCredit, setCurrentCredit] = useState(0);
     const [giftCredit, setGiftCredit] = useState('');
@@ -40,6 +40,49 @@ function Credit({ onCloseModal, friendId, ProfileId }) {
         getCredit();
     }, []);
 
+    //채팅방생성
+    const createChatRoom = async () => {
+        const creatroomid = {
+            user1_id: user_id,
+            user2_id: friendId
+        };
+        try {
+          const response = await axios.post(`${apiUrl}/chatrooms/`, creatroomid, {
+            withCredentials: true,
+          });
+    
+          console.log("채탕빙생성 성공");
+        } catch (error) {
+          console.error('Error updating friend status:', error);
+          console.log("채팅방을 만들지 못했습니다");
+        }
+      };
+
+
+      //소개하기 요청 api
+      const introduceUser = async () => {
+        try {
+            const response = await axios.post(`${apiUrl}/introduction_request/`, {
+                user_id: user_id,
+                target_user_id : ProfileId,
+                intermediary_user_id: friendId
+              }, {
+            withCredentials: true,
+          });
+          setIntroduceData(response.data)
+          console.log(introduceData)
+          console.log("소개요청 성공");
+          
+          navigate('/chat');
+        } catch (error) {
+          console.error('Error updating friend status:', error);
+          console.log("소개요청을 못했습니다");
+        }
+      };
+
+      console.log(introduceData)
+      
+
     const updateCredit = (addedCredit) => {
         setCurrentCredit((prevCredit) => prevCredit + addedCredit);
         toggleChargeModal();
@@ -52,22 +95,8 @@ function Credit({ onCloseModal, friendId, ProfileId }) {
             alert("선물할 크레딧이 현재 보유 크레딧보다 많습니다.");
         }
         else {
-            try {
-                //채팅방 생성 api 호출
-                const response = await axios.post(`${apiUrl}/chatrooms`, {
-                    user1_id: user_id,
-                    user2_id: friendId
-                });
-                window.alert("채팅방 생성 성공");
-
-                //소개 요청 생성 api 호출
-                await createIntroductionRequest(user_id, ProfileId, friendId);
-                window.alert("소개 요청 성공");
-                navigate('/chat');
-            } catch (err) {
-                window.alert('api 요청 실패');
-                console.log(err);
-            }
+            createChatRoom()
+            introduceUser()
         }
     }
     
