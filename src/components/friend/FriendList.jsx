@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import ProfileModal from './ProfileModal';
-import CreditModal from '../components/CreditModal';
-import { useApiUrlStore, useUserIdStore } from '../store/store';
+import ProfileModal from '../modal/ProfileModal';
+import CreditModal from '../modal/CreditModal';
+import { useApiUrlStore, useUserIdStore } from '../../store/store';
 import { NavLink} from 'react-router-dom';
 import axios from 'axios';
 

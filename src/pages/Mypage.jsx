@@ -4,9 +4,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useApiUrlStore, useUserIdStore } from '../store/store';
-import ChargeModal from '../components/ChargeModal';
+import ChargeModal from '../components/modal/ChargeModal';
 import Lottie from "lottie-react";
-import network from '../components/network.json';
+import network from '../components/lottie/network.json';
 import basicProfile from "../assets/images/myprofile/basicProfile.png";
 
 function Mypage() {

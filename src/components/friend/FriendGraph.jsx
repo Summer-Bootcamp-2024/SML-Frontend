@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import cytoscape from 'cytoscape';
-import mainProfile from '../assets/images/myprofile/profileImgSquare.png';
-import node1img from '../assets/images/profileImg2.png';
-import ProfileModal from './ProfileModal';
-import { useApiUrlStore, useUserIdStore } from '../store/store';
+import mainProfile from '../../assets/images/myprofile/profileImgSquare.png';
+import node1img from '../../assets/images/profileImg2.png';
+import ProfileModal from '../modal/ProfileModal';
+import { useApiUrlStore, useUserIdStore } from '../../store/store';
 import axios from 'axios';
 
 function FriendGraph() {

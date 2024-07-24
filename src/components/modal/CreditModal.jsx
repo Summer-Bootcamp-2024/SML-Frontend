@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import Button from "./Button";
+import Button from "../Button";
 import ChargeModal from "./ChargeModal";
 import { MdClose } from "react-icons/md"; 
-import { useApiUrlStore, useUserIdStore } from "../store/store";
+import { useApiUrlStore, useUserIdStore } from "../../store/store";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 

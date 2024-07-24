@@ -1,4 +1,4 @@
-import Lottiefile from "../Logolottie"
+import Lottiefile from "../lottie/Logolottie"
 
 function Header() {
     return(

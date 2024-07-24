@@ -1,8 +1,8 @@
 import { useState } from "react";
-import Button from "./Button";
+import Button from "../Button";
 import { MdClose } from "react-icons/md"; 
 import axios from "axios";
-import { useApiUrlStore, useUserIdStore } from "../store/store";
+import { useApiUrlStore, useUserIdStore } from "../../store/store";
 
 function ChargeModal({onCloseModal, currentCredit, onUpdateCredit}) {
     const { apiUrl } = useApiUrlStore();

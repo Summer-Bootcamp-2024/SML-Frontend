@@ -1,5 +1,5 @@
 import Lottie from "lottie-react";
-import network from '../components/network.json';
+import network from '../components/lottie/network.json';
 import Button from '../components/Button';
 import axios from "axios";
 import { useState } from "react";

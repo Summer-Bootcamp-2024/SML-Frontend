@@ -4,7 +4,7 @@ import ChatRoom from '../components/chat/ChatRoom';
 import axios from 'axios';
 import { useApiUrlStore, useUserIdStore } from '../store/store';
 import { useEffect, useState } from 'react';
-import GiftCreditModal from '../components/GiftCreditModal';
+import GiftCreditModal from '../components/modal/GiftCreditModal'
 
 
 function ChatPage() {

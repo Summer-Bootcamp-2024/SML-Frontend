@@ -3,7 +3,7 @@ import SearchBar from '../components/search/SearchBar';
 import ProfileList from '../components/search/profile/ProfileList';
 import { useState } from 'react';
 import ProfileSlide from '../components/search/profile/ProfileSlide';
-import CreditModal from '../components/CreditModal';
+import CreditModal from '../components/modal/CreditModal'
 import { MdPeople } from "react-icons/md";
 
 function SearchPage() {

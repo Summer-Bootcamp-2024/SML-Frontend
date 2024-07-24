@@ -1,5 +1,5 @@
 import React from 'react';
-import Lottiefile from './Firstlottie.jsx';
+import Lottiefile from '../lottie/Firstlottie.jsx';
 
 function Mainfirst() {
   return (
