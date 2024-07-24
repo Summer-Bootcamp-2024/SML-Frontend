@@ -11,6 +11,8 @@ function MypageEdit() {
     const { user_id } = useUserIdStore();
     const [_postImg, setPostImg] = useState([]);
     const [previewImg, setPreviewImg] = useState([]);
+    const imgRef = useRef(null);
+    const navigate = useNavigate();
     const [profileData, setProfileData] = useState({
         name: '',
         age: '',
@@ -22,8 +24,22 @@ function MypageEdit() {
         image_url: ''
     });
 
-    const imgRef = useRef(null);
-    const navigate = useNavigate();
+    const categoryList = [
+        { value: 'IT/SW', name: 'IT/SW' },
+        { value: 'MOVIE', name: '영화' },
+    ];
+
+    const jobList = [
+        {
+            name: '개발자',
+            value: 'PROGRAMMING',
+        },
+        {
+            name: '감독',
+            value: 'DIRECTOR',
+        },
+    ];
+
 
     useEffect(() => {
         const fetchProfileData = async () => {
@@ -158,13 +174,30 @@ function MypageEdit() {
                             value={profileData.age}
                             onChange={handleInputChange}
                             className="w-[250px] h-[27px] pl-[15px] text-black bg-custom-white rounded-[5px] border border-custom-grey" />
-                            <input 
-                            type="text" 
-                            placeholder="백엔드 개발자"
-                            name="job"
-                            value={profileData.job}
-                            onChange={handleInputChange} 
-                            className="w-[250px] h-[27px] pl-[15px] text-black bg-custom-white rounded-[5px] border border-custom-grey" />
+                             <select 
+                                name="job"
+                                value={profileData.job}
+                                onChange={handleInputChange}
+                                className="w-[250px] h-[27px] pl-[15px] text-black bg-custom-white rounded-[5px] border border-custom-grey"
+                            >
+                                {jobList.map((item) => (
+                                    <option value={item.value} key={item.name}>
+                                        {item.name}
+                                    </option>
+                                ))}
+                            </select>
+                            <select 
+                                name="category"
+                                value={profileData.category}
+                                onChange={handleInputChange}
+                                className="w-[250px] h-[27px] pl-[15px] text-black bg-custom-white rounded-[5px] border border-custom-grey"
+                            >
+                                {categoryList.map((item) => (
+                                    <option value={item.value} key={item.name}>
+                                        {item.name}
+                                    </option>
+                                ))}
+                             </select>
                             <input 
                             type="text" 
                             placeholder="Men" 
@@ -173,7 +206,6 @@ function MypageEdit() {
                             onChange={handleInputChange}
                             className="w-[250px] h-[27px] pl-[15px] text-black bg-custom-white rounded-[5px] border border-custom-grey" />
                             <input 
-                            type="text" 
                             placeholder="실리콘밸리" 
                             name="company"
                             value={profileData.company}
@@ -184,13 +216,6 @@ function MypageEdit() {
                             placeholder="서울시 중구" 
                             name="region"
                             value={profileData.region}
-                            onChange={handleInputChange}
-                            className="w-[250px] h-[27px] pl-[15px] text-black bg-custom-white rounded-[5px] border border-custom-grey" />
-                            <input 
-                            type="text" 
-                            placeholder="면접" 
-                            name="category"
-                            value={profileData.category}
                             onChange={handleInputChange}
                             className="w-[250px] h-[27px] pl-[15px] text-black bg-custom-white rounded-[5px] border border-custom-grey" />
                             <Button type="submit" label="수정 완료" className="absolute right-4 bottom-6"></Button>

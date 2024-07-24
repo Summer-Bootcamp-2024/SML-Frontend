@@ -19,6 +19,19 @@ function Mypage() {
     const [receivedGifts, setReceivedGifts] = useState([]);
     const navigate = useNavigate();
 
+    const [selectedCategory, setSelectedCategory] = useState('');
+    const [selectedJob, setSelectedJob] = useState('');
+
+    const categoryList = [
+        { value: 'IT/SW', name: 'IT/SW' },
+        { value: 'MOVIE', name: '영화' },
+    ];
+
+    const jobList = [
+        { name: '개발자', value: 'PROGRAMMING' },
+        { name: '감독', value: 'DIRECTOR' },
+    ];
+
     const getProfile = async () => {
         try {
             const response = await axios.get(`${apiUrl}/users/${user_id}`, {
@@ -26,10 +39,11 @@ function Mypage() {
             });
             setProfile(response.data);
             setCurrentCredit(response.data.credit);
+            setSelectedCategory(response.data.category);
+            setSelectedJob(response.data.job);
         } catch (error) {
             window.alert("조회 실패");
         }
-    
     }
 
     const getSentGifts = async () => {
@@ -57,17 +71,16 @@ function Mypage() {
             if (err.response && err.response.status === 404) {
                 setReceivedGifts([]); // 빈 배열로 설정
             } else {
-                window.alert("보낸 선물 기록 조회 실패");
+                window.alert("받은 선물 기록 조회 실패");
             }
         }
     }
 
     useEffect(() => {
-         getProfile();
-         getSentGifts();
-         getReceivedGifts();
+        getProfile();
+        getSentGifts();
+        getReceivedGifts();
     }, []);
-
 
     if (!profile) {
         return <div className='w-[100vw] h-[100vh] flex justify-center items-center'>
@@ -101,11 +114,14 @@ function Mypage() {
                 localStorage.removeItem('user_id');
                 setUserId(null);
                 navigate('/');
-                }
+            }
         } catch (error) {
             window.alert('회원 탈퇴 실패');
         }
     }
+
+    const selectedCategoryName = categoryList.find(item => item.value === selectedCategory)?.name || '';
+    const selectedJobName = jobList.find(item => item.value === selectedJob)?.name || '';
 
     return (
         <div className="flex justify-end w-full h-[100vh] font-[Pretendard]">
@@ -129,11 +145,11 @@ function Mypage() {
                         <li className="flex flex-col gap-[10px]">
                             {profile && <span className="text-base font-light text-black">{profile.name}</span>}
                             {profile && <span className="text-base font-light text-black">{profile.age}세</span>}
-                            <span className="text-base font-light text-black">{profile.job}</span>
+                            <span className="text-base font-light text-black">{selectedJobName}</span>
                             {profile && <span className="text-base font-light text-black">{profile.gender}</span>}
                             <span className="text-base font-light text-black">{profile.company}</span>
                             {profile && <span className="text-base font-light text-black">{profile.region}</span>}
-                            <span className="text-base font-light text-black">{profile.category}</span>
+                            <span className="text-base font-light text-black">{selectedCategoryName}</span>
                         </li>
                     </ul>
                     <div className="ml-[45px] mt-20 w-[218.86px] h-[98.18px] bg-custom-white rounded-[10px] shadow-xl border border-custom-grey">
@@ -172,7 +188,7 @@ function Mypage() {
                             </ul>
                             <ul className='flex flex-col gap-[20px] text-black text-base font-normal'>
                                 {sentGifts.map(gift => (
-                                     <li key={gift.id}>
+                                    <li key={gift.id}>
                                         <span>{`-${gift.ct_money} credit`}</span>
                                     </li>
                                 ))}
@@ -180,7 +196,7 @@ function Mypage() {
                         </div>
                     </div>
                     <div className="w-[380px] h-[220px] bg-custom-grey/10 rounded-[10px] shadow-custom-blue/30 shadow-lg border-2 border-custom-blue overflow-y-scroll">
-                    <div>
+                        <div>
                             <h1 className='p-[20px] text-xl font-black tracking-tight text-custom-indigo underline'>받은 선물 기록 조회</h1>
                         </div>
                         <div className='w-full pl-[40px] gap-[20px] h-[100px] flex'>
