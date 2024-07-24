@@ -5,11 +5,14 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useApiUrlStore, useUserIdStore } from '../store/store';
+import LoginModal from "../components/modal/LoginModal";
 
 
 function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [statusModalOpen, setStatusModalOpen] = useState(false);
+    const [signupSuccess, setSignupSuccess] = useState(false);
     const navigate = useNavigate();
     const {apiUrl} = useApiUrlStore()
     const {setUserId} = useUserIdStore()
@@ -18,14 +21,20 @@ function LoginPage() {
         e.preventDefault();
         try {
             const response = await axios.post(`${apiUrl}/auth/login`, {email, password}, {withCredentials: true});
-            window.alert('로그인 성공');
+            console.log(response.data)
+            setSignupSuccess(true); 
             setUserId(response.data.user_id);
-            navigate('/list');
         } catch (err) {
-            window.alert('로그인 실패');
+            setSignupSuccess(false); 
             console.log(err);
+        } finally {
+            setStatusModalOpen(true); 
         }
-    }
+    };
+
+    const PostingClosedModal = () => {
+        setStatusModalOpen(false);
+    };
 
     return (
         <div className="flex h-[100vh] items-center justify-center bg-[#D7ECFF] font-[Pretendard] ">
@@ -58,7 +67,13 @@ function LoginPage() {
                         </div>
                     </form>
                 </div>
-                
+                {statusModalOpen && (
+                <LoginModal 
+                    onClose={PostingClosedModal}
+                    signupSuccess={signupSuccess}
+                    navigate={navigate}
+                />
+            )}
             </div>
         </div>
     )
