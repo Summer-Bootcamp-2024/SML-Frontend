@@ -17,6 +17,7 @@ function SearchPage() {
 
   const handleCardClick = (profile) => {
     setSelectProfile(profile);
+    setSelectedProfileId(profile.user_id);
   };
 
   const closeProfile = () => {
