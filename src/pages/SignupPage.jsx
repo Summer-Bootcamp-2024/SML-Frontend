@@ -135,7 +135,7 @@ function SignupPage() {
             </div>
             {statusModalOpen && (
                 <SignUpModal 
-                    PostingClosedModal={PostingClosedModal}
+                    onClose={PostingClosedModal}
                     signupSuccess={signupSuccess}
                     navigate={navigate}
                 />

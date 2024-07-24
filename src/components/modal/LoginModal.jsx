@@ -3,15 +3,15 @@ import Button from "../Button";
 import CheckLottie from "../checklottie.jsx";
 import FailLottie from "../faillottie.jsx";
 
-function LoginModal({ PostingClosedModal, signupSuccess, navigate }) {
+function LoginModal({ onClose, signupSuccess, navigate }) {
 
     const handleFailure = () => {
-        PostingClosedModal(); 
+        onClose(); 
         navigate('/login'); 
     };
 
     const handleSuccess = () => {
-        PostingClosedModal();
+        onClose();
         navigate('/list'); 
     };
     

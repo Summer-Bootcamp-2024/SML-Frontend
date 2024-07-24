@@ -69,7 +69,7 @@ function LoginPage() {
                 </div>
                 {statusModalOpen && (
                 <LoginModal 
-                    PostingClosedModal={PostingClosedModal}
+                    onClose={PostingClosedModal}
                     signupSuccess={signupSuccess}
                     navigate={navigate}
                 />
