@@ -77,10 +77,7 @@ function Credit({ onCloseModal, friendId, ProfileId }) {
           console.error('Error updating friend status:', error);
           console.log("소개요청을 못했습니다");
         }
-      };
-
-      console.log(introduceData)
-      
+      };      
 
     const updateCredit = (addedCredit) => {
         setCurrentCredit((prevCredit) => prevCredit + addedCredit);
