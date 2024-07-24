@@ -24,12 +24,28 @@ function Mypage() {
 
     const categoryList = [
         { value: 'IT/SW', name: 'IT/SW' },
-        { value: 'MOVIE', name: '영화' },
+        { value: 'Finance/Insurance', name: '금융/보험' },
+        { value: 'Production', name: '제조업' },
+        { value: 'Service', name: '서비스업' },
+        { value: 'Education', name: '교육' },
+        { value: 'Medical', name: '의료/보건' },
+        { value: 'Legal', name: '법률' },
+        { value: 'Media', name: '미디어/홍보' },
+        { value: 'Art', name: '예술/디자인' },
+        { value: 'Science', name: '연구/과학' }
     ];
 
     const jobList = [
-        { name: '개발자', value: 'PROGRAMMING' },
-        { name: '감독', value: 'DIRECTOR' },
+        { name: '개발자', value: 'Developer'},
+        { name: '금융 전문가', value: 'Finance Professional'},
+        { name: '생산 관리자', value: 'Production Manager'},
+        { name: '서비스 관리자', value: 'Service Manager'},
+        { name: '교육 전문가', value: 'Education Professional'},
+        { name: '의료 전문가', value: 'Healthcare Professional'},
+        { name: '법률 전문가', value: 'Legal Professional'},
+        { name: '미디어/커뮤니케이션 전문가', value: 'Media & Communication Professional'},
+        { name: '디자이너', value: 'Designer'},
+        { name: '연구원', value: 'Researcher'}
     ];
 
     const getProfile = async () => {
@@ -137,19 +153,19 @@ function Mypage() {
                             <span className="text-base font-semibold text-black">이름</span>
                             <span className="text-base font-semibold text-black">나이</span>
                             <span className="text-base font-semibold text-black">직업</span>
+                            <span className="text-base font-semibold text-black">관심분야</span>
                             <span className="text-base font-semibold text-black">성별</span>
                             <span className="text-base font-semibold text-black">회사</span>
                             <span className="text-base font-semibold text-black">위치</span>
-                            <span className="text-base font-semibold text-black">관심분야</span>
                         </li>
                         <li className="flex flex-col gap-[10px]">
                             {profile && <span className="text-base font-light text-black">{profile.name}</span>}
                             {profile && <span className="text-base font-light text-black">{profile.age}세</span>}
                             <span className="text-base font-light text-black">{selectedJobName}</span>
+                            <span className="text-base font-light text-black">{selectedCategoryName}</span>
                             {profile && <span className="text-base font-light text-black">{profile.gender}</span>}
                             <span className="text-base font-light text-black">{profile.company}</span>
                             {profile && <span className="text-base font-light text-black">{profile.region}</span>}
-                            <span className="text-base font-light text-black">{selectedCategoryName}</span>
                         </li>
                     </ul>
                     <div className="ml-[45px] mt-20 w-[218.86px] h-[98.18px] bg-custom-white rounded-[10px] shadow-xl border border-custom-grey">
