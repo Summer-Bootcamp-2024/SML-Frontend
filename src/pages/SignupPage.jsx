@@ -46,18 +46,14 @@ function SignupPage() {
         console.log(formData);
         try {
             const response = await axios.post(`${apiUrl}/users/signup`, formData);
+            console.log(response.data)
             setSignupSuccess(true);
-            console.log(response.data);
         } catch (err) {
             setSignupSuccess(false);
             console.log(err);
         } finally {
             setStatusModalOpen(true);
         }
-    };
-
-    const PostingOpenModal = () => {
-        setStatusModalOpen(true);
     };
 
     const PostingClosedModal = () => {

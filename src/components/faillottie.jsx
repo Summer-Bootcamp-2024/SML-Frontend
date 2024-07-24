@@ -3,7 +3,7 @@ import Lottie from 'lottie-react';
 import animationData from "./fail.json"
 
 const Logolottie = () => {
-  return <Lottie animationData={animationData} loop={true} style={{ height: 130, width: 130}} />;
+  return <Lottie animationData={animationData} loop={true} style={{ height: 100, width: 100}} />;
 };
 
 export default Logolottie;

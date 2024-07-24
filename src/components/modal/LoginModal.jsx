@@ -3,16 +3,16 @@ import Button from "../Button";
 import CheckLottie from "../checklottie.jsx";
 import FailLottie from "../faillottie.jsx";
 
-function SignUpModal({ PostingClosedModal, signupSuccess, navigate }) {
+function LoginModal({ PostingClosedModal, signupSuccess, navigate }) {
 
     const handleFailure = () => {
         PostingClosedModal(); 
-        navigate('/signup'); 
+        navigate('/login'); 
     };
 
     const handleSuccess = () => {
         PostingClosedModal();
-        navigate('/login'); 
+        navigate('/list'); 
     };
     
     return (
@@ -20,7 +20,7 @@ function SignUpModal({ PostingClosedModal, signupSuccess, navigate }) {
             <div className=" flex flex-col items-center justify-center w-[400px] h-[250px] bg-custom-white rounded-[10px] border-[1px] border-custom-grey">
                 {signupSuccess ? (
                     <div className='flex flex-col items-center'>
-                        <div className='text-[28px] font-black mb-[-10px]'>회원가입 성공!</div>
+                        <div className='text-[28px] font-black mb-[-10px]'>로그인 성공!</div>
                         <div className='flex flex-col items-center'>
                             <CheckLottie />
                             <div className="flex">
@@ -30,7 +30,7 @@ function SignUpModal({ PostingClosedModal, signupSuccess, navigate }) {
                     </div>
                 ) : (
                     <div className='flex flex-col items-center'>
-                        <div className='text-[28px] font-black mb-[-10px]'>회원가입 실패!</div>
+                        <div className='text-[28px] font-black mb-[-10px]'>로그인 실패!</div>
                         <div className='flex flex-col items-center'>
                             <FailLottie />
                             <div className="flex">
@@ -44,4 +44,4 @@ function SignUpModal({ PostingClosedModal, signupSuccess, navigate }) {
     );
 }
 
-export default SignUpModal;
+export default LoginModal;
