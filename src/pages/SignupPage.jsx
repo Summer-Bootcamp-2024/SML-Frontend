@@ -21,24 +21,35 @@ function SignupPage() {
 
     const categoryList = [
         { value: 'IT/SW', name: 'IT/SW' },
-        { value: 'MOVIE', name: '영화' },
+        { value: 'Finance/Insurance', name: '금융/보험' },
+        { value: 'Production', name: '제조업' },
+        { value: 'Service', name: '서비스업' },
+        { value: 'Education', name: '교육' },
+        { value: 'Medical', name: '의료/보건' },
+        { value: 'Legal', name: '법률' },
+        { value: 'Media', name: '미디어/홍보' },
+        { value: 'Art', name: '예술/디자인' },
+        { value: 'Science', name: '연구/과학' }
     ];
 
     const jobList = [
-        {
-            name: '개발자',
-            value: 'PROGRAMMING',
-        },
-        {
-            name: '감독',
-            value: 'DIRECTOR',
-        },
+        { name: '개발자', value: 'Developer'},
+        { name: '금융 전문가', value: 'Finance Professional'},
+        { name: '생산 관리자', value: 'Production Manager'},
+        { name: '서비스 관리자', value: 'Service Manager'},
+        { name: '교육 전문가', value: 'Education Professional'},
+        { name: '의료 전문가', value: 'Healthcare Professional'},
+        { name: '법률 전문가', value: 'Legal Professional'},
+        { name: '미디어/커뮤니케이션 전문가', value: 'Media & Communication Professional'},
+        { name: '디자이너', value: 'Designer'},
+        { name: '연구원', value: 'Researcher'}
     ];
 
     const navigate = useNavigate();
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
+        console.log(formData)
     };
 
     const handleSignup = async (e) => {
@@ -106,24 +117,24 @@ function SignupPage() {
                         className="w-[300px] h-[50px] bg-stone-50 rounded-[10px] border border-gray-600 pl-[23px] text-gray-600/opacity-30 text-base font-extrabold tracking-tight" />
                     <div className="flex">
                         <select 
-                            name="job"
-                            value={formData.job}
-                            onChange={handleChange}
-                            required
-                            className="w-[140px] h-[50px] bg-stone-50 rounded-[10px] mx-[10px] border border-gray-600 pl-[23px] text-gray-600/opacity-30 text-base font-extrabold tracking-tight">
-                            {jobList.map((item) => (
-                                <option value={item.value} key={item.name}>
-                                    {item.name}
-                                </option>
-                            ))}
-                        </select>
-                        <select 
                             name="category"
                             value={formData.category}
                             onChange={handleChange}
                             required
                             className="w-[140px] h-[50px] bg-stone-50 rounded-[10px] border mx-[10px] border-gray-600 pl-[23px] text-gray-600/opacity-30 text-base font-extrabold tracking-tight">
                             {categoryList.map((item) => (
+                                <option value={item.value} key={item.name}>
+                                    {item.name}
+                                </option>
+                            ))}
+                        </select>
+                        <select 
+                            name="job"
+                            value={formData.job}
+                            onChange={handleChange}
+                            required
+                            className="w-[140px] h-[50px] bg-stone-50 rounded-[10px] mx-[10px] border border-gray-600 pl-[23px] text-gray-600/opacity-30 text-base font-extrabold tracking-tight">
+                            {jobList.map((item) => (
                                 <option value={item.value} key={item.name}>
                                     {item.name}
                                 </option>
