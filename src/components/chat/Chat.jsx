@@ -51,7 +51,7 @@ function Chat({ selectedRoom, getChatRoom, onOpenGiftCreditModal }) {
     };
 
     useEffect(() => {
-        getChatRoom();
+        fetchChatRoom();
     }, [selectedRoom.room_id]);
 
 
