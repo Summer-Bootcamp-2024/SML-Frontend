@@ -34,7 +34,7 @@ function Chat({ selectedRoom, getChatRoom, onOpenGiftCreditModal }) {
   };
 
   // 채팅방 데이터 조회
-    const getChatRoom = async () => {
+    const fetchChatRoom = async () => {
       try {
         const response = await axios.get(`${apiUrl}/chatrooms/${user_id}`, {
           withCredentials: true,

@@ -2,19 +2,15 @@ import { useEffect, useState } from "react";
 import Button from "./Button";
 import ChargeModal from "./ChargeModal";
 import { MdClose } from "react-icons/md"; 
-import { useApiUrlStore, useUserIdStore, useIntroductionRequestStore } from "../store/store";
+import { useApiUrlStore, useUserIdStore } from "../store/store";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-
 
 function GiftCreditModal({ onClose, friendId, targetUserId }) {
     const { apiUrl } = useApiUrlStore();
     const { user_id } = useUserIdStore();
-    const { createIntroductionRequest } = useIntroductionRequestStore();
     const [chargeModalOpen, setChargeModalOpen] = useState(false);
     const [currentCredit, setCurrentCredit] = useState(0);
     const [giftCredit, setGiftCredit] = useState('');
-    const navigate = useNavigate();
 
     const toggleChargeModal = () => {
         setChargeModalOpen(prev => !prev);
