@@ -205,7 +205,7 @@ function MypageEdit() {
                             value={profileData.gender}
                             onChange={handleInputChange}
                             className="w-[250px] h-[27px] pl-[15px] text-black bg-custom-white rounded-[5px] border border-custom-grey" />
-                            <select 
+                            <input 
                             placeholder="실리콘밸리" 
                             name="company"
                             value={profileData.company}
