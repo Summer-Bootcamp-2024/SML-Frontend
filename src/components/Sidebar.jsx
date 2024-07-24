@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 import { useApiUrlStore, useUserIdStore } from '../store/store';
 import basicProfile from '../assets/images/myprofile/basicProfile.png';
 import Lottie from "lottie-react";
-import network from '../components/network.json';
+import network from '../components/lottie/network.json';
 
 function Sidebar() {
     const location = useLocation();
