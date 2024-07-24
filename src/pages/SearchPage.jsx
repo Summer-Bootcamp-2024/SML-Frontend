@@ -9,6 +9,7 @@ import { MdPeople } from "react-icons/md";
 function SearchPage() {
   const [creditModalOpen, setCreditModalOpen] = useState(false);
   const [selectProfile, setSelectProfile] = useState(null);
+  const [selectedProfileId, setSelectedProfileId] = useState(null);
   const [friendId, setFriendId] = useState(null);
   const [_intermediaryUserId, setIntermediaryUserId] = useState(null);
 
@@ -20,6 +21,7 @@ function SearchPage() {
 
   const closeProfile = () => {
     setSelectProfile(null);
+    setSelectedProfileId(null);
   };
 
   const openCreditModal = (selectedFriendId, intermediaryId) => { // 소개하기 모달 열기
@@ -35,7 +37,7 @@ function SearchPage() {
   return (
     <div className="flex w-full h-[100vh]">
       <Sidebar></Sidebar>
-      <div className="flex flex-col items-center w-[calc(100vw-296px)] h-full">
+      <div className="flex flex-col ml-[296px] items-center w-[calc(100vw-296px)] h-full">
         <div className="flex h-[150px] items-center justify-start w-full border-b-[1px] border-custom-grey">
           <SearchBar setSearchResults={setSearchResults} />
         </div>

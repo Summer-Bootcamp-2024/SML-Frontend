@@ -53,8 +53,8 @@ function Sidebar() {
     }
 
     return(
-        <div className=" flex flex-col items-center w-[296px] h-screen bg-custom-white border-r-[1px] border-custom-grey font-[Pretendard]">
-            <div className="flex items-center justify-around w-[190px] text-[24px] font-extrabold text-custom-indigo mt-[20px] font-[GmarketSansMedium] ">
+        <div className="fixed top-0 left-0 flex flex-col items-center w-[296px] h-screen bg-custom-white border-r-[1px] border-custom-grey font-[Pretendard] z-10">
+            <div className="flex justify-start items-center w-[190px] text-[24px] font-extrabold text-custom-indigo mt-[20px] font-[GmarketSansMedium] ">
             <Lottie animationData={network} loop={true} className="w-[50px] h-[50px] text-blue-300"/>
                 SML
                 </div>

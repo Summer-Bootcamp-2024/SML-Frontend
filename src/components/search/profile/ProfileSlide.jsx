@@ -90,7 +90,7 @@ function ProfileSlide({ isOpen, openCreditModal, onCloseSlide, ProfileId }) {
         <div
             className={`absolute w-[450px] top-[175px] rounded-[10px] border-2 border-custom-blue right-20 h-[calc(100vh-140px)] pb-[3%] bg-custom-skyblue transition-transform duration-300 overflow-y-scroll ${isOpen ? '' : 'translate-x-[400px]'}`}
             >
-            <button className="flex justify-end w-full" onClick={onCloseSlide}>
+            <button className="flex justify-end w-full" onClick={onCloseSlide} >
                 <MdKeyboardDoubleArrowRight className='w-[46px] h-[39px] mr-[10px] mt-[10px] text-custom-grey'/>
             </button>
             <div className='flex flex-col items-center justify-center mt-[-30px]'>

@@ -12,7 +12,7 @@ function SignupPage() {
         password: '',
         name: '',
         gender: '',
-        region: '',
+        category: '',
         age: '',
     });
 
@@ -80,9 +80,9 @@ function SignupPage() {
                     className="w-[300px] h-[50px] bg-stone-50 rounded-[10px] border border-gray-600 pl-[23px] text-gray-600/opacity-30 text-base font-extrabold tracking-tight" />
                     <input 
                     type="text" 
-                    placeholder="region"
-                    name="region"
-                    value={formData.region}
+                    placeholder="category"
+                    name="category"
+                    value={formData.category}
                     onChange={handleChange}
                     required
                     className="w-[300px] h-[50px] bg-stone-50 rounded-[10px] border border-gray-600 pl-[23px] text-gray-600/opacity-30 text-base font-extrabold tracking-tight" />
