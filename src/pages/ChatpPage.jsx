@@ -4,6 +4,7 @@ import ChatRoom from '../components/chat/ChatRoom';
 import axios from 'axios';
 import { useApiUrlStore, useUserIdStore } from '../store/store';
 import { useEffect, useState } from 'react';
+import GiftCreditModal from '../components/GiftCreditModal';
 
 
 function ChatPage() {
@@ -11,7 +12,9 @@ function ChatPage() {
     const {user_id} = useUserIdStore()
     const [roomData, setRoomData] = useState([])
     const [selectRoom, setSelectRoom] = useState([])
-    
+    const [giftCreditModalOpen, setGiftCreditModalOpen] = useState(false);
+    const [friendId, setFriendId] = useState(null);
+    const [targetUserId, setTargetUserId] = useState(null);
     
 //채팅방 조회
 const getChatRoom = async () => {
@@ -57,19 +60,32 @@ const getChatRoom = async () => {
   const handleChatRoomClick = (roomId) => {
     const selected = roomData.find(room => room.room_id === roomId);
     setSelectRoom(selected);
+
+    if (selected) {
+      setFriendId(selected);
+      setTargetUserId(selected.other_id);
+    }
   };
   
   useEffect(() => {
     getChatRoom()
   }, [])
 
+  const handleOpenGiftCreditModal = () => {
+    setGiftCreditModalOpen(true);
+  };
+
+  const handleCloseGiftCreditModal = () => {
+    setGiftCreditModalOpen(false);
+  };
     
   return (
-    <div className='flex'>
+    <div className='flex w-full h-[100vh]'>
         <Sidebar/>
         <div className='flex justify-center w-[calc(100vw-296px)] h-screen'>
             <ChatRoom className='w-[40%]' roomListData={roomData} onChatRoomClick={handleChatRoomClick}/>
-            <Chat className='w-[60%]' selectedRoom={selectRoom} getChatRoom={getChatRoom}/>
+            <Chat className='w-[60%]' selectedRoom={selectRoom} getChatRoom={getChatRoom} onOpenGiftCreditModal={handleOpenGiftCreditModal}/>
+            {giftCreditModalOpen && <GiftCreditModal onClose={handleCloseGiftCreditModal} friendId={friendId} targetUserId={targetUserId}/>}
         </div>
     </div>
   );
