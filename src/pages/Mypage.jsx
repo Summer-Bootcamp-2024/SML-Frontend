@@ -1,6 +1,5 @@
 import Button from '../components/Button';
 import Sidebar from '../components/Sidebar';
-import profileImgSquare from '../assets/images/myprofile/profileImgSquare.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -8,6 +7,7 @@ import { useApiUrlStore, useUserIdStore } from '../store/store';
 import ChargeModal from '../components/ChargeModal';
 import Lottie from "lottie-react";
 import network from '../components/network.json';
+import basicProfile from "../assets/images/myprofile/basicProfile.png";
 
 function Mypage() {
     const { apiUrl } = useApiUrlStore();
@@ -80,7 +80,7 @@ function Mypage() {
                 <div className="relative flex w-[800px] h-[350px] bg-custom-blue/30 rounded-[10px] shadow-custom-blue/30 shadow-lg border-2 border-custom-blue">
                     <div className="flex flex-col gap-[20px] pl-[50px] pt-[28px]">
                         <h1 className="text-2xl font-black tracking-tight text-gray-600 underline">My PROFILE</h1>
-                        <img className="w-[150px] h-[150px]" src={profileImgSquare}/>
+                        <img className="w-[150px] h-[150px]" src={profile.image_url ? profile.image_url : basicProfile}/>
                     </div>
                     <ul className="flex gap-[40px] pt-[75px] pl-[68px]">
                         <li className="flex flex-col gap-[10px]">

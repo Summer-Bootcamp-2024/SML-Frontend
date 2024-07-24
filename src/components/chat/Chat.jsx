@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useApiUrlStore, useUserIdStore} from '../../store/store';
 import { useEffect, useRef, useState } from 'react';
 
-function Chat({ selectedRoom }) {
+function Chat({ selectedRoom, getChatRoom, onOpenGiftCreditModal }) {
   const { apiUrl } = useApiUrlStore();
   const { user_id } = useUserIdStore();
   const [messages, setMessages] = useState([]);
@@ -368,6 +368,11 @@ function Chat({ selectedRoom }) {
     }
   };
 
+  const handleFriendRequest = () => {
+    postFriendStatus();
+    onOpenGiftCreditModal();
+  }
+
 //일촌요청받기 버튼 확인 후 수정
   return (
     <div className="flex items-center justify-center w-[60%] h-screen ml-[-30px] bg-white font-[Pretendard]">
@@ -387,7 +392,7 @@ function Chat({ selectedRoom }) {
                  일촌요청 받기
                </button>
               ) :(
-              <button className="text-[14px] font-semibold text-custom-blue ml-auto mr-[20px]" onClick={postFriendStatus}>
+              <button className="text-[14px] font-semibold text-custom-blue ml-auto mr-[20px]" onClick={handleFriendRequest}>
                 일촌 요청
               </button>
               )}

@@ -3,18 +3,14 @@ import SearchBar from '../components/search/SearchBar';
 import ProfileList from '../components/search/profile/ProfileList';
 import { useState } from 'react';
 import ProfileSlide from '../components/search/profile/ProfileSlide';
-import Credit from '../components/CreditModal';
-import { useUserIdStore, useApiUrlStore } from '../store/store';
+import CreditModal from '../components/CreditModal';
 import { MdPeople } from "react-icons/md";
-import basicProfile from "../assets/images/myprofile/basicProfile.png";
 
 function SearchPage() {
-  const { user_id } = useUserIdStore();
-  const { apiUrl } = useApiUrlStore();
   const [creditModalOpen, setCreditModalOpen] = useState(false);
   const [selectProfile, setSelectProfile] = useState(null);
   const [friendId, setFriendId] = useState(null);
-  const [intermediaryUserId, setIntermediaryUserId] = useState(null);
+  const [_intermediaryUserId, setIntermediaryUserId] = useState(null);
 
   const [searchResults, setSearchResults] = useState([]);
 
@@ -26,7 +22,7 @@ function SearchPage() {
     setSelectProfile(null);
   };
 
-  const openCreditModal = (selectedFriendId, intermediaryId) => { // 선물하기 모달 열기
+  const openCreditModal = (selectedFriendId, intermediaryId) => { // 소개하기 모달 열기
     setFriendId(selectedFriendId);
     setIntermediaryUserId(intermediaryId);
     setCreditModalOpen(true);
@@ -58,7 +54,7 @@ function SearchPage() {
           {selectProfile && (
             <ProfileSlide isOpen={true} onCloseSlide={closeProfile} openCreditModal={(id) => openCreditModal(id, selectProfile.id)} ProfileId={selectProfile.id}/>
           )}
-          {creditModalOpen && <Credit onCloseModal={onCloseModal} friendId={friendId} ProfileId={selectProfile.id}/>}
+          {creditModalOpen && <CreditModal onCloseModal={onCloseModal} friendId={friendId} ProfileId={selectProfile.id}/>}
         </div>
       </div>
     </div>
