@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import ProfileModal from './ProfileModal';
-import Credit from '../components/CreditModal'
+import CreditModal from '../components/CreditModal';
 import { useApiUrlStore, useUserIdStore } from '../store/store';
-import { NavLink} from 'react-router-dom'
+import { NavLink} from 'react-router-dom';
 import axios from 'axios';
 
 function FriendList({}) {
@@ -21,7 +21,7 @@ function FriendList({}) {
     setStatusModalOpen(false)
   }
 
-  const openCreditModal = () => { //선물하기 모달 열기
+  const openCreditModal = () => { //소개하기 모달 열기
     setCreditModalOpen(true)
   
   }
@@ -87,7 +87,7 @@ const getFriend = async (friend_id) => {
         ProfileId={friendId}
         openCreditModal={openCreditModal}/>
       )}
-      {creditModalOpen && <Credit onCloseModal={onCloseModal}/>}
+      {creditModalOpen && <CreditModal onCloseModal={onCloseModal}/>}
     </div> 
   );
 }
