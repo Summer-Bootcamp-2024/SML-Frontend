@@ -225,7 +225,7 @@ function Chat({ selectedRoom }) {
         setMessages(parsedMessages)
         console.log(selectedRoom.user_id)
         //기존 채팅 내역이 없고 user_id가 introduceData.user_id와 동일한 경우
-        if (parsedMessages.length === 0 && user_id === selectedRoom.user_id) {
+        if (parsedMessages.length === 0 && user_id === introduceData.user_id) {
           sendMessage(`${selectedRoom.user_name}님께서 ${targetName}님을 소개받기 원합니다!`);
           sendMessage("소개요청 버튼을 눌러서 지인을 소개 해보세요!");
         }
@@ -343,6 +343,7 @@ function Chat({ selectedRoom }) {
     console.log(status)
   };
 
+  
   //일촌관계수정
   const updateFriendStatus = async (status) => {
     const putstatus = {
@@ -367,6 +368,7 @@ function Chat({ selectedRoom }) {
     }
   };
 
+//일촌요청받기 버튼 확인 후 수정
   return (
     <div className="flex items-center justify-center w-[60%] h-screen ml-[-30px] bg-white font-[Pretendard]">
       <div className="w-[650px] h-[600px] border-2 border-custom-grey rounded-[10px] flex items-center justify-center bg-white shadow-lg">
@@ -380,7 +382,7 @@ function Chat({ selectedRoom }) {
                   소개 요청
                 </button>) : null
               }
-              {user_id === introduceData.target_user_id ? (
+              {user_id === chatuserData.user1_id ? (
                  <button className="text-[14px] font-semibold text-custom-blue ml-auto mr-[20px]" onClick={handleFriendStatusUpdate}>
                  일촌요청 받기
                </button>
