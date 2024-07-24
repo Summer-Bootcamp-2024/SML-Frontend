@@ -44,7 +44,7 @@ function SearchBar({ setSearchResults }) {
                 value={selectedCategory}
                 onChange={handleCategoryChange}
                 required
-                className="w-[140px] h-[50px] bg-stone-50 rounded-[10px] border border-gray-600 pl-[23px] ml-[20px] text-gray-600/opacity-30 text-base font-extrabold tracking-tight"
+                className="w-[120px] h-[50px] bg-stone-50 rounded-[10px] border border-gray-600 pl-[23px] ml-[20px] text-gray-600/opacity-30 text-base font-extrabold tracking-tight"
             >
                 {categoryList.map((item) => (
                     <option value={item.value} key={item.name}>
