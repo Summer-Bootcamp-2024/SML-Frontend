@@ -18,7 +18,7 @@ function SearchBar({ setSearchResults }) {
     const handleCategoryChange = (event) => {
         setSelectedCategory(event.target.value);
     };
-    console.log(selectedCategory)
+
     const handleSearch = async (e) => {
         e.preventDefault();
 
