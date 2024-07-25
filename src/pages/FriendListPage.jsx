@@ -1,8 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 import Sidebar from '../components/Sidebar';
 import FriendGraph from '../components/friend/FriendGraph';
 import FriendList from '../components/friend/FriendList';
-import { useUserIdStore } from '../store/store';
+
 
 
 function FriendListPage() {

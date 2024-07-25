@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import profileimage from '../../../assets/images/profileImg2.png';
 import Button from '../../Button';
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import axios from 'axios';
 import { useApiUrlStore, useUserIdStore } from '../../../store/store';
 
-function ProfileSlide({ isOpen, openCreditModal, onCloseSlide, ProfileId }) {
+function ProfileSlide({ isOpen, openIntroduceModal, onCloseSlide, ProfileId }) {
     const { apiUrl } = useApiUrlStore();
     const { user_id } = useUserIdStore();
     const [clickedIndex, setClickedIndex] = useState(null); //일촌목록 선택 여부
@@ -132,7 +131,7 @@ function ProfileSlide({ isOpen, openCreditModal, onCloseSlide, ProfileId }) {
                             ))}
                         </div>
                     </div>
-                    <Button label={"소개 받기"} onClick={clickedIndex !== null ? () => openCreditModal(commonFriendList[clickedIndex].id, ProfileId) : null}/>
+                    <Button label={"소개 받기"} onClick={clickedIndex !== null ? () => openIntroduceModal(commonFriendList[clickedIndex].id, ProfileId) : null}/>
                 </div>
                 
             </div>

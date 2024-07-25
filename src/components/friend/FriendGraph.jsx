@@ -31,8 +31,12 @@ function FriendGraph() {
         withCredentials: true,
       });
       setRelationData(response.data);
-    } catch (error) {
-      console.error('Error fetching friend data:', error);
+    } catch (err) {
+      if (err.response && err.response.status === 404) {
+        setRelationData([]); // 빈 배열로 설정
+      } else {
+          console.error('Error fetching friend data:', err);
+        }
     }
   };
 

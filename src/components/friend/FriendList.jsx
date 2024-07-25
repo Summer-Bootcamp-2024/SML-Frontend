@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ProfileModal from '../modal/ProfileModal';
-import CreditModal from '../modal/CreditModal';
+import GettingIntroduceModal from '../modal/GettingIntroduceModal'
 import { useApiUrlStore, useUserIdStore } from '../../store/store';
 import { NavLink} from 'react-router-dom';
 import axios from 'axios';
@@ -11,7 +11,7 @@ function FriendList({}) {
   const [stausModalOpen, setStatusModalOpen] = useState(false)
   const [friendlistData, setFriendListData] = useState([])
   const [friendId, setFriendId] = useState('')
-  const [creditModalOpen, setCreditModalOpen] = useState(false)
+  const [introduceModalOpen, setIntroduceModalOpen] = useState(false)
 
   const PostingOpenModal = (id) => {
     setFriendId(id)
@@ -21,12 +21,12 @@ function FriendList({}) {
     setStatusModalOpen(false)
   }
 
-  const openCreditModal = () => { //소개하기 모달 열기
-    setCreditModalOpen(true)
+  const openIntroduceModal = () => { //소개하기 모달 열기
+    setIntroduceModalOpen(true)
   
   }
   const onCloseModal = () => {
-    setCreditModalOpen(false)
+    setIntroduceModalOpen(false)
   }
 
 
@@ -85,9 +85,9 @@ const getFriend = async (friend_id) => {
       {stausModalOpen && (
         <ProfileModal PostingClosedModal={PostingClosedModal}
         ProfileId={friendId}
-        openCreditModal={openCreditModal}/>
+        openIntroduceModal={openIntroduceModal}/>
       )}
-      {creditModalOpen && <CreditModal onCloseModal={onCloseModal}/>}
+      {introduceModalOpen && <GettingIntroduceModal onCloseModal={onCloseModal}/>}
     </div> 
   );
 }
