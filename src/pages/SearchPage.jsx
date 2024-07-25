@@ -3,11 +3,11 @@ import SearchBar from '../components/search/SearchBar';
 import ProfileList from '../components/search/profile/ProfileList';
 import { useEffect, useState } from 'react';
 import ProfileSlide from '../components/search/profile/ProfileSlide';
-import CreditModal from '../components/modal/CreditModal'
+import GettingIntroduceModal from '../components/modal/GettingIntroduceModal'
 import { MdPeople } from "react-icons/md";
 
 function SearchPage() {
-  const [creditModalOpen, setCreditModalOpen] = useState(false);
+  const [introduceModalOpen, setIntroduceModalOpen] = useState(false);
   const [selectProfile, setSelectProfile] = useState(null);
   const [_selectedProfileId, setSelectedProfileId] = useState(null);
   const [friendId, setFriendId] = useState(null);
@@ -25,10 +25,10 @@ function SearchPage() {
     setSelectedProfileId(null);
   };
 
-  const openCreditModal = (selectedFriendId, intermediaryId) => { // 소개하기 모달 열기
+  const openIntroduceModal = (selectedFriendId, intermediaryId) => { // 소개하기 모달 열기
     setFriendId(selectedFriendId);
     setIntermediaryUserId(intermediaryId);
-    setCreditModalOpen(true);
+    setIntroduceModalOpen(true);
   };
 
   const onCloseModal = () => {
@@ -58,9 +58,9 @@ function SearchPage() {
             </div>
           )}
           {selectProfile && (
-            <ProfileSlide isOpen={true} onCloseSlide={closeProfile} openCreditModal={(id) => openCreditModal(id, selectProfile.id)} ProfileId={selectProfile.id}/>
+            <ProfileSlide isOpen={true} onCloseSlide={closeProfile} openIntroduceModal={(id) => openIntroduceModal(id, selectProfile.id)} ProfileId={selectProfile.id}/>
           )}
-          {creditModalOpen && <CreditModal onCloseModal={onCloseModal} friendId={friendId} ProfileId={selectProfile.id}/>}
+          {introduceModalOpen && <GettingIntroduceModal onCloseModal={onCloseModal} friendId={friendId} ProfileId={selectProfile.id}/>}
         </div>
       </div>
     </div>

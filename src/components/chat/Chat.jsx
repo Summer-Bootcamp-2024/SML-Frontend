@@ -5,7 +5,7 @@ import { useApiUrlStore, useUserIdStore} from '../../store/store';
 import { useEffect, useRef, useState } from 'react';
 
 
-function Chat({ selectedRoom, getChatRoom, onOpenGiftCreditModal }) {
+function Chat({ selectedRoom, getChatRoom, onOpenGiftCreditModal, onOpenFriendRequesttModal, onOpenIntroduceFriendModal }) {
   const { apiUrl } = useApiUrlStore();
   const { user_id } = useUserIdStore();
   const [messages, setMessages] = useState([]);
@@ -14,6 +14,7 @@ function Chat({ selectedRoom, getChatRoom, onOpenGiftCreditModal }) {
   const [chatuserData, setChatUserData] = useState('')
   const [nickName, setNickName] = useState('')
   const [introduceData, setIntroduceData] = useState([])
+  const [statusModal, setStatusModal] = useState(false)
   const [status, setStatus] = useState('pending');
   const socketRef = useRef(null);
   const messagesEndRef = useRef(null);
@@ -249,13 +250,14 @@ function Chat({ selectedRoom, getChatRoom, onOpenGiftCreditModal }) {
   const createBCChatRoom = async () => {
 
     const creatroomid = {
-      user1_id: introduceData.target_user_id,
-      user2_id: user_id
+      user1_id: user_id,
+      user2_id: introduceData.target_user_id,
     };
     try {
       const response = await axios.post(`${apiUrl}/chatrooms/`, creatroomid, {
         withCredentials: true,
       });
+      console.log(user1_id)
       getChatRoom()
     } catch (error) {
       console.error('Error updating friend status:', error);
@@ -267,8 +269,8 @@ function Chat({ selectedRoom, getChatRoom, onOpenGiftCreditModal }) {
   //CA채팅방 생성
   const createCAChatRoom = async () => {
     const creatroomid = {
-      user1_id: introduceData.target_user_id,
-      user2_id: introduceData.user_id
+      user1_id: introduceData.user_id,
+      user2_id: introduceData.target_user_id,
     };
     try {
       const response = await axios.post(`${apiUrl}/chatrooms/`, creatroomid, {
@@ -284,6 +286,7 @@ function Chat({ selectedRoom, getChatRoom, onOpenGiftCreditModal }) {
  
   //소개요청 버튼 클릭
   const handleClicked = async () => {
+    onOpenIntroduceFriendModal() //소개요청 버튼 클릭
     const userConfirmed = window.confirm(`${targetName}님 소개하기를 진행할까요? \n보답으로 소정의 크레딧을 드려요 (확인:수락 취소:거절)`);
     if (userConfirmed) {
       if (selectedRoom.other_id === introduceData.user_id) {
@@ -341,7 +344,7 @@ function Chat({ selectedRoom, getChatRoom, onOpenGiftCreditModal }) {
 
     setStatus(newStatus); // 상태 업데이트
     updateFriendStatus(newStatus); // 일촌 상태 업데이트
-    console.log(status)
+    onOpenFriendRequesttModal() //일촌요청 받기 모달 열림
   };
 
   

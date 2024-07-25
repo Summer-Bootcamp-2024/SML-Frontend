@@ -18,7 +18,6 @@ function Mypage() {
     const [sentGifts, setSentGifts] = useState([]);
     const [receivedGifts, setReceivedGifts] = useState([]);
     const navigate = useNavigate();
-
     const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedJob, setSelectedJob] = useState('');
 
@@ -48,6 +47,9 @@ function Mypage() {
         { name: '연구원', value: 'Researcher'}
     ];
 
+    const selectedCategoryName = categoryList.find(item => item.value === selectedCategory)?.name || '';
+    const selectedJobName = jobList.find(item => item.value === selectedJob)?.name || '';
+
     const getProfile = async () => {
         try {
             const response = await axios.get(`${apiUrl}/users/${user_id}`, {
@@ -57,8 +59,8 @@ function Mypage() {
             setCurrentCredit(response.data.credit);
             setSelectedCategory(response.data.category);
             setSelectedJob(response.data.job);
-        } catch (error) {
-            window.alert("조회 실패");
+        } catch (err) {
+            console.error('Error fetching profile data:', err);
         }
     }
 
@@ -72,7 +74,7 @@ function Mypage() {
             if (err.response && err.response.status === 404) {
                 setSentGifts([]);
             } else {
-                window.alert("보낸 선물 기록 조회 실패");
+                console.error('Error fetching sending gift log:', err);
             }
         }
     }
@@ -87,7 +89,7 @@ function Mypage() {
             if (err.response && err.response.status === 404) {
                 setReceivedGifts([]);
             } else {
-                window.alert("받은 선물 기록 조회 실패");
+                console.error('Error fetching getting gift log:', err);
             }
         }
     }
@@ -136,8 +138,7 @@ function Mypage() {
         }
     }
 
-    const selectedCategoryName = categoryList.find(item => item.value === selectedCategory)?.name || '';
-    const selectedJobName = jobList.find(item => item.value === selectedJob)?.name || '';
+    
 
     return (
         <div className="flex justify-end w-full h-[100vh] font-[Pretendard]">
