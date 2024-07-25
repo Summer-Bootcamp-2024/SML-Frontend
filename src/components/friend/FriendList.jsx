@@ -107,11 +107,11 @@ const getFriend = async (friend_id) => {
       <div className="w-[650px] h-[500px] bg-custom-white border-[1px] border-custom-grey rounded-[10px] overflow-y-auto pt-[20px] ">
       {friendlistData.map((friend) => (
         <div key={friend.id} className="flex flex-col items-center justify-center border-b-[1px] border-custom-grey">
-            <NavLink className="w-[500px] min-h-[55px] flex justify-between items-center cursor-pointer " onClick={()=>PostingOpenModal(friend.id)}>
+            <NavLink className="w-[600px] min-h-[55px] flex justify-between items-center cursor-pointer" onClick={()=>PostingOpenModal(friend.id)}>
                 <div className="flex text-[18px] h-[30px] font-semibold w-[80px] items-center justify-center">{friend.name}</div>
-                <div className="flex items-center justify-between w-[350px] p-[5px]">
-                  <div className="flex justify-center items-center text-[16px] mr-[20px] h-[30px] w-[80px]">{selectedCategoryName}</div>
-                  <div className="flex justify-center items-center text-[16px] mr-[20px] h-[30px] w-[80px]">{selectedJobName}</div>
+                <div className="flex items-center justify-between w-[500px] p-[5px]">
+                  <div className="flex justify-center items-center text-[16px] h-[30px] mr-[-80px] w-[100px]">{selectedCategoryName}</div>
+                  <div className="flex justify-center items-center text-[16px] h-[30px] w-auto">{selectedJobName}</div>
                   <div className="flex justify-center items-center text-[16px] h-[30px] w-[80px]">{friend.company}</div>
                 </div>
             </NavLink>

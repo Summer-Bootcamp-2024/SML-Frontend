@@ -149,13 +149,11 @@ function MypageEdit() {
                         <h1 className="text-2xl font-black tracking-tight underline text-custom-indigo">My PROFILE</h1>
                         <form className="flex flex-col gap-[10px] w-[142.64px] items-center">
                             <input onChange={showImg} ref={imgRef} id="photo" className="hidden" type="file" accept=".png, .jgeg, .jpg" />
-                            <label htmlFor="photo" className="bg-gray-300 w-[142.64px] h-[137.74px] flex justify-center items-center cursor-pointer">
                             {previewImg ? (
                                 <img className="w-full h-full" src={previewImg} />
                                 ) : (
                                 <MdPhotoCamera size={60} className="text-white" />
                             )}
-                            </label>
                             <label htmlFor="photo" className="text-sm font-medium cursor-pointer text-custom-indigo">프로필 사진 선택</label>
                         </form>
                     </div>

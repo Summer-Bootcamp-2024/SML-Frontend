@@ -14,8 +14,8 @@ function SignupPage() {
         password: '',
         name: '',
         gender: '',
-        category: '',
-        job: '',
+        category: 'IT/SW',
+        job: 'Developer',
         age: '',
     });
 
@@ -48,8 +48,12 @@ function SignupPage() {
     const navigate = useNavigate();
 
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-        console.log(formData)
+        const { name, value } = e.target;
+        setFormData(prevFormData => ({
+            ...prevFormData,
+            [name]: value
+        }));
+        console.log(formData);
     };
 
     const handleSignup = async (e) => {

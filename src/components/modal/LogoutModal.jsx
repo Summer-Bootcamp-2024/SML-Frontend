@@ -20,10 +20,10 @@ function LogoutModal({ onClose, logoutSuccess, navigate }) {
                 {logoutSuccess ? (
                     <div className='flex flex-col items-center'>
                         <div className='text-[24px] font-black'>로그아웃 성공!</div>
-                        <div className='text-[14px] text-custom-grey mb-[-5px]'>다음에 다시 만나요</div>
+                        <div className='text-[14px] text-custom-grey mb-[-10px]'>다음에 다시 만나요</div>
                         <div className='flex flex-col items-center'>
                             <CheckLottie />
-                            <div className="flex">
+                            <div className="flex mt-[-10px]">
                                 <Button label={"완료"} type="button" onClick={handleSuccess} />
                             </div>
                         </div>
@@ -33,7 +33,7 @@ function LogoutModal({ onClose, logoutSuccess, navigate }) {
                         <div className='text-[24px] font-black'>로그아웃 실패!</div>
                         <div className='flex flex-col items-center'>
                             <FailLottie />
-                            <div className="flex">
+                            <div className="flex mt-[-10px]">
                                 <Button label={"확인"} type="button" onClick={handleFailure} />
                             </div>
                         </div>
