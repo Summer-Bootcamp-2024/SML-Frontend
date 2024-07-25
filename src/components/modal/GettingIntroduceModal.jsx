@@ -5,14 +5,15 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 
-function Credit({ onCloseModal, friendId, ProfileId }) {
+function GettingIntroduceModal({ onCloseModal, friendId, ProfileId }) {
     const { apiUrl } = useApiUrlStore();
     const { user_id } = useUserIdStore();
     const [nickName, setNickName] = useState('');
     const navigate = useNavigate();
 
 
-    const getProfile = async () => {
+    //이촌의 이름 불러오기
+    const getProfile = async (ProfileId) => {
         try {
             const response = await axios.get(`${apiUrl}/users/${ProfileId}`, {
                 withCredentials: true,
@@ -24,7 +25,7 @@ function Credit({ onCloseModal, friendId, ProfileId }) {
     }
 
     useEffect(() => {
-        getProfile();
+        getProfile(ProfileId);
     }, []);
 
     //채팅방생성
@@ -38,7 +39,7 @@ function Credit({ onCloseModal, friendId, ProfileId }) {
             withCredentials: true,
           });
         } catch (error) {
-          console.error('Error updating friend status:', error);
+          console.error('Error creating chatroom:', error);
         }
       };
 
@@ -53,7 +54,6 @@ function Credit({ onCloseModal, friendId, ProfileId }) {
               }, {
             withCredentials: true,
           });
-          setIntroduceData(response.data)
           navigate('/chat');
         } catch (error) {
           console.error('Error updating friend status:', error);
@@ -71,14 +71,14 @@ function Credit({ onCloseModal, friendId, ProfileId }) {
     
     return (
         <div className={`fixed top-0 flex items-center justify-center w-[calc(100vw-296px)] min-h-screen border-2 bg-white/50 backdrop-blur-md`}>
-            <div className=" flex flex-col items-center justify-center w-[500px] h-[300px] bg-custom-white rounded-[10px] border-[1px] border-custom-grey">
+            <div className=" flex flex-col items-center justify-center w-[400px] h-[200px] bg-custom-white rounded-[10px] border-[1px] border-custom-grey">
                 <div className='flex flex-col items-center p-[20px]'>
-                    <div className='text-[20px] font-black mb-[10px]'>{nickName}님을 소개받으시겠어요?</div>
+                    <div className='text-[20px] font-black mb-[30px]'>'{nickName}' 님을 소개 받으시겠어요?</div>
                     <div className='w-[400px] flex flex-col items-center'>
                         <form onSubmit={handleSubmit}>
                             <div className="flex gap-[40px]">
-                                <Button label={"소개받기"} type="submit"/>
-                                <Button label={"취소"} onClick={onCloseModal}/>
+                              <Button label={"취소"} onClick={onCloseModal}/>
+                              <Button label={"소개 받기"} type="submit"/>
                             </div>
                         </form>
                     </div>
@@ -88,4 +88,4 @@ function Credit({ onCloseModal, friendId, ProfileId }) {
     )
 }
 
-export default Credit;
+export default GettingIntroduceModal;

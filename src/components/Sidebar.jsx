@@ -10,6 +10,7 @@ import { useApiUrlStore, useUserIdStore } from '../store/store';
 import basicProfile from '../assets/images/myprofile/basicProfile.png';
 import Lottie from "lottie-react";
 import network from '../components/lottie/network.json';
+import LogoutModal from './modal/LogoutModal';
 
 function Sidebar() {
     const location = useLocation();
@@ -17,6 +18,8 @@ function Sidebar() {
     const { apiUrl} = useApiUrlStore();
     const { logout, user_id } = useUserIdStore();
     const [isLoggedIn, setIsLoggedIn] = useState(true);
+    const [logoutSuccess, setLogoutSuccess] = useState(false);
+    const [logoutModalOpen, setlogoutModalOpen] = useState(false);
     const [profile, setProfile] = useState({});
  
     const getProfile = async () => {
@@ -26,7 +29,7 @@ function Sidebar() {
             });
             setProfile(response.data);
         } catch (err) {
-            window.alert('프로필 조회 실패');
+            console.error('Error fetching profile data:', err);
         }
     }
 
@@ -41,20 +44,26 @@ function Sidebar() {
     const handleLogout = async () => {
         try {
             const response = await axios.post('http://localhost:8000/api/v1/auth/logout', {}, {withCredentials:true});
-            window.alert('로그아웃 성공');
+            setLogoutSuccess(true); 
             logout();
             localStorage.removeItem('user_id');
-            setIsLoggedIn(false);
-            navigate('/');
-            
+            setIsLoggedIn(false);    
         } catch (err) {
-            window.alert('로그아웃을 실패하는 경우가 있어?');
+            setLogoutSuccess(false); 
+        }
+        finally {
+            setlogoutModalOpen(true); 
         }
     }
 
+    const PostingClosedModal = () => {
+        setlogoutModalOpen(false);
+    };
+
+
     return(
         <div className="fixed top-0 left-0 flex flex-col items-center w-[296px] h-screen bg-custom-white border-r-[1px] border-custom-grey font-[Pretendard] z-10">
-            <div className="flex gap-[2%] pl-[5%] justify-start items-center w-full text-[24px] font-extrabold text-custom-indigo mt-[20px] font-[GmarketSansMedium] ">
+            <div className="flex gap-[2%] pl-[5%] justify-start items-center w-full text-[24px] font-extrabold text-custom-indigo mt-[20px] font-[GmarketSansMedium]">
             <Lottie animationData={network} loop={true} className="w-[50px] h-[50px] text-blue-300"/>
                 SML
                 </div>
@@ -96,13 +105,20 @@ function Sidebar() {
                         </div>
                     </NavLink>
                 </ul>
-                </div>
+            </div>
                 {isLoggedIn && (
-                    <button onClick={handleLogout} className='flex items-center justify-baseline w-[190px] h-[40px] mb-[20px]'>
+                    <button onClick={handleLogout} className='flex items-center justify-baseline w-[190px] h-[40px] mb-[30px]'>
                         <MdLogout className='w-5 h-5 text-custom-grey'/>
                         <span className='font-medium cursor-pointer text-custom-grey ml-[10px]'>Log Out</span>
                     </button>
                 )}
+                {logoutModalOpen && (
+                <LogoutModal 
+                    onClose={PostingClosedModal}
+                    logoutSuccess={logoutSuccess}
+                    navigate={navigate}
+                />
+            )}
         </div>
     )
 }

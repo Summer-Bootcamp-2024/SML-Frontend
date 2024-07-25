@@ -133,7 +133,6 @@ function ProfileSlide({ isOpen, openIntroduceModal, onCloseSlide, ProfileId }) {
                     </div>
                     <Button label={"소개 받기"} onClick={clickedIndex !== null ? () => openIntroduceModal(commonFriendList[clickedIndex].id, ProfileId) : null}/>
                 </div>
-                
             </div>
         </div>
     );

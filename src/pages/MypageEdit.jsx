@@ -70,7 +70,7 @@ function MypageEdit() {
                 });
                 setPreviewImg(data.image_url);
             } catch (err) {
-                window.alert('프로필 조회 실패');
+                console.error('Error fetching profile data:', err);
             }
         }
         fetchProfileData();
@@ -95,7 +95,7 @@ function MypageEdit() {
 
             setProfileData({...profileData, image_url: response.data.s3Url});
         } catch (err) {
-            window.alert('프로필 이미지 업로드 실패');
+            console.error('Error fetching profile image upload:', err);
         }
 
     }
