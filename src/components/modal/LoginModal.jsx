@@ -30,10 +30,10 @@ function LoginModal({ onClose, signupSuccess, navigate }) {
                     </div>
                 ) : (
                     <div className='flex flex-col items-center'>
-                        <div className='text-[28px] font-black mb-[-10px]'>로그인 실패!</div>
+                        <div className='text-[28px] font-black mb-[5px]'>로그인 실패!</div>
                         <div className='flex flex-col items-center'>
                             <FailLottie />
-                            <div className="flex">
+                            <div className="flex  mt-[5px]">
                                 <Button label={"확인"} type="button" onClick={handleFailure} />
                             </div>
                         </div>
