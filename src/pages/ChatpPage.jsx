@@ -87,7 +87,7 @@ const getChatRoom = async () => {
   return (
     <div className='flex w-full h-[100vh]'>
         <Sidebar/>
-        <div className='flex justify-center w-[calc(100vw-296px)] h-screen'>
+        <div className='ml-[296px] flex justify-center w-[calc(100vw-296px)] h-screen'>
             <ChatRoom className='w-[40%]' roomListData={roomData} onChatRoomClick={handleChatRoomClick}/>
             <Chat className='w-[60%]' selectedRoom={selectRoom} getChatRoom={getChatRoom} onOpenGiftCreditModal={handleOpenGiftCreditModal}/>
             {giftCreditModalOpen && <GiftCreditModal onClose={handleCloseGiftCreditModal} friendId={friendId} targetUserId={targetUserId}/>}
