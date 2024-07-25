@@ -4,7 +4,7 @@ import { useApiUrlStore, useUserIdStore } from "../../store/store";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-
+//프로핆 모달에서 소개받기 버튼을 누르면 나오는 모달창
 function GettingIntroduceModal({ onCloseModal, friendId, ProfileId }) {
     const { apiUrl } = useApiUrlStore();
     const { user_id } = useUserIdStore();
@@ -77,8 +77,8 @@ function GettingIntroduceModal({ onCloseModal, friendId, ProfileId }) {
                     <div className='w-[400px] flex flex-col items-center'>
                         <form onSubmit={handleSubmit}>
                             <div className="flex gap-[40px]">
-                            <Button label={"확인"} onClick={onCloseModal}/>
-                            <Button label={"취소"} type="submit"/>
+                            <Button label={"확인"}type="submit" />
+                            <Button label={"취소"} onClick={onCloseModal} />
                             </div>
                         </form>
                     </div>
