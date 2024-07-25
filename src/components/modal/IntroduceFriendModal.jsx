@@ -5,7 +5,7 @@ import axios from "axios";
 import { MdClose } from "react-icons/md"; 
 import { useNavigate } from "react-router-dom";
 
-function IntroduceFriendModal({ onClose, friendName}) {
+function IntroduceFriendModal({ onClose, friendName, friendId}) {
   const navigate = useNavigate();
   const {apiUrl} = useApiUrlStore()
   const {user_id} = useUserIdStore()
@@ -25,9 +25,8 @@ function IntroduceFriendModal({ onClose, friendName}) {
     const introducestatus = {
       status: status,
     };
-    console.log(status)
     try {
-      const response = await axios.put(`${apiUrl}/introduction_request/${user_id}`, introducestatus, {
+      const response = await axios.put(`${apiUrl}/introduction_request/13`, introducestatus, {
         withCredentials: true,
       });
       console.log(response.data);

@@ -141,7 +141,8 @@ function ChatPage() {
         {introduceFriendModalOpen && (
           <IntroduceFriendModal 
           onClose={handleIntroduceFriendClosetModal}
-          friendName={selectRoom.other_name}/>
+          friendName={selectRoom.other_name}
+          friendId={selectRoom.other_id}/>
         )}
       </div>
     </div>
