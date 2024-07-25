@@ -68,8 +68,6 @@ function Credit({ onCloseModal, friendId, ProfileId }) {
               }, {
             withCredentials: true,
           });
-          setIntroduceData(response.data)
-          console.log(introduceData)
           console.log("소개요청 성공");
           
           navigate('/chat');

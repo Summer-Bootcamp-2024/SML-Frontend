@@ -164,8 +164,8 @@ function Mypage() {
                             <span className="text-base font-light text-black">{selectedJobName}</span>
                             <span className="text-base font-light text-black">{selectedCategoryName}</span>
                             {profile && <span className="text-base font-light text-black">{profile.gender}</span>}
-                            <span className="text-base font-light text-black">{profile?.company || '정보 없음'}</span>
-                            <span className="text-base font-light text-black">{profile?.region || '정보 없음'}</span>
+                            <span className="text-base font-light text-black">{profile?.company || '-'}</span>
+                            <span className="text-base font-light text-black">{profile?.region || '-'}</span>
                         </li>
                     </ul>
                     <div className="ml-[45px] mt-20 w-[218.86px] h-[98.18px] bg-custom-white rounded-[10px] shadow-xl border border-custom-grey">
