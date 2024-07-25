@@ -71,8 +71,8 @@ function Sidebar() {
                 <div className="flex items-center justify-between w-auto h-[80px] mb-[30px] pb-[5px]  border-custom-grey">
                     <img className=" h-[70px] rounded-[115px]" src={profile.image_url || basicProfile}/>
                     <div className='flex items-center justify-center p-[10px]'>
-                        <span className='flex justify-center items-end h-[30px] border-2 text-[20px] font-normal mx-[5px]'>{profile.name}</span>
-                        <span className='flex justify-center items-end h-[30px] border-2 text-[16px] font-normal mr-[5px]'>님</span>
+                        <span className='flex justify-center items-end h-[30px] text-[20px] font-normal mx-[5px]'>{profile.name}</span>
+                        <span className='flex justify-center items-end h-[30px] text-[16px] font-normal mr-[5px]'>님</span>
                     </div>
                 </div>
                 <ul className='flex flex-col justify-center items-center w-[190px] h-[300px]'>
