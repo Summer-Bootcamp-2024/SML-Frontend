@@ -5,7 +5,9 @@ import axios from 'axios'
 import { useApiUrlStore, useUserIdStore } from '../store/store'
 import { useEffect, useState } from 'react'
 import GiftCreditModal from '../components/modal/GiftCreditModal'
-import FriendCheckModal from '../components/modal/FriendCheckModal'
+import FriendRequestModal from '../components/modal/FriendRequestModal'
+import IntroduceFriendModal from '../components/modal/IntroduceFriendModal'
+
 
 function ChatPage() {
   const { apiUrl } = useApiUrlStore()
@@ -13,7 +15,8 @@ function ChatPage() {
   const [roomData, setRoomData] = useState([])
   const [selectRoom, setSelectRoom] = useState([])
   const [giftCreditModalOpen, setGiftCreditModalOpen] = useState(false)
-  const [friendCheckModalOpen, setfriendCheckModalOpenn] = useState(false)
+  const [friendRequestModalOpen, setFriendRequestModalOpen] = useState(false)
+  const [introduceFriendModalOpen, setIntroduceFriendModalOpen] = useState(false)
   const [friendId, setFriendId] = useState(null)
   const [targetUserId, setTargetUserId] = useState(null)
 
@@ -85,13 +88,22 @@ function ChatPage() {
     setGiftCreditModalOpen(false)
   }
 
-  const handleFriendCheckOpentModal = () => {
-    setfriendCheckModalOpenn(true)
+  const handleFriendRequestOpentModal = () => {
+    setFriendRequestModalOpen(true)
   }
 
-  const handleFriendCheckCloseModal = () => {
-    setfriendCheckModalOpenn(false)
+  const handleFriendRequestCloseModal = () => {
+    setFriendRequestModalOpen(false)
   }
+  
+  const handleIntroduceFriendOpentModal = () => {
+    setIntroduceFriendModalOpen(true)
+  }
+
+  const handleIntroduceFriendClosetModal = () => {
+    setIntroduceFriendModalOpen(false)
+  }
+
 
   return (
     <div className="flex w-full h-[100vh]">
@@ -107,7 +119,8 @@ function ChatPage() {
           selectedRoom={selectRoom}
           getChatRoom={getChatRoom}
           onOpenGiftCreditModal={handleOpenGiftCreditModal}
-          onFriendCheckOpentModal={handleFriendCheckOpentModal}
+          onOpenFriendRequesttModal={handleFriendRequestOpentModal}
+          onOpenIntroduceFriendModal={handleIntroduceFriendOpentModal}
         />
         {giftCreditModalOpen && (
           <GiftCreditModal
@@ -116,8 +129,15 @@ function ChatPage() {
             targetUserId={targetUserId}
           />
         )}
-        {friendCheckModalOpen && (
-          <FriendCheckModal onClose={handleFriendCheckCloseModal} friendName={other_name} />
+        {friendRequestModalOpen && (
+          <FriendRequestModal 
+          onClose={handleFriendRequestCloseModal}
+          friendName={other_name} />
+        )}
+        {introduceFriendModalOpen && (
+          <IntroduceFriendModal 
+          onClose={handleIntroduceFriendClosetModal}
+          friendName={other_name} />
         )}
       </div>
     </div>

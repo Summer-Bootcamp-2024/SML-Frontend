@@ -30,7 +30,7 @@ function LogoutModal({ onClose, logoutSuccess, navigate }) {
                     </div>
                 ) : (
                     <div className='flex flex-col items-center'>
-                        <div className='text-[28px] font-black mb-[-10px]'>로그아웃 실패!</div>
+                        <div className='text-[24px] font-black'>로그아웃 실패!</div>
                         <div className='flex flex-col items-center'>
                             <FailLottie />
                             <div className="flex">

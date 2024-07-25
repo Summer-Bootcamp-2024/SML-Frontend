@@ -77,8 +77,8 @@ function GettingIntroduceModal({ onCloseModal, friendId, ProfileId }) {
                     <div className='w-[400px] flex flex-col items-center'>
                         <form onSubmit={handleSubmit}>
                             <div className="flex gap-[40px]">
-                              <Button label={"취소"} onClick={onCloseModal}/>
-                              <Button label={"소개 받기"} type="submit"/>
+                            <Button label={"확인"} onClick={onCloseModal}/>
+                            <Button label={"취소"} type="submit"/>
                             </div>
                         </form>
                     </div>
