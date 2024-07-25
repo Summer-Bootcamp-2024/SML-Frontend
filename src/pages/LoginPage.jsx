@@ -62,7 +62,7 @@ function LoginPage() {
                         onChange={(e) => setPassword(e.target.value)}
                          />
                         <div className="flex flex-col items-center gap-[7px] mt-[10px]">
-                            <Button label="Start" type="submit"></Button>
+                            <Button label="Login" type="submit"></Button>
                             <a href="/signup" className="text-stone-300 text-[15px] font-semibold tracking-tight">Sign Up</a>
                         </div>
                     </form>
