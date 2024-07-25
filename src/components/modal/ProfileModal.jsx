@@ -132,7 +132,7 @@ function ProfileModal({ PostingClosedModal, friendId, openIntroduceModal }) {
                     <div className='text-[24px] font-black text-custom-indigo underline underline-offset-2 mb-[10px]'>PROFILE</div>
                     <div className='w-[400px] min-h-[500px] flex flex-col items-center'>
                         <div className='flex items-center justify-between mt-[10px]'>
-                            <img src={profileData.image_url} className='w-[150px] min-h-[150px]' />
+                            <img src={profileData.image_url} className='w-[130px] h-[130px] mr-[20px]' />
                             <div className='flex justify-between ml-[10px]'>
                                 <div className='flex flex-col'>
                                     <span className='font-semibold w-[80px] h-[30px] flex items-center justify-start'>이름</span>
