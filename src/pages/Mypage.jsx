@@ -72,7 +72,7 @@ function Mypage() {
             setSentGifts(Array.isArray(response.data.transactions) ? response.data.transactions : []);
         } catch (err) {
             if (err.response && err.response.status === 404) {
-                setSentGifts([]); // 빈 배열로 설정
+                setSentGifts([]);
             } else {
                 console.error('Error fetching sending gift log:', err);
             }
@@ -87,7 +87,7 @@ function Mypage() {
             setReceivedGifts(Array.isArray(response.data.transactions) ? response.data.transactions : []);
         } catch (err) {
             if (err.response && err.response.status === 404) {
-                setReceivedGifts([]); // 빈 배열로 설정
+                setReceivedGifts([]);
             } else {
                 console.error('Error fetching getting gift log:', err);
             }
@@ -165,8 +165,8 @@ function Mypage() {
                             <span className="text-base font-light text-black">{selectedJobName}</span>
                             <span className="text-base font-light text-black">{selectedCategoryName}</span>
                             {profile && <span className="text-base font-light text-black">{profile.gender}</span>}
-                            <span className="text-base font-light text-black">{profile.company}</span>
-                            {profile && <span className="text-base font-light text-black">{profile.region}</span>}
+                            <span className="text-base font-light text-black">{profile?.company || '-'}</span>
+                            <span className="text-base font-light text-black">{profile?.region || '-'}</span>
                         </li>
                     </ul>
                     <div className="ml-[45px] mt-20 w-[218.86px] h-[98.18px] bg-custom-white rounded-[10px] shadow-xl border border-custom-grey">
@@ -184,7 +184,7 @@ function Mypage() {
                     <Button onClick={deleteUser} className="absolute right-10 bottom-6" label="탈퇴하기"></Button>
                 </div>
                 <div className="w-[800px] h-[220px] flex gap-[68px]">
-                    <div className="w-[380px] h-[220px] bg-custom-grey/10 rounded-[10px] shadow-custom-blue/30 shadow-lg border-2 border-custom-blue overflow-y-auto">
+                    <div className="w-[380px] h-[220px] bg-custom-grey/10 rounded-[10px] shadow-custom-blue/30 shadow-lg border-2 border-custom-blue overflow-y-scroll">
                         <div>
                             <h1 className='p-[20px] text-xl font-black tracking-tight text-custom-indigo underline'>보낸 선물 기록 조회</h1>
                         </div>

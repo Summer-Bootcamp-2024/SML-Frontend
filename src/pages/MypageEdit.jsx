@@ -164,10 +164,10 @@ function MypageEdit() {
                             <li>이름</li>
                             <li>나이</li>
                             <li>직업</li>
+                            <li>관심분야</li>
                             <li>성별</li>
                             <li>회사</li>
                             <li>위치</li>
-                            <li>관심분야</li>
                         </ul>
                         <form onSubmit={handleUpdateProfile} className="relative w-[80%] flex flex-col gap-[20px]">
                             <input 
