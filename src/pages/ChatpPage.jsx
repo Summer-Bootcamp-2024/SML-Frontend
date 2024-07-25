@@ -33,19 +33,22 @@ function ChatPage() {
           let name = null
           let other = null
           let user_img = null
+          let other_img = null
 
           if (user_id === item.user1_id) {
             room_user_id = item.user2_id
             me = item.user1_id
             name = item.user1_name
             other = item.user2_name
-            user_img = item.user2_image_url
+            user_img = item.user1_image_url
+            other_img = item.user2_image_url
           } else {
             room_user_id = item.user1_id
             me = item.user2_id
             name = item.user2_name
             other = item.user1_name
-            user_img = item.user1_image_url
+            user_img = item.user2_image_url
+            other_img = item.user1_image_url
           }
           return {
             room_id: item.id,
@@ -53,7 +56,8 @@ function ChatPage() {
             other_id: room_user_id,
             user_name: name,
             other_name: other,
-            other_img: user_img, // 변수 수정
+            user_img : user_img,
+            other_img: other_img, // 변수 수정
           }
         })
 
