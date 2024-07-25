@@ -96,7 +96,7 @@ function ProfileSlide({ isOpen, openIntroduceModal, onCloseSlide, ProfileId }) {
                 <div className='text-[24px] font-black text-custom-indigo underline underline-offset-2 mb-[10px]'>PROFILE</div>
                 <div className='w-[400px] min-h-[500px] flex flex-col items-center'>
                     <div className='flex items-center justify-between w-[90%] mt-[10px]'>
-                        <img src={profileData.image_url} className='w-[130px] min-h-[130px]'></img>
+                        <img src={profileData.image_url} className='w-[130px] h-[130px]'></img>
                         <div className='w-[50%] flex justify-between'>
                             <div className='flex flex-col'>
                                 <span className='font-semibold mb-[5px]'>이름</span>

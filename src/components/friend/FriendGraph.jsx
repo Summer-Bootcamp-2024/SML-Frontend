@@ -156,7 +156,7 @@ function FriendGraph() {
     <div className="w-full h-full">
       <div id="cy" ref={cyRef} className='w-full h-full' />
       {statusModalOpen && (
-        <ProfileModal PostingClosedModal={PostingClosedModal} ProfileId={selectedNodeId} />
+        <ProfileModal PostingClosedModal={PostingClosedModal} friendId={selectedNodeId} />
       )}
     </div>
   );
