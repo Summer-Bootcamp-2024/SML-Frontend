@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import Button from "../Button";
 import { useApiUrlStore, useUserIdStore } from "../../store/store";
 import axios from "axios";
@@ -26,17 +25,16 @@ function IntroduceFriendModal({ onClose, friendName, friendId}) {
       status: status,
     };
     try {
-      const response = await axios.put(`${apiUrl}/introduction_request/13`, introducestatus, {
+      const response = await axios.put(`${apiUrl}/introduction_request/${friendId}`, introducestatus, {
         withCredentials: true,
       });
-      console.log(response.data);
     } catch (error) {
       console.error('Error updating introduce status:', error);
     }
   };
 
   return (
-    <div className={`fixed top-0 flex items-center justify-center w-[calc(100vw-296px)] min-h-screen border-2 bg-white/50 backdrop-blur-md`}>
+    <div className={`fixed top-0 flex items-center justify-center w-[calc(100vw-296px)] min-h-screen border-2 bg-white/50 backdrop-blur-sm`}>
       <div className="flex flex-col items-center justify-center w-[400px] h-[200px] bg-custom-white rounded-[10px] border-[1px] border-custom-grey">
       <button className="flex justify-end w-full" onClick={onClose}><MdClose className='w-[20px] h-[20px] mr-[20px]' /></button>
         <div className='flex flex-col items-center p-[20px]'>

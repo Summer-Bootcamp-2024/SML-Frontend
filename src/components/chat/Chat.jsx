@@ -279,7 +279,7 @@ function Chat({ selectedRoom, getChatRoom, onOpenGiftCreditModal, onOpenFriendRe
   };
 
   // 소개요청 버튼 클릭
-  const handleClicked = async (confirmed) => {
+  const handleClicked = async () => {
     onOpenIntroduceFriendModal()
     if (selectedRoom.other_id === introduceData.user_id) {
       createBCChatRoom();
@@ -289,9 +289,6 @@ function Chat({ selectedRoom, getChatRoom, onOpenGiftCreditModal, onOpenFriendRe
   };
 
   
-  
-
- 
   //일촌요청
   const postFriendStatus = async () => {
     sendMessage(`${selectedRoom.user_name}님께서 ${selectedRoom.other_name}님에게 일촌을 신청했습니다!`);
@@ -311,32 +308,12 @@ function Chat({ selectedRoom, getChatRoom, onOpenGiftCreditModal, onOpenFriendRe
 
   // 일촌 상태 업데이트 
   const handleFriendStatusUpdate = async () => {
-    const friendConfirmed = window.confirm(`${selectedRoom.other_name}님의 일촌 신청을 받으시겠어요? \n일촌이 되면 크레딧을 선물 받아요 (확인:수락 취소:거절)`);
-    const newStatus = friendConfirmed ? 'accepted' : 'rejected'; // 확인을 눌렀는지 여부에 따라 상태 설정
-
-    setStatus(newStatus); // 상태 업데이트
-    updateFriendStatus(newStatus); // 일촌 상태 업데이트
-    onOpenFriendRequesttModal() //일촌요청 받기 모달 열림
-  };
-
-  
-  //일촌관계수정
-  const updateFriendStatus = async (status) => {
-    const putstatus = {
-      user_id: chatuserData.user2_id,
-      status: status,
-    };
-    try {
-      const response = await axios.put(`${apiUrl}/friends/${selectedRoom.other_id}`, putstatus, {
-        withCredentials: true,
-      });
+    onOpenFriendRequesttModal()
+    if(status==="accepted"){
       sendMessage('일촌이 됐어요!');
-      console.log(response.data);
-    } catch (error) {
-      console.error('Error updating friend status:', error);
-      alert('일촌관계 수정에 실패했습니다')
     }
   };
+
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {

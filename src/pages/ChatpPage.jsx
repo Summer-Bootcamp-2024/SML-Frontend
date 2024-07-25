@@ -136,7 +136,8 @@ function ChatPage() {
         {friendRequestModalOpen && (
           <FriendRequestModal 
           onClose={handleFriendRequestCloseModal}
-          friendName={selectRoom.other_name} />
+          friendName={selectRoom.other_name}
+          friendId={selectRoom.other_id} />
         )}
         {introduceFriendModalOpen && (
           <IntroduceFriendModal 
