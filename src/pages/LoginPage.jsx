@@ -21,12 +21,11 @@ function LoginPage() {
         e.preventDefault();
         try {
             const response = await axios.post(`${apiUrl}/auth/login`, {email, password}, {withCredentials: true});
-            console.log(response.data)
             setSignupSuccess(true); 
             setUserId(response.data.user_id);
-        } catch (err) {
+        } catch (error) {
             setSignupSuccess(false); 
-            console.log(err);
+            console.log(error);
         } finally {
             setStatusModalOpen(true); 
         }

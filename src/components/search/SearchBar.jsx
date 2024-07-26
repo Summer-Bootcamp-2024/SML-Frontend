@@ -32,8 +32,8 @@ function SearchBar({ setSearchResults }) {
                 params: { user_id, search: query, filter_by: selectedCategory }
             });
             setSearchResults(response.data);
-        } catch (err) {
-            console.error(err.response?.data?.detail || err.message);
+        } catch (error) {
+            console.error(error.response?.data?.detail || error.message);
         }
     };
 

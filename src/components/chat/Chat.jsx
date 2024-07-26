@@ -1,5 +1,4 @@
 import sendimg from '../../assets/images/sendimg.png';
-import profileimg from '../../assets/images/myprofile/profileImg.png';
 import axios from 'axios';
 import { useApiUrlStore, useUserIdStore} from '../../store/store';
 import { useEffect, useRef, useState } from 'react';
@@ -14,8 +13,7 @@ function Chat({ selectedRoom, getChatRoom, onOpenGiftCreditModal, onOpenFriendRe
   const [chatuserData, setChatUserData] = useState('')
   const [nickName, setNickName] = useState('')
   const [introduceData, setIntroduceData] = useState([])
-  const [statusModal, setStatusModal] = useState(false)
-  const [status, setStatus] = useState('pending');
+  const [status, _setStatus] = useState('pending');
   const socketRef = useRef(null);
   const messagesEndRef = useRef(null);
 
@@ -61,7 +59,6 @@ function Chat({ selectedRoom, getChatRoom, onOpenGiftCreditModal, onOpenFriendRe
     try {
       let response;
       let matchedIntroduceData;
-      console.log(chatuserData)
       if (user_id === chatuserData.user1_id) {
         response = await axios.get(`${apiUrl}/introduction_request/${chatuserData.user2_id}`, {
           withCredentials: true,
@@ -87,7 +84,6 @@ function Chat({ selectedRoom, getChatRoom, onOpenGiftCreditModal, onOpenFriendRe
   
       if (matchedIntroduceData) {
         setIntroduceData(matchedIntroduceData);
-        console.log("소개요청 성공", matchedIntroduceData);
       } else {
         console.log('소개 요청이 일치하지 않습니다.');
       }
@@ -224,7 +220,6 @@ function Chat({ selectedRoom, getChatRoom, onOpenGiftCreditModal, onOpenFriendRe
           content: parseContent(msg.content),
         }));
         setMessages(parsedMessages)
-        console.log(introduceData)
         //기존 채팅 내역이 없고 user_id가 introduceData.user_id와 동일한 경우
         if (parsedMessages.length === 0 && user_id === introduceData.user_id) {
           sendMessage(`${selectedRoom.user_name}님께서 ${targetName}님을 소개받기 원합니다!`);
@@ -253,7 +248,6 @@ function Chat({ selectedRoom, getChatRoom, onOpenGiftCreditModal, onOpenFriendRe
       const response = await axios.post(`${apiUrl}/chatrooms/`, creatroomid, {
         withCredentials: true,
       });
-      console.log(user_id);
       getChatRoom();
     } catch (error) {
       console.error('Error creating BC chat room:', error);

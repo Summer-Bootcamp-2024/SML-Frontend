@@ -27,7 +27,7 @@ function FriendRequestModal({ onClose, friendName, friendId}) {
       status: status,
     };
     try {
-      const response = await axios.put(`${apiUrl}/friends/${user_id}`, putstatus, {
+      await axios.put(`${apiUrl}/friends/${user_id}`, putstatus, {
         withCredentials: true,
       });
     } catch (error) {
