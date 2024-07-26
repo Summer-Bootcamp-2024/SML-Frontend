@@ -150,7 +150,7 @@ function MypageEdit() {
                         <form className="flex flex-col gap-[10px] w-[142.64px] items-center">
                             <input onChange={showImg} ref={imgRef} id="photo" className="hidden" type="file" accept=".png, .jgeg, .jpg" />
                             {previewImg ? (
-                                <img className="w-full h-full" src={previewImg} />
+                                <img className="w-[110px] h-[110px] rounded-[50%]" src={previewImg} />
                                 ) : (
                                 <MdPhotoCamera size={60} className="text-white" />
                             )}
