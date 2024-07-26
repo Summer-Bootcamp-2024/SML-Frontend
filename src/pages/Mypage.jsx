@@ -47,8 +47,6 @@ function Mypage() {
         { name: '연구원', value: '연구원'}
     ];
 
-    const selectedCategoryName = categoryList.find(item => item.value === selectedCategory)?.name || '';
-    const selectedJobName = jobList.find(item => item.value === selectedJob)?.name || '';
 
     const getProfile = async () => {
         try {
@@ -162,8 +160,8 @@ function Mypage() {
                         <li className="flex flex-col w-[180px] gap-[10px] ">
                             {profile && <span className="text-base font-light text-black">{profile.name}</span>}
                             {profile && <span className="text-base font-light text-black">{profile.age}세</span>}
-                            <span className="text-base font-light text-black">{selectedJobName || '-'}</span>
-                            <span className="text-base font-light text-black">{selectedCategoryName || '-'}</span>
+                            <span className="text-base font-light text-black">{profile.job}</span>
+                            <span className="text-base font-light text-black">{profile.category}</span>
                             {profile && <span className="text-base font-light text-black">{profile.gender}</span>}
                             <span className="text-base font-light text-black">{profile?.company || '-'}</span>
                             <span className="text-base font-light text-black">{profile?.region || '-'}</span>

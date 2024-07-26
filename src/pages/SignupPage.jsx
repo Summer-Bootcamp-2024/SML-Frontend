@@ -15,7 +15,7 @@ function SignupPage() {
         name: '',
         gender: '',
         category: 'IT/SW',
-        job: 'Developer',
+        job: '개발자',
         age: '',
     });
 

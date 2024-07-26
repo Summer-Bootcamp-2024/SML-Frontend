@@ -16,34 +16,6 @@ function ProfileModal({ PostingClosedModal, friendId, openIntroduceModal }) {
     const [selectedJob, setSelectedJob] = useState('');
     const [profileId, setProfileId] = useState(''); 
 
-    const categoryList = [
-        { value: 'IT/SW', name: 'IT/SW' },
-        { value: 'Finance/Insurance', name: '금융/보험' },
-        { value: 'Production', name: '제조업' },
-        { value: 'Service', name: '서비스업' },
-        { value: 'Education', name: '교육' },
-        { value: 'Medical', name: '의료/보건' },
-        { value: 'Legal', name: '법률' },
-        { value: 'Media', name: '미디어/홍보' },
-        { value: 'Art', name: '예술/디자인' },
-        { value: 'Science', name: '연구/과학' }
-    ];
-
-    const jobList = [
-        { name: '개발자', value: 'Developer' },
-        { name: '금융 전문가', value: 'Finance Professional' },
-        { name: '생산 관리자', value: 'Production Manager' },
-        { name: '서비스 관리자', value: 'Service Manager' },
-        { name: '교육 전문가', value: 'Education Professional' },
-        { name: '의료 전문가', value: 'Healthcare Professional' },
-        { name: '법률 전문가', value: 'Legal Professional' },
-        { name: '미디어/커뮤니케이션 전문가', value: 'Media & Communication Professional' },
-        { name: '디자이너', value: 'Designer' },
-        { name: '연구원', value: 'Researcher' }
-    ];
-
-    const selectedCategoryName = categoryList.find(item => item.value === selectedCategory)?.name || '';
-    const selectedJobName = jobList.find(item => item.value === selectedJob)?.name || '';
 
     const handleItemClick = (index) => {
         setClickedIndex(index);
@@ -116,10 +88,9 @@ function ProfileModal({ PostingClosedModal, friendId, openIntroduceModal }) {
             navigate('/list');
         } catch (error) {
             console.error('Error deleting friend:', error);
-            if (error.response && error.response.data) {
+            if (error.response && error.response.data) {a
                 console.error('Error details:', error.response.data);
             }
-            alert('친구 삭제를 실패했습니다');
             navigate('/list');
         }
     };
@@ -141,12 +112,12 @@ function ProfileModal({ PostingClosedModal, friendId, openIntroduceModal }) {
                                     <span className='font-semibold w-[80px] h-[30px] flex items-center justify-start'>관심분야</span>
                                     <span className='font-semibold w-[80px] h-[30px] flex items-center justify-start'>위치</span>
                                 </div>
-                                <div className='flex flex-col ml-[10px]'>
-                                    <span className='h-[30px] w-[80px] flex items-center justify-start'>{profileData.name}</span>
-                                    <span className='h-[30px] w-[80px] flex items-center justify-start'>{profileData.age}세</span>
-                                    <span className='h-[30px] w-[80px] flex items-center justify-start'>{selectedJobName}</span>
-                                    <span className='h-[30px] w-[80px] flex items-center justify-start'>{selectedCategoryName}</span>
-                                    <span className='h-[30px] w-[80px] flex items-center justify-start'>{profileData.region}</span>
+                                <div className='flex flex-col'>
+                                    <span className='h-[30px] w-[190px] flex items-center justify-start'>{profileData.name}</span>
+                                    <span className='h-[30px] w-[190px] flex items-center justify-start'>{profileData.age}세</span>
+                                    <span className='h-[30px] w-[190px] flex items-center justify-start'>{profileData.job}</span>
+                                    <span className='h-[30px] w-[190px] flex items-center justify-start'>{profileData.category}</span>
+                                    <span className='h-[30px] w-[190px] flex items-center justify-start'>{profileData.region}</span>
                                 </div>
                             </div>
                         </div>
@@ -162,7 +133,7 @@ function ProfileModal({ PostingClosedModal, friendId, openIntroduceModal }) {
                                         onClick={() => handleItemClick(index)}
                                     >
                                         <div className='flex items-center ml-[30px]'>{secondfriend.name}</div>
-                                        <div className='flex items-center text-[14px] text-custom-blue mr-[30px]'># {selectedCategoryName}</div>
+                                        <div className='flex items-center text-[14px] text-custom-blue mr-[30px]'># {profileData.category}</div>
                                     </div>
                                 ))}
                             </div>

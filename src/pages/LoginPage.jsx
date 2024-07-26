@@ -63,8 +63,10 @@ function LoginPage() {
                          />
                         <div className="flex flex-col items-center gap-[7px] mt-[10px]">
                             <Button label="Login" type="submit"></Button>
-                            <span>아직 회원이 아니신가요?</span>
-                            <a href="/signup" className="text-stone-300 text-[15px] font-semibold tracking-tight">회원 가입</a>
+                            <div className="flex items-center">
+                                <span className="text-[13px] mr-[10px]">아직 회원이 아니신가요?</span>
+                                <a href="/signup" className="text-stone-300 text-[13px] font-semibold hover:text-custom-indigo ">회원 가입</a>
+                            </div>
                         </div>
                     </form>
                 </div>
