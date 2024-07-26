@@ -147,7 +147,7 @@ function Mypage() {
                 <div className="relative flex w-[800px] h-[350px] bg-custom-blue/30 rounded-[10px] shadow-custom-blue/30 shadow-lg border-2 border-custom-blue">
                     <div className="flex flex-col gap-[20px] pl-[50px] pt-[28px]">
                         <h1 className="text-2xl font-black tracking-tight text-gray-600 underline">My PROFILE</h1>
-                        <img className="w-[140px] h-[140px]" src={profile.image_url ? profile.image_url : basicProfile}/>
+                        <img className="w-[130px] h-[130px] rounded-[50%]" src={profile.image_url ? profile.image_url : basicProfile}/>
                     </div>
                     <ul className="flex gap-[30px] pt-[75px] pl-[50px]">
                         <li className="flex flex-col gap-[10px]">
@@ -162,8 +162,8 @@ function Mypage() {
                         <li className="flex flex-col w-[180px] gap-[10px] ">
                             {profile && <span className="text-base font-light text-black">{profile.name}</span>}
                             {profile && <span className="text-base font-light text-black">{profile.age}세</span>}
-                            <span className="text-base font-light text-black">{selectedJobName}</span>
-                            <span className="text-base font-light text-black">{selectedCategoryName}</span>
+                            <span className="text-base font-light text-black">{selectedJobName || '-'}</span>
+                            <span className="text-base font-light text-black">{selectedCategoryName || '-'}</span>
                             {profile && <span className="text-base font-light text-black">{profile.gender}</span>}
                             <span className="text-base font-light text-black">{profile?.company || '-'}</span>
                             <span className="text-base font-light text-black">{profile?.region || '-'}</span>
