@@ -43,7 +43,7 @@ function Sidebar() {
 
     const handleLogout = async () => {
         try {
-            const response = await axios.post(`{apiUrl}/auth/logout`, {}, {withCredentials:true});
+            const response = await axios.post(`${apiUrl}/auth/logout`, {}, {withCredentials:true});
             setLogoutSuccess(true); 
             logout();
             localStorage.removeItem('user_id');
