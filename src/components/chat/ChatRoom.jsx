@@ -1,6 +1,3 @@
-import profileImg from '../../assets/images/myprofile/profileImg.png'
-
-
 function ChatRoom({roomListData, onChatRoomClick}) {
     
 

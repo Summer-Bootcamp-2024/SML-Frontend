@@ -50,7 +50,6 @@ function ProfileModal({ PostingClosedModal, friendId, openIntroduceModal }) {
         if (secondfriendlist[index]) {
             setProfileId(secondfriendlist[index].id);
         }
-        console.log(profileId)
     };
 
     // 친구 프로필 정보 조회
@@ -81,7 +80,6 @@ function ProfileModal({ PostingClosedModal, friendId, openIntroduceModal }) {
             });
             const secondFriends = response.data.map(item => item.friend_id);
             secondFriends.forEach(ProfileId => getFriendName(ProfileId));
-            console.log(response.data);
         } catch (error) {
             console.error('Error fetching friend list:', error);
             alert('친구의 일촌목록을 불러오지 못했습니다');
@@ -108,7 +106,7 @@ function ProfileModal({ PostingClosedModal, friendId, openIntroduceModal }) {
     const deleteFriend = async (friendId) => {
         try {
             // user_id를 요청 본문에 포함시킵니다
-            const response = await axios.delete(`${apiUrl}/friends/${friendId}`, {
+            await axios.delete(`${apiUrl}/friends/${friendId}`, {
                 data: { user_id }, // 요청 본문에 user_id 포함
                 withCredentials: true,
             });

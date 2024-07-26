@@ -2,28 +2,9 @@ import { useApiUrlStore, useUserIdStore } from "../../../store/store";
 import basicProfile from '../../../assets/images/myprofile/basicProfile.png';
 import { useState, useEffect } from "react";
 import axios from "axios";
-function ProfileImg({image_url}) {
-    const [profile, setProfile] = useState({});
-    const { apiUrl} = useApiUrlStore();
-    const { user_id } = useUserIdStore();
-
-    const getProfile = async () => {
-        try {
-            const response = await axios.get(`${apiUrl}/users/${user_id}`, {
-                withCredentials: true,
-            });
-            setProfile(response.data);
-        } catch (err) {
-            console.error('Error fetching profile data:', err);
-        }
-    }
-
-    useEffect(() => {
-        getProfile();
-    }, []);
-
+function ProfileImg({src}) {
     return (
-        <img src={profile.image_url || basicProfile}
+        <img src={src || basicProfile}
         className="w-[100px] h-[100px] rounded-full" />
     )
 }

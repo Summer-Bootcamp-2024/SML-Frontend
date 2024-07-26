@@ -35,7 +35,7 @@ function GettingIntroduceModal({ onCloseModal, friendId, ProfileId }) {
             user2_id: friendId
         };
         try {
-          const response = await axios.post(`${apiUrl}/chatrooms/`, creatroomid, {
+          await axios.post(`${apiUrl}/chatrooms/`, creatroomid, {
             withCredentials: true,
           });
         } catch (error) {
@@ -47,7 +47,7 @@ function GettingIntroduceModal({ onCloseModal, friendId, ProfileId }) {
       //소개하기 요청 api
       const introduceUser = async () => {
         try {
-            const response = await axios.post(`${apiUrl}/introduction_request/`, {
+            await axios.post(`${apiUrl}/introduction_request/`, {
                 user_id: user_id,
                 target_user_id : ProfileId,
                 intermediary_user_id: friendId

@@ -69,8 +69,8 @@ function MypageEdit() {
                     image_url: data.image_url
                 });
                 setPreviewImg(data.image_url);
-            } catch (err) {
-                console.error('Error fetching profile data:', err);
+            } catch (error) {
+                console.error('Error fetching profile data:', error);
             }
         }
         fetchProfileData();
@@ -94,8 +94,8 @@ function MypageEdit() {
             });
 
             setProfileData({...profileData, image_url: response.data.s3Url});
-        } catch (err) {
-            console.error('Error fetching profile image upload:', err);
+        } catch (error) {
+            console.error('Error fetching profile image upload:', error);
         }
 
     }
@@ -135,7 +135,7 @@ function MypageEdit() {
                 withCredentials: true,
             });
             navigate('/mypage');
-        } catch (err) {
+        } catch (error) {
             window.alert('프로필 수정 실패');
         }
     }
