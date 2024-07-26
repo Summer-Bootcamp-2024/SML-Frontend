@@ -23,28 +23,28 @@ function Mypage() {
 
     const categoryList = [
         { value: 'IT/SW', name: 'IT/SW' },
-        { value: 'Finance/Insurance', name: '금융/보험' },
-        { value: 'Production', name: '제조업' },
-        { value: 'Service', name: '서비스업' },
-        { value: 'Education', name: '교육' },
-        { value: 'Medical', name: '의료/보건' },
-        { value: 'Legal', name: '법률' },
-        { value: 'Media', name: '미디어/홍보' },
-        { value: 'Art', name: '예술/디자인' },
-        { value: 'Science', name: '연구/과학' }
+        { value: '금융/보험', name: '금융/보험' },
+        { value: '제조업', name: '제조업' },
+        { value: '서비스업', name: '서비스업' },
+        { value: '교육', name: '교육' },
+        { value: '의료/보건', name: '의료/보건' },
+        { value: '법률', name: '법률' },
+        { value: '미디어/홍보', name: '미디어/홍보' },
+        { value: '예술/디자인', name: '예술/디자인' },
+        { value: '연구/과학', name: '연구/과학' }
     ];
 
     const jobList = [
-        { name: '개발자', value: 'Developer'},
-        { name: '금융 전문가', value: 'Finance Professional'},
-        { name: '생산 관리자', value: 'Production Manager'},
-        { name: '서비스 관리자', value: 'Service Manager'},
-        { name: '교육 전문가', value: 'Education Professional'},
-        { name: '의료 전문가', value: 'Healthcare Professional'},
-        { name: '법률 전문가', value: 'Legal Professional'},
-        { name: '미디어/커뮤니케이션 전문가', value: 'Media & Communication Professional'},
-        { name: '디자이너', value: 'Designer'},
-        { name: '연구원', value: 'Researcher'}
+        { name: '개발자', value: '개발자'},
+        { name: '금융 전문가', value: '금융 전문가'},
+        { name: '생산 관리자', value: '생산 관리자'},
+        { name: '서비스 관리자', value: '서비스 관리자'},
+        { name: '교육 전문가', value: '교육 전문가'},
+        { name: '의료 전문가', value: '의료 전문가'},
+        { name: '법률 전문가', value: '법률 전문가'},
+        { name: '미디어/커뮤니케이션 전문가', value: '미디어/커뮤니케이션 전문가'},
+        { name: '디자이너', value: '디자이너'},
+        { name: '연구원', value: '연구원'}
     ];
 
     const selectedCategoryName = categoryList.find(item => item.value === selectedCategory)?.name || '';

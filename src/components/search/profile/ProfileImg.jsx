@@ -1,6 +1,7 @@
 import { useApiUrlStore, useUserIdStore } from "../../../store/store";
 import basicProfile from '../../../assets/images/myprofile/basicProfile.png';
 import { useState, useEffect } from "react";
+import axios from "axios";
 function ProfileImg({image_url}) {
     const [profile, setProfile] = useState({});
     const { apiUrl} = useApiUrlStore();
