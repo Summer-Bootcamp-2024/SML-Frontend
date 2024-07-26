@@ -13,9 +13,9 @@ import axios from 'axios';
 
 //api 주소
 export const useApiUrlStore = create((set) => ({
-  //apiUrl: 'http://localhost:8000/api/v1',
+  apiUrl: 'http://localhost:8000/api/v1',
   //apiUrl: 'http://localhost:80/api/v1',
-  apiUrl: 'http://sml-m.site/api/v1',
+  //apiUrl: 'http://sml-m.site/api/v1',
   setApiUrl: (url) => set((state) => ({ ...state, apiUrl: url })),
 }));
 
