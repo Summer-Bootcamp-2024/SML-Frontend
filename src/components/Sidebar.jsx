@@ -27,8 +27,12 @@ function Sidebar() {
             const response = await axios.get(`${apiUrl}/users/${user_id}`, {
                 withCredentials: true,
             });
-            setProfile(response.data);
-            localStorage.setItem('profile', JSON.stringify(response.data));
+            const profileData = {
+                image_url: response.data.image_url,
+                name: response.data.name,
+            }
+            setProfile(profileData);
+            localStorage.setItem('profile', JSON.stringify(profileData));
         } catch (error) {
             console.error('Error fetching profile data:', error);
         }
