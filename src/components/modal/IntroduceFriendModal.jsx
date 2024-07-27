@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 function IntroduceFriendModal({ onClose, friendName, friendId}) {
   const navigate = useNavigate();
   const {apiUrl} = useApiUrlStore()
-  const {user_id} = useUserIdStore()
 
   const handleClicked = async (confirmed) => {
     const status = confirmed ? 'accepted' : 'rejected';
@@ -25,7 +24,7 @@ function IntroduceFriendModal({ onClose, friendName, friendId}) {
       status: status,
     };
     try {
-      const response = await axios.put(`${apiUrl}/introduction_request/${friendId}`, introducestatus, {
+      await axios.put(`${apiUrl}/introduction_request/${friendId}`, introducestatus, {
         withCredentials: true,
       });
     } catch (error) {

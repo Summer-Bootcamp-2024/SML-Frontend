@@ -28,8 +28,8 @@ function Sidebar() {
                 withCredentials: true,
             });
             setProfile(response.data);
-        } catch (err) {
-            console.error('Error fetching profile data:', err);
+        } catch (error) {
+            console.error('Error fetching profile data:', error);
         }
     }
 
@@ -43,12 +43,12 @@ function Sidebar() {
 
     const handleLogout = async () => {
         try {
-            const response = await axios.post(`${apiUrl}/auth/logout`, {}, {withCredentials:true});
+            await axios.post(`${apiUrl}/auth/logout`, {}, {withCredentials:true});
             setLogoutSuccess(true); 
             logout();
             localStorage.removeItem('user_id');
             setIsLoggedIn(false);    
-        } catch (err) {
+        } catch (error) {
             setLogoutSuccess(false); 
         }
         finally {

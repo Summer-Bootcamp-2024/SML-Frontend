@@ -1,6 +1,5 @@
 import ProfileImg from './ProfileImg'
 import ProfileDetail from './ProfileDetail'
-import { useState } from 'react'
 
 function ProfileCard({ profile, onCardClick, isSelected }) {
 

@@ -26,7 +26,7 @@ function GiftCreditModal({ onClose, friendId, targetUserId }) {
                 withCredentials: true,
             });
             setCurrentCredit(response.data.credit);
-        } catch (err) {
+        } catch (error) {
             window.alert('크레딧 조회 실패');
         }
             
@@ -48,18 +48,16 @@ function GiftCreditModal({ onClose, friendId, targetUserId }) {
         }
         else {
             try {
-                const response = await axios.post(`${apiUrl}/gifts`, {
+                await axios.post(`${apiUrl}/gifts`, {
                     user_id: user_id,
                     friend_id: targetUserId,
                     ct_money: parseInt(giftCredit),
                 });
                 window.alert('크레딧 선물 성공');
                 onClose();
-            } catch (err) {
-                console.log(friendId);
-                console.log(targetUserId);
+            } catch (error) {
                 window.alert('크레딧 선물 실패');
-                console.log(err);
+                console.log(error);
             }
         }
     }

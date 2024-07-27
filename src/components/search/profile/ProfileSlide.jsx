@@ -37,7 +37,7 @@ function ProfileSlide({ isOpen, openIntroduceModal, onCloseSlide, ProfileId }) {
                 withCredentials: true,
             });
             setMyFriendList(response.data);
-        } catch (err) {
+        } catch (error) {
             alert('내 친구 목록을 불러오지 못했습니다');
         }
       }
@@ -49,7 +49,7 @@ function ProfileSlide({ isOpen, openIntroduceModal, onCloseSlide, ProfileId }) {
                 withCredentials: true,
             });
             setProfileFreindList(response.data);
-        } catch (err) {
+        } catch (error) {
             alert('사용자의 친구 목록을 불러오지 못했습니다');
         }
       }

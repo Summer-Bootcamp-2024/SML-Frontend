@@ -1,7 +1,7 @@
 import Sidebar from '../components/Sidebar';
 import SearchBar from '../components/search/SearchBar';
 import ProfileList from '../components/search/profile/ProfileList';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import ProfileSlide from '../components/search/profile/ProfileSlide';
 import GettingIntroduceModal from '../components/modal/GettingIntroduceModal'
 import { MdPeople } from "react-icons/md";

@@ -18,13 +18,13 @@ function ChargeModal({onCloseModal, currentCredit, onUpdateCredit}) {
         if (selectedCredit) {
             setIsLoading(true);
             try {
-                const response = await axios.put(`${apiUrl}/users/${user_id}/credit`, {
+                await axios.put(`${apiUrl}/users/${user_id}/credit`, {
                     credits: selectedCredit
                 });
                 onUpdateCredit(selectedCredit);
                 setSelectedCredit(0);
                 onCloseModal();
-            } catch (err) {
+            } catch (error) {
                 window.alert('충전 실패');
             } finally {
                 setIsLoading(false);

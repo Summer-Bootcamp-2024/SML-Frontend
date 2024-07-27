@@ -57,8 +57,8 @@ function Mypage() {
             setCurrentCredit(response.data.credit);
             setSelectedCategory(response.data.category);
             setSelectedJob(response.data.job);
-        } catch (err) {
-            console.error('Error fetching profile data:', err);
+        } catch (error) {
+            console.error('Error fetching profile data:', error);
         }
     }
 
@@ -68,11 +68,11 @@ function Mypage() {
                 withCredentials: true,
             });
             setSentGifts(Array.isArray(response.data.transactions) ? response.data.transactions : []);
-        } catch (err) {
-            if (err.response && err.response.status === 404) {
+        } catch (error) {
+            if (error.response && error.response.status === 404) {
                 setSentGifts([]);
             } else {
-                console.error('Error fetching sending gift log:', err);
+                console.error('Error fetching sending gift log:', error);
             }
         }
     }
@@ -83,11 +83,11 @@ function Mypage() {
                 withCredentials: true,
             });
             setReceivedGifts(Array.isArray(response.data.transactions) ? response.data.transactions : []);
-        } catch (err) {
-            if (err.response && err.response.status === 404) {
+        } catch (error) {
+            if (error.response && error.response.status === 404) {
                 setReceivedGifts([]);
             } else {
-                console.error('Error fetching getting gift log:', err);
+                console.error('Error fetching getting gift log:', error);
             }
         }
     }
