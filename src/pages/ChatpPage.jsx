@@ -7,6 +7,8 @@ import { useEffect, useState } from 'react'
 import GiftCreditModal from '../components/modal/GiftCreditModal'
 import FriendRequestModal from '../components/modal/FriendRequestModal'
 import IntroduceFriendModal from '../components/modal/IntroduceFriendModal'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function ChatPage() {
@@ -19,6 +21,8 @@ function ChatPage() {
   const [introduceFriendModalOpen, setIntroduceFriendModalOpen] = useState(false)
   const [friendId, setFriendId] = useState(null)
   const [targetUserId, setTargetUserId] = useState(null)
+  const [chatuserData, setChatUserData] = useState('')
+  const [introduceData, setIntroduceData] = useState([])
 
   //채팅방 조회
   const getChatRoom = async () => {
@@ -62,6 +66,13 @@ function ChatPage() {
         })
 
         setRoomData(userDetailsArray)
+        
+        const chatRoomData = response.data.find(item => item.id === selectRoom.room_id);
+        if (chatRoomData) {
+          setChatUserData(chatRoomData);
+        } else {
+          console.log('선택된 채팅방 데이터가 없습니다.');
+        }
       } else {
         console.log('채팅방이 없습니다')
       }
@@ -82,7 +93,51 @@ function ChatPage() {
 
   useEffect(() => {
     getChatRoom()
-  }, [])
+  }, [selectRoom.room_id])
+
+
+  // 소개하기 조회
+  const getIntroduceUser = async () => {
+    try {
+      let response;
+      let matchedIntroduceData;
+      console.log(chatuserData)
+      if (user_id === chatuserData.user1_id) {
+        response = await axios.get(`${apiUrl}/introduction_request/${chatuserData.user2_id}`, {
+          withCredentials: true,
+        });
+  
+        const introduceDataList = response.data;
+        // selectedRoom.other_id와 intermediary_user_id가 같은 객체만 필터링
+        matchedIntroduceData = introduceDataList.find(data =>
+          data.intermediary_user_id === chatuserData.user2_id && data.status === "pending"
+        );
+      } else {
+        response = await axios.get(`${apiUrl}/introduction_request/${user_id}`, {
+          withCredentials: true,
+        });
+  
+        const introduceDataList = response.data;
+
+        // user_id와 intermediary_user_id가 같은 객체만 필터링
+        matchedIntroduceData = introduceDataList.find(data =>
+          data.intermediary_user_id === user_id && data.status === "pending"
+        );
+      }
+      console.log(introduceData)
+      if (matchedIntroduceData) {
+        setIntroduceData(matchedIntroduceData);
+      } else {
+        console.log('소개 요청이 일치하지 않습니다.');
+      }
+    } catch (error) {
+      console.error('소개요청 실패:', error);
+    }
+  };
+  
+  useEffect(()=>{
+    getIntroduceUser()
+  },[selectRoom.room_id])
 
   const handleOpenGiftCreditModal = () => {
     setGiftCreditModalOpen(true)
@@ -111,6 +166,7 @@ function ChatPage() {
 
   return (
     <div className="flex w-full h-[100vh]">
+      <ToastContainer position='top-center'/>
       <Sidebar />
       <div className="ml-[296px] flex justify-center w-[calc(100vw-296px)] h-screen">
         <ChatRoom
@@ -125,25 +181,30 @@ function ChatPage() {
           onOpenGiftCreditModal={handleOpenGiftCreditModal}
           onOpenFriendRequesttModal={handleFriendRequestOpentModal}
           onOpenIntroduceFriendModal={handleIntroduceFriendOpentModal}
-        />
+          chatuserData={chatuserData}
+          introduceData={introduceData}
+          showToastMessage={() => toast.success('일촌요청 성공!')}/>
         {giftCreditModalOpen && (
           <GiftCreditModal
             onClose={handleCloseGiftCreditModal}
             friendId={friendId}
             targetUserId={targetUserId}
-          />
+            showToastMessage={() => toast.success('크레딧 선물 성공!')}/>
         )}
         {friendRequestModalOpen && (
           <FriendRequestModal 
           onClose={handleFriendRequestCloseModal}
           friendName={selectRoom.other_name}
-          friendId={selectRoom.other_id} />
+          friendId={selectRoom.other_id}
+          showToastMessage={() => toast.success('일촌이 됐어요!')}/>
         )}
         {introduceFriendModalOpen && (
           <IntroduceFriendModal 
           onClose={handleIntroduceFriendClosetModal}
           friendName={selectRoom.other_name}
-          friendId={selectRoom.other_id}/>
+          friendId={selectRoom.other_id}
+          request_id={introduceData.id}
+          showToastMessage={() => toast.success('소개요청 성공!')}/>
         )}
       </div>
     </div>

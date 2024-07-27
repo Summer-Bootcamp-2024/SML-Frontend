@@ -4,15 +4,13 @@ import { useApiUrlStore, useUserIdStore} from '../../store/store';
 import { useEffect, useRef, useState } from 'react';
 
 
-function Chat({ selectedRoom, getChatRoom, onOpenGiftCreditModal, onOpenFriendRequesttModal, onOpenIntroduceFriendModal }) {
+function Chat({ selectedRoom, getChatRoom, chatuserData, introduceData, onOpenGiftCreditModal, onOpenFriendRequesttModal, onOpenIntroduceFriendModal,showToastMessage }) {
   const { apiUrl } = useApiUrlStore();
   const { user_id } = useUserIdStore();
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
   const [targetName, setTargetName] = useState('')
-  const [chatuserData, setChatUserData] = useState('')
   const [nickName, setNickName] = useState('')
-  const [introduceData, setIntroduceData] = useState([])
   const [status, _setStatus] = useState('pending');
   const socketRef = useRef(null);
   const messagesEndRef = useRef(null);
@@ -31,70 +29,6 @@ function Chat({ selectedRoom, getChatRoom, onOpenGiftCreditModal, onOpenFriendRe
     }
     return content;
   };
-
-  // 채팅방 데이터 조회
-    const fetchChatRoom = async () => {
-      try {
-        const response = await axios.get(`${apiUrl}/chatrooms/${user_id}`, {
-          withCredentials: true,
-        });
-        const chatRoomData = response.data.find(item => item.id === selectedRoom.room_id);
-        if (chatRoomData) {
-          setChatUserData(chatRoomData);
-        } else {
-          console.log('선택된 채팅방 데이터가 없습니다.');
-        }
-      } catch (error) {
-        console.error('Error fetching chat room data:', error);
-      }
-    };
-
-    useEffect(() => {
-        fetchChatRoom();
-    }, [selectedRoom.room_id]);
-
-
-   // 소개하기 조회
-   const getIntroduceUser = async () => {
-    try {
-      let response;
-      let matchedIntroduceData;
-      if (user_id === chatuserData.user1_id) {
-        response = await axios.get(`${apiUrl}/introduction_request/${chatuserData.user2_id}`, {
-          withCredentials: true,
-        });
-  
-        const introduceDataList = response.data;
-        // selectedRoom.other_id와 intermediary_user_id가 같은 객체만 필터링
-        matchedIntroduceData = introduceDataList.find(data =>
-          data.intermediary_user_id === chatuserData.user2_id && data.status === "pending"
-        );
-      } else {
-        response = await axios.get(`${apiUrl}/introduction_request/${user_id}`, {
-          withCredentials: true,
-        });
-  
-        const introduceDataList = response.data;
-  
-        // user_id와 intermediary_user_id가 같은 객체만 필터링
-        matchedIntroduceData = introduceDataList.find(data =>
-          data.intermediary_user_id === user_id && data.status === "pending"
-        );
-      }
-  
-      if (matchedIntroduceData) {
-        setIntroduceData(matchedIntroduceData);
-      } else {
-        console.log('소개 요청이 일치하지 않습니다.');
-      }
-    } catch (error) {
-      console.error('소개요청 실패:', error);
-    }
-  };
-  
-  useEffect(()=>{
-    getIntroduceUser()
-  },[selectedRoom.room_id])
 
 
 
@@ -134,10 +68,6 @@ function Chat({ selectedRoom, getChatRoom, onOpenGiftCreditModal, onOpenFriendRe
   };
 
   useEffect(() => {
-    getIntroduceUser();
-  }, [selectedRoom.room_id, user_id]);
-
-  useEffect(() => {
     getProfileData(); // 프로필 데이터 조회
   }, [selectedRoom, introduceData]);
 
@@ -145,7 +75,7 @@ function Chat({ selectedRoom, getChatRoom, onOpenGiftCreditModal, onOpenFriendRe
 
   useEffect(() => {
     if (selectedRoom.room_id && user_id) {
-      const socket = new WebSocket(`ws://sml-m.site/ws/${selectedRoom.room_id}/${user_id}`);
+      const socket = new WebSocket(`ws://localhost:8000/ws/${selectedRoom.room_id}/${user_id}`);
 
       socket.onopen = () => {
         console.log("WebSocket Connected");
@@ -225,10 +155,8 @@ function Chat({ selectedRoom, getChatRoom, onOpenGiftCreditModal, onOpenFriendRe
           sendMessage(`${selectedRoom.user_name}님께서 ${targetName}님을 소개받기 원합니다!`);
           sendMessage("소개요청 버튼을 눌러서 지인을 소개 해보세요!");
         }
-        
       } catch (error) {
         console.error('Error fetching chat history:', error);
-        alert('채팅 내역을 가져오는데 실패했습니다');
       }
     }
   };
@@ -245,7 +173,7 @@ function Chat({ selectedRoom, getChatRoom, onOpenGiftCreditModal, onOpenFriendRe
       user2_id: introduceData.target_user_id,
     };
     try {
-      const response = await axios.post(`${apiUrl}/chatrooms/`, creatroomid, {
+      await axios.post(`${apiUrl}/chatrooms/`, creatroomid, {
         withCredentials: true,
       });
       getChatRoom();
@@ -262,7 +190,7 @@ function Chat({ selectedRoom, getChatRoom, onOpenGiftCreditModal, onOpenFriendRe
       user2_id: introduceData.target_user_id,
     };
     try {
-      const response = await axios.post(`${apiUrl}/chatrooms/`, creatroomid, {
+      await axios.post(`${apiUrl}/chatrooms/`, creatroomid, {
         withCredentials: true,
       });
       getChatRoom();
@@ -285,18 +213,17 @@ function Chat({ selectedRoom, getChatRoom, onOpenGiftCreditModal, onOpenFriendRe
   
   //일촌요청
   const postFriendStatus = async () => {
-    sendMessage(`${selectedRoom.user_name}님께서 ${selectedRoom.other_name}님에게 일촌을 신청했습니다!`);
     const postfriendId = {
       user_id: user_id
     }
     try {
-      const response = await axios.post(`${apiUrl}/friends/${selectedRoom.other_id}`, postfriendId, {
+      await axios.post(`${apiUrl}/friends/${selectedRoom.other_id}`, postfriendId, {
         withCredentials: true,
       });
-
+      sendMessage(`${selectedRoom.user_name}님께서 ${selectedRoom.other_name}님에게 일촌을 신청했습니다!`);
+      showToastMessage()
     } catch (error) {
       console.error('Error posting friend request:', error);
-      alert('일촌 요청에 실패했습니다');
     }
   };
 
