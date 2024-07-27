@@ -55,7 +55,7 @@ function SearchBar({ setSearchResults }) {
             <input
                 type="text"
                 value={query}
-                nChange={(e) => setQuery(e.target.value)}
+                onChange={(e) => setQuery(e.target.value)}
                 placeholder="이촌을 찾기위한 관심분야를 적어보세요!"
                 className="w-[400px] h-[50px] bg-custom-white rounded-[10px] indent-[20px] text-[16px] ml-[20px] border-[1px] border-custom-grey"
             />
