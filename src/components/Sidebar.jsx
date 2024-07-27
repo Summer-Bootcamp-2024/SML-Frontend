@@ -28,13 +28,19 @@ function Sidebar() {
                 withCredentials: true,
             });
             setProfile(response.data);
+            localStorage.setItem('profile', JSON.stringify(response.data));
         } catch (error) {
             console.error('Error fetching profile data:', error);
         }
     }
 
     useEffect(() => {
-        getProfile();
+        const cachedProfile = localStorage.getItem('profile');
+        if (cachedProfile) {
+            setProfile(JSON.parse(cachedProfile));
+        } else {
+            getProfile();
+        }
     }, []);
 
     const isActive = (path) => {
@@ -47,6 +53,7 @@ function Sidebar() {
             setLogoutSuccess(true); 
             logout();
             localStorage.removeItem('user_id');
+            localStorage.removeItem('profile');
             setIsLoggedIn(false);    
         } catch (error) {
             setLogoutSuccess(false); 
