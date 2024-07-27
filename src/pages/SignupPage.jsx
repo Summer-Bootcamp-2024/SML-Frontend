@@ -15,7 +15,7 @@ function SignupPage() {
         name: '',
         gender: '',
         category: 'IT/SW',
-        job: 'Developer',
+        job: '개발자',
         age: '',
     });
 
@@ -142,7 +142,7 @@ function SignupPage() {
                             ))}
                         </select>
                     </div>
-                    <Button label="Join" className="mt-[10px]" type="submit" />
+                    <Button label="회원 가입" className="mt-[10px]" type="submit" />
                 </form>
             </div>
             {statusModalOpen && (

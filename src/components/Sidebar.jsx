@@ -87,28 +87,28 @@ function Sidebar() {
                     : 'w-[190px] h-[55px] text-[18px] font-medium flex items-center justify-center cursor-pointer mb-[15px]'}>
                     <div className='w-[190px] flex items-center justify-center'>
                         <MdListAlt className='w-[24px] h-[24px]'/>
-                        <span className=' w-[110px] ml-[10px] pr-[10px]'>Friend List</span>
+                        <span className=' w-[110px] ml-[10px] pr-[10px]'>일촌 목록</span>
                     </div>
                     </NavLink>
                     <NavLink to="/search" className={({isActive}) => isActive ? 'text-[20px] font-extrabold bg-custom-orange rounded-[10px] text-custom-indigo w-[190px] h-[55px] flex justify-center items-center cursor-pointer mb-[15px]' 
                     : 'w-[190px] h-[55px] text-[18px] font-medium flex items-center justify-center cursor-pointer mb-[15px]'}>
                     <div className='w-[190px] flex items-center justify-center'>
                         <MdOutlinePersonSearch className='w-[24px] h-[24px]'/>
-                        <span className='w-[110px] ml-[10px] pr-[10px]'>Search</span>
+                        <span className='w-[110px] ml-[10px] pr-[10px]'>검색</span>
                     </div> 
                     </NavLink>
                     <NavLink to="/chat" className={({isActive}) => isActive ? 'text-[20px] font-extrabold bg-custom-orange rounded-[10px] text-custom-indigo w-[190px] h-[55px] flex justify-center items-center cursor-pointer mb-[15px]' 
                     : 'w-[190px] h-[55px] text-[18px] font-medium flex items-center justify-center cursor-pointer mb-[15px]'}>
                     <div className='w-[190px] flex items-center justify-center'>
                         <MdOutlineChat className='w-[24px] h-[24px]'/>
-                        <span className='w-[110px] ml-[10px] pr-[10px]'>Chat</span>
+                        <span className='w-[110px] ml-[10px] pr-[10px]'>채팅</span>
                         </div>
                     </NavLink>
                     <NavLink to="/mypage" className={({isActive}) => isActive ? 'text-[20px] font-extrabold bg-custom-orange rounded-[10px] text-custom-indigo w-[190px] h-[55px] flex justify-center items-center cursor-pointer' 
                     : 'w-[190px] h-[55px] text-[18px] font-medium flex items-center justify-center cursor-pointer'}>
                         <div className='w-[190px] flex items-center justify-center'>
                             <MdHome className='w-[24px] h-[24px]'/>
-                            <span className='w-[110px] ml-[10px] pr-[10px]'>My Page</span>
+                            <span className='w-[110px] ml-[10px] pr-[10px]'>마이 페이지</span>
                         </div>
                     </NavLink>
                 </ul>
@@ -116,7 +116,7 @@ function Sidebar() {
                 {isLoggedIn && (
                     <button onClick={handleLogout} className='flex items-center justify-baseline w-[190px] h-[40px] mb-[30px]'>
                         <MdLogout className='w-5 h-5 text-custom-grey'/>
-                        <span className='font-medium cursor-pointer text-custom-grey ml-[10px]'>Log Out</span>
+                        <span className='font-medium cursor-pointer text-custom-grey ml-[10px]'>로그아웃</span>
                     </button>
                 )}
                 {logoutModalOpen && (

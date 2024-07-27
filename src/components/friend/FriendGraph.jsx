@@ -3,6 +3,7 @@ import cytoscape from 'cytoscape';
 import mainProfile from '../../assets/images/myprofile/profileImgSquare.png';
 import node1img from '../../assets/images/profileImg2.png';
 import ProfileModal from '../modal/ProfileModal';
+import GettingIntroduceModal from '../modal/GettingIntroduceModal'
 import { useApiUrlStore, useUserIdStore } from '../../store/store';
 import axios from 'axios';
 
@@ -11,9 +12,11 @@ function FriendGraph() {
   const { apiUrl } = useApiUrlStore();
   const cyRef = useRef(null);
   const [statusModalOpen, setStatusModalOpen] = useState(false);
-  const [selectedNodeId, setSelectedNodeId] = useState(null);
+  const [selectedNodeId, setSelectedNodeId] = useState('');
+  const [profileId, setProfileId] = useState('')
   const [relationData, setRelationData] = useState([]);
   const [cy, setCy] = useState(null);
+  const [introduceModalOpen, setIntroduceModalOpen] = useState(false)
 
   const PostingOpenModal = (nodeId) => {
     setSelectedNodeId(nodeId);
@@ -23,6 +26,15 @@ function FriendGraph() {
   const PostingClosedModal = () => {
     setStatusModalOpen(false);
   };
+
+  const openIntroduceModal = (id) => { //소개하기 모달 열기
+    setProfileId(id)
+    setIntroduceModalOpen(true)
+  }
+  
+  const onCloseModal = () => {
+    setIntroduceModalOpen(false)
+  }
 
   //친구 관계도 조회
   const getFriendRelation = async () => {
@@ -156,8 +168,11 @@ function FriendGraph() {
     <div className="w-full h-full">
       <div id="cy" ref={cyRef} className='w-full h-full' />
       {statusModalOpen && (
-        <ProfileModal PostingClosedModal={PostingClosedModal} friendId={selectedNodeId} />
+        <ProfileModal PostingClosedModal={PostingClosedModal}
+        friendId={selectedNodeId}
+        openIntroduceModal={openIntroduceModal}/>
       )}
+      {introduceModalOpen && <GettingIntroduceModal onCloseModal={onCloseModal} friendId={selectedNodeId} ProfileId={profileId}/>}
     </div>
   );
 }

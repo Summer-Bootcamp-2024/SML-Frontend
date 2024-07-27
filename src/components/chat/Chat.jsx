@@ -347,7 +347,7 @@ function Chat({ selectedRoom, getChatRoom, onOpenGiftCreditModal, onOpenFriendRe
               )}
             </div>
           </div>
-          <div className="flex flex-col w-full h-[440px] overflow-y-auto border-2 p-[10px]">
+          <div className="flex flex-col w-full h-[440px] overflow-y-auto border-r-2 border-l-2 p-[10px]">
             {messages.map((message, index) => (
               <div key={index} className={`flex items-center w-full my-[8px] ${message.sender_id === user_id ? 'justify-end' : 'justify-start'}`}>
                 <div className={`flex flex-col justify-center items-center max-w-[80%] p-[10px] ${message.sender_id === user_id ? 'bg-custom-blue text-custom-white' : 'bg-custom-white text-black'} rounded-[20px] text-[16px]`}>

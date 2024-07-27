@@ -102,15 +102,15 @@ function ProfileSlide({ isOpen, openIntroduceModal, onCloseSlide, ProfileId }) {
                                 <span className='font-semibold mb-[5px]'>이름</span>
                                 <span className='font-semibold mb-[5px]'>나이</span>
                                 <span className='font-semibold mb-[5px]'>직업</span>
-                                <span className='font-semibold mb-[5px]'>위치</span>
                                 <span className='font-semibold mb-[5px]'>관심 분야</span>
+                                <span className='font-semibold mb-[5px]'>위치</span>
                             </div>
                             <div className='flex flex-col'>
                                 <span className='mb-[5px]'>{profileData.name}</span>
                                 <span className='mb-[5px]'>{profileData.age}세</span>
                                 <span className='mb-[5px]'>{profileData.job}</span>
-                                <span className='mb-[5px]'>{profileData.region}</span>
                                 <span className='mb-[5px]'>{profileData.category}</span>
+                                <span className='mb-[5px]'>{profileData.region}</span>
                             </div>
                         </div>
                     </div>
