@@ -40,9 +40,9 @@ function SearchPage() {
   
   return (
     <div className="flex w-full h-[100vh] font-[Pretendard]">
-      <Sidebar></Sidebar>
+      <Sidebar/>
       <div className="flex flex-col ml-[296px] items-center w-[calc(100vw-296px)] h-full">
-        <div className="flex h-[150px] items-center justify-start w-full border-b-[1px] border-custom-grey">
+        <div className="flex h-[20%] items-center justify-start w-full border-b-[1px] border-custom-grey">
           <SearchBar setSearchResults={setSearchResults} />
         </div>
         <div className="flex items-center justify-center w-full h-full">
