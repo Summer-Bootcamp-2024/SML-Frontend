@@ -12,8 +12,6 @@ function ProfileModal({ PostingClosedModal, friendId, openIntroduceModal }) {
     const [secondfriendlist, SetSecondFriendList] = useState([]);
     const { user_id } = useUserIdStore();
     const navigate = useNavigate();
-    const [selectedCategory, setSelectedCategory] = useState('');
-    const [selectedJob, setSelectedJob] = useState('');
     const [profileId, setProfileId] = useState(''); 
 
 
@@ -32,8 +30,6 @@ function ProfileModal({ PostingClosedModal, friendId, openIntroduceModal }) {
             });
             setProfileData(response.data);
             getFriendList(friendId);
-            setSelectedCategory(response.data.category);
-            setSelectedJob(response.data.job);
         } catch (error) {
             console.error('Error fetching friend data:', error);
             alert('프로필 정보를 불러오지 못했습니다');
@@ -138,7 +134,7 @@ function ProfileModal({ PostingClosedModal, friendId, openIntroduceModal }) {
                         </div>
                         <div className='flex gap-[10px]'>
                             <Button label={"일촌 삭제"} onClick={() => deleteFriend(friendId)} />
-                            <Button label={"소개 받기"} onClick={() => clickedIndex !== null && openIntroduceModal(profileId)} />
+                            <Button label={"소개 받기"} onClick={clickedIndex !== null ? () => openIntroduceModal(secondfriendlist[clickedIndex].id, profileId) : null} />
                         </div>
                     </div>
                 </div>

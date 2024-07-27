@@ -60,7 +60,7 @@ function LoginPage() {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                          />
-                        <div className="flex flex-col items-center gap-[7px] mt-[10px]">
+                        <div className="flex flex-col items-center gap-[10px] ">
                             <Button label="Login" type="submit"></Button>
                             <div className="flex items-center">
                                 <span className="text-[13px] mr-[10px]">아직 회원이 아니신가요?</span>

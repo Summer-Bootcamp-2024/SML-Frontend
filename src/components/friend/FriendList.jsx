@@ -26,7 +26,6 @@ function FriendList({}) {
   const openIntroduceModal = (id) => { //소개하기 모달 열기
     setProfileId(id)
     setIntroduceModalOpen(true)
-  
   }
   const onCloseModal = () => {
     setIntroduceModalOpen(false)

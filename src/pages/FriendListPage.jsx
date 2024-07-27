@@ -3,42 +3,43 @@ import Sidebar from '../components/Sidebar';
 import FriendGraph from '../components/friend/FriendGraph';
 import FriendList from '../components/friend/FriendList';
 
-
-
 function FriendListPage() {
-  const [sortOption, setSortOption] = useState('graph')
-  const Sortoption = [
-    { value: 'graph', name: 'Friend Graph' },
-    { value: 'list', name: 'Friend List' },
-  ]
+  const [clickOption, setClickOption] = useState('graph');
   
-  const onListHandler = (e) => {
-    setSortOption(e.target.value)
-    console.log(sortOption)
+  const onClickHandler = (value) => {
+    setClickOption(value);
   }
 
-   
-  
+  const getButtonClasses = (option) => {
+    const baseClasses = 'justify-center items-center flex w-[150px] h-[45px] border-2 rounded-[10px] mx-[10px] text-[18px] hover:cursor-pointer';
+    const activeClasses = 'border-custom-indigo bg-custom-indigo text-white font-semibold';
+    const inactiveClasses = 'border-custom-grey bg-custom-white text-custom-grey hover:text-custom-indigo hover:font-semibold hover:border-custom-indigo';
+    return `${baseClasses} ${clickOption === option ? activeClasses : inactiveClasses}`;
+  }
+
   return (
-   <div className='flex font-[Pretendard]'>
-    <Sidebar/>
-    <div className='ml-[296px] flex flex-col justify-center w-[calc(100vw-296px)] h-screen'>
-      <div className=' h-[20%] flex items-center border-b-[1px] border-custom-grey '>
-      <select
-        className='w-[170px] h-[45px] border-[1px] border-custom-grey bg-custom-white rounded-[10px] ml-[40px] font-semibold text-[18px] text-custom-indigo indent-[10px]'
-        onChange={onListHandler}>
-          {Sortoption.map((item) => (
-            <option value={item.value} key={item.name} className='text-[18px]'>
-              {item.name}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div className='flex items-center justify-center w-full h-[80%]'>
-      {sortOption ==='graph' ? <FriendGraph/> : <FriendList/>}
+    <div className='flex font-[Pretendard]'>
+      <Sidebar />
+      <div className='ml-[296px] flex flex-col justify-center w-[calc(100vw-296px)] h-screen'>
+        <div className='h-[20%] flex items-center border-b-[1px] border-custom-grey'>
+          <button
+            className={getButtonClasses('graph')}
+            onClick={() => onClickHandler('graph')}
+          >
+            일촌 그래프
+          </button>
+          <button
+            className={getButtonClasses('list')}
+            onClick={() => onClickHandler('list')}
+          >
+            일촌 목록
+          </button>
+        </div>
+        <div className='flex items-center justify-center w-full h-[80%]'>
+          {clickOption === 'graph' ? <FriendGraph /> : <FriendList />}
+        </div>
       </div>
     </div>
-   </div>
   );
 }
 
