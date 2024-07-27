@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Button from "../Button";
-import ChargeModal from "./ChargeModal";
+import ChargeModal from "../modal/ChargeModal"
 import { MdClose } from "react-icons/md"; 
 import { useApiUrlStore, useUserIdStore } from "../../store/store";
 import axios from "axios";

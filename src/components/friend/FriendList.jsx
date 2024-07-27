@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import ProfileModal from '../modal/ProfileModal';
-import GettingIntroduceModal from '../modal/GettingIntroduceModal'
 import { useApiUrlStore, useUserIdStore } from '../../store/store';
 import { NavLink} from 'react-router-dom';
 import axios from 'axios';
