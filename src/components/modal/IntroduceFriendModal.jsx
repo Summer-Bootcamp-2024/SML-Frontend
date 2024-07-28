@@ -4,7 +4,7 @@ import axios from "axios";
 import { MdClose } from "react-icons/md"; 
 import { useNavigate } from "react-router-dom";
 
-function IntroduceFriendModal({ onClose, friendName, friendId}) {
+function IntroduceFriendModal({ onClose, friendName, request_id, showToastMessage}) {
   const navigate = useNavigate();
   const {apiUrl} = useApiUrlStore()
 
@@ -13,6 +13,9 @@ function IntroduceFriendModal({ onClose, friendName, friendId}) {
 
     await updateIntroduceStatus(status);
 
+    if (status === 'accepted') {
+      showToastMessage(); // 알림 호출
+    }
     onClose();
     navigate('/chat');
   };
@@ -24,7 +27,7 @@ function IntroduceFriendModal({ onClose, friendName, friendId}) {
       status: status,
     };
     try {
-      await axios.put(`${apiUrl}/introduction_request/${friendId}`, introducestatus, {
+      await axios.put(`${apiUrl}/introduction_request/${request_id}`, introducestatus, {
         withCredentials: true,
       });
     } catch (error) {

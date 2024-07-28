@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 
-function FriendRequestModal({ onClose, friendName, friendId}) {
+function FriendRequestModal({ onClose, friendName, friendId, showToastMessage}) {
     const navigate = useNavigate();
     const { user_id } = useUserIdStore()
     const {apiUrl} = useApiUrlStore()
@@ -15,6 +15,10 @@ function FriendRequestModal({ onClose, friendName, friendId}) {
         const status = confirmed ? 'accepted' : 'rejected';
     
         await updateFriendStatus(status);
+
+        if (status === 'accepted') {
+          showToastMessage(); // 알림 호출
+        }
     
         onClose();
         navigate('/chat');

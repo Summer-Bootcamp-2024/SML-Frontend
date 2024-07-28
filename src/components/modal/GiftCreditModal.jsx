@@ -5,7 +5,7 @@ import { MdClose } from "react-icons/md";
 import { useApiUrlStore, useUserIdStore } from "../../store/store";
 import axios from "axios";
 
-function GiftCreditModal({ onClose, friendId, targetUserId }) {
+function GiftCreditModal({ onClose, friendId, targetUserId, showToastMessage }) {
     const { apiUrl } = useApiUrlStore();
     const { user_id } = useUserIdStore();
     const [chargeModalOpen, setChargeModalOpen] = useState(false);
@@ -53,10 +53,9 @@ function GiftCreditModal({ onClose, friendId, targetUserId }) {
                     friend_id: targetUserId,
                     ct_money: parseInt(giftCredit),
                 });
-                window.alert('크레딧 선물 성공');
+                showToastMessage()
                 onClose();
             } catch (error) {
-                window.alert('크레딧 선물 실패');
                 console.log(error);
             }
         }
