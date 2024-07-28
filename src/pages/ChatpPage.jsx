@@ -101,7 +101,6 @@ function ChatPage() {
     try {
       let response;
       let matchedIntroduceData;
-      console.log(chatuserData)
       if (user_id === chatuserData.user1_id) {
         response = await axios.get(`${apiUrl}/introduction_request/${chatuserData.user2_id}`, {
           withCredentials: true,
@@ -124,7 +123,6 @@ function ChatPage() {
           data.intermediary_user_id === user_id && data.status === "pending"
         );
       }
-      console.log(introduceData)
       if (matchedIntroduceData) {
         setIntroduceData(matchedIntroduceData);
       } else {

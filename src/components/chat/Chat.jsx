@@ -75,7 +75,7 @@ function Chat({ selectedRoom, getChatRoom, chatuserData, introduceData, onOpenGi
 
   useEffect(() => {
     if (selectedRoom.room_id && user_id) {
-      const socket = new WebSocket(`ws://localhost:8000/ws/${selectedRoom.room_id}/${user_id}`);
+      const socket = new WebSocket(`ws://sml-m.site/ws/${selectedRoom.room_id}/${user_id}`);
 
       socket.onopen = () => {
         console.log("WebSocket Connected");
