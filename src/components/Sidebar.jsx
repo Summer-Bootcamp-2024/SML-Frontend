@@ -26,12 +26,6 @@ function Sidebar() {
             const response = await axios.get(`${apiUrl}/users/${user_id}`, {
                 withCredentials: true,
             });
-            const profileData = {
-                image_url: response.data.image_url,
-                name: response.data.name,
-            }
-            setProfile(profileData);
-            localStorage.setItem('profile', JSON.stringify(profileData));
         } catch (error) {
             console.error('Error fetching profile data:', error);
         }
@@ -78,9 +72,9 @@ function Sidebar() {
                 </div>
             <div className='w-[220px] h-[650px] flex flex-col items-center pt-[36px]'>
                 <div className="flex items-center justify-between w-auto h-[80px] mb-[30px] pb-[5px]  border-custom-grey">
-                    <img className="w-[70px] h-[70px] rounded-[50%]" src={profile.image_url || basicProfile}/>
+                    <img className="w-[70px] h-[70px] rounded-[50%]" src={localStorage.getItem('profile_image_url') || basicProfile}/>
                     <div className='flex items-center justify-center p-[10px]'>
-                        <span className='flex justify-center items-end h-[30px] text-[20px] font-normal mx-[5px]'>{profile.name}</span>
+                        <span className='flex justify-center items-end h-[30px] text-[20px] font-normal mx-[5px]'>{localStorage.getItem('profile_name')}</span>
                         <span className='flex justify-center items-end h-[30px] text-[16px] font-normal mr-[5px]'>님</span>
                     </div>
                 </div>
