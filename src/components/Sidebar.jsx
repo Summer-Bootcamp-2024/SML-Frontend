@@ -8,9 +8,8 @@ import { NavLink,  useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useApiUrlStore, useUserIdStore } from '../store/store';
 import basicProfile from '../assets/images/myprofile/basicProfile.png';
-import Lottie from "lottie-react";
-import network from '../components/lottie/network.json';
 import LogoutModal from './modal/LogoutModal';
+import Logo from "../assets/images/sidebarLogo.png"
 
 function Sidebar() {
     const location = useLocation();
@@ -75,8 +74,7 @@ function Sidebar() {
     return(
         <div className="fixed top-0 left-0 flex flex-col items-center w-[296px] h-screen bg-custom-white border-r-[1px] border-custom-grey font-[Pretendard] z-10">
             <div className="flex gap-[2%] pl-[5%] justify-start items-center w-full text-[24px] font-extrabold text-custom-indigo mt-[20px] font-[GmarketSansMedium]">
-            <Lottie animationData={network} loop={true} className="w-[50px] h-[50px] text-blue-300"/>
-                SML
+            <img src={Logo} className='w-[100px] ml-[5px]'/>
                 </div>
             <div className='w-[220px] h-[650px] flex flex-col items-center pt-[36px]'>
                 <div className="flex items-center justify-between w-auto h-[80px] mb-[30px] pb-[5px]  border-custom-grey">
