@@ -127,7 +127,7 @@ function ProfileModal({ PostingClosedModal, friendId, openIntroduceModal }) {
                                         onClick={() => handleItemClick(index)}
                                     >
                                         <div className='flex items-center ml-[30px]'>{secondfriend.name}</div>
-                                        <div className='flex items-center text-[14px] text-custom-blue mr-[30px]'># {profileData.category}</div>
+                                        <div className='flex items-center text-[14px] text-custom-blue mr-[30px]'># {secondfriend.category}</div>
                                     </div>
                                 ))}
                             </div>
