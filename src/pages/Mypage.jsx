@@ -18,8 +18,6 @@ function Mypage() {
     const [sentGifts, setSentGifts] = useState([]);
     const [receivedGifts, setReceivedGifts] = useState([]);
     const navigate = useNavigate();
-    const [selectedCategory, setSelectedCategory] = useState('');
-    const [selectedJob, setSelectedJob] = useState('');
 
     const categoryList = [
         { value: 'IT/SW', name: 'IT/SW' },
@@ -55,8 +53,8 @@ function Mypage() {
             });
             setProfile(response.data);
             setCurrentCredit(response.data.credit);
-            setSelectedCategory(response.data.category);
-            setSelectedJob(response.data.job);
+            localStorage.setItem('profile_image_url', response.data.image_url);
+            localStorage.setItem('profile_name', response.data.name);
         } catch (error) {
             console.error('Error fetching profile data:', error);
         }
