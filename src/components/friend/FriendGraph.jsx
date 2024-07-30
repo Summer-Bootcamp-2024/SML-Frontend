@@ -92,9 +92,10 @@ const getProfileImages = async (friends) => {
         .map(friendship => friendship.friend_id);
 
       const profileImages = await getProfileImages(friends);
-
+      const userImg = localStorage.getItem('profile_image_url')
+      
       // 사용자 노드 추가
-      elements.push({ data: { id: user_id, image: profileImages[user_id] } });
+      elements.push({ data: { id: user_id, image: userImg } });
 
       // 친구 관계도 노드 & 엣지 구현
       relationData.forEach(friendship => {
@@ -103,7 +104,7 @@ const getProfileImages = async (friends) => {
 
           // 친구 노드 추가
           if (!elements.find(e => e.data.id === friend)) {
-            elements.push({ data: { id: friend, image: profileImages[friend]} });
+            elements.push({ data: { id: friend, image: profileImages[friend]} || '' });
           }
 
           // 관계별 엣지 구분
@@ -115,7 +116,7 @@ const getProfileImages = async (friends) => {
               const otherFriend = otherFriendship.friend_id;
 
               // 이촌 노드 추가
-              elements.push({ data: { id: otherFriend, image: profileImages[otherFriend]} });
+              elements.push({ data: { id: otherFriend, image: profileImages[otherFriend]} || '' });
               // 관계별 엣지 구분
               edges.push({ data: { id: `edge-${friend}-${otherFriend}`, source: friend, target: otherFriend, color: '#404F60' } });
             }
