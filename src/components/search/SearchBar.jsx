@@ -10,9 +10,9 @@ function SearchBar({ setSearchResults }) {
     const [selectedCategory, setSelectedCategory] = useState('');
 
     const categoryList = [
-        { value: 'CATEGORY', name: '카테고리' },
-        { value: 'JOB', name: '직업' },
-        { value: 'COMPANY', name: '회사' },
+        { value: 'category', name: '카테고리' },
+        { value: 'job', name: '직업' },
+        { value: 'company', name: '회사' },
     ];
 
     const handleCategoryChange = (event) => {

@@ -41,14 +41,14 @@ function SearchPage() {
   return (
     <div className="flex w-full h-[100vh] font-[Pretendard]">
       <Sidebar/>
-      <div className="flex flex-col ml-[296px] items-center w-[calc(100vw-296px)] h-full">
-        <div className="flex h-[200px] px-[2%] py-[2%] items-center justify-start w-full border-b-[1px] border-custom-grey">
+      <div className="flex flex-col ml-[296px] items-center w-[calc(100vw-296px)]">
+      <div className="flex h-[20%] items-center justify-start w-full border-b-[1px] border-custom-blue">
           <SearchBar setSearchResults={setSearchResults} />
         </div>
-        <div className="flex items-center justify-center w-full h-[calc(full-200px)]">
+        <div className="flex items-center justify-center w-full h-full">
           {searchResults.length === 0 ? (
-            <div className="flex flex-col mt-[10%] items-center justify-center text-custom-grey">
-              <MdPeople className="w-[200px] h-[200px] mt-[-60px]" />
+            <div className="flex flex-col items-center justify-center mt-[-80px] text-custom-grey">
+              <MdPeople className="w-[200px] h-[200px] mb-[-20px]" />
               <span className="text-2xl font-bold">나의 일촌의 일촌과 친구가 되어보세요!</span>
               <span className="font-bold">원하는 관심분야를 검색하면 해당되는 이촌을 보여드립니다</span>
             </div>
